@@ -11,7 +11,7 @@ termux-setup-storage
 
 # Update and install frequently used apps.
 apt update
-apt install -y git termux-api vim-python openssh wget curl
+apt install -y git termux-api vim-python openssh wget curl rsync
 # Append public key to authorized keys.
 cat id_rsa.pub > ~/.ssh/authorized_keys
 # Add custom functions to bashrc

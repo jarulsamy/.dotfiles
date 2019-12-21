@@ -32,12 +32,12 @@ ext_rename(){
 # Moves all kik images to server and removes originals.
 kik-clean(){
     # Static Paths
-    readonly KIK_PATH="/sdcard/Kik/"
-    readonly REMOTE_KIK_PATH="/mnt/shareVol/2tb/Oasis/kik/"
-    readonly OMEGA_USERNAME="joshua"
-    readonly OMEGA_HOST="Omega.lan"
+    KIK_PATH="/sdcard/kik/"
+    REMOTE_KIK_PATH="/mnt/shareVol/2tb/Oasis/kik/"
+    OMEGA_USERNAME="joshua"
+    OMEGA_HOST="Omega.lan"
 
-    if [ "$(ls -A $KIK_PATH)" ];
+    if ! [ "$(ls -A $KIK_PATH)" ];
     then
         echo "Kik Empty!";
         return;
