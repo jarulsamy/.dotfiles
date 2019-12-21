@@ -11,11 +11,11 @@ termux-setup-storage
 
 # Update and install frequently used apps.
 apt update
-apt install -y git termux-api termux-widget vim ssh wget curl
+apt install -y git termux-api vim openssh wget curl
 # Append public key to authorized keys.
 cat id_rsa.pub > ~/.ssh/authorized_keys
 # Add custom functions to bashrc
-echo "source ~/.dotfiles/termux/Omega.sh" >> ~/.bashrc
+echo "source ~/.dotfiles/termux/Omega.sh" > ~/.bashrc
 
 # VIM
 git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
@@ -23,9 +23,12 @@ cp ".vimrc" "$HOME"/
 vim +PluginInstall +qall
 
 # Generate and add ssh key to ssh-agent
-ssh-keygen -f $HOME/.ssh/id_rsa -t rsa -b 4096 -C "joshua.gf.arul@gmail.com" -N ''
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/id_rsa
+if ! [ -f $HOME/.ssh/id_rsa ];
+then
+    ssh-keygen -f $HOME/.ssh/id_rsa -t rsa -b 4096 -C "joshua.gf.arul@gmail.com" -N ''
+    eval "$(ssh-agent -s)"
+    ssh-add ~/.ssh/id_rsa
+fi
 
 echo "Done"
 

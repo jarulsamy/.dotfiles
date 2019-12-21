@@ -37,8 +37,14 @@ kik-clean(){
     readonly OMEGA_USERNAME="joshua"
     readonly OMEGA_HOST="Omega.lan"
 
+    if [ "$(ls -A $KIK_PATH)" ];
+    then
+        echo "Kik Empty!";
+        return;
+    fi
+
     # Ensure an argument is given
-    if [ -z "$1" ]
+    if [ -z "$1" ];
     then
         echo "Kik subpath missing!";
         return;
