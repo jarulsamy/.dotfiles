@@ -6,6 +6,8 @@ set -o nounset  # Disallow expansion of unset variables
 set -o pipefail # Use last non-zero exit code in a pipeline
 #set -o xtrace  # Trace the execution of the script (debug)
 
+sudo apt update
+sudo apt install vim wget curl
 # VIM
 if ! [ -d "$HOME/.vim" ];
 then
