@@ -18,12 +18,15 @@ cat id_rsa.pub > ~/.ssh/authorized_keys
 echo "source ~/.dotfiles/termux/Omega.sh" > ~/.bashrc
 
 # VIM
-git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-cp ".vimrc" "$HOME"/
-vim +PluginInstall +qall
+if ! [ -d "$HOME/.vim" ];
+then
+    git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    cp "../global/.vimrc" "$HOME"/
+    vim +PluginInstall +qall
+fi
 
 # Generate and add ssh key to ssh-agent
-if ! [ -f $HOME/.ssh/id_rsa ];
+if ! [ -f "$HOME/.ssh/id_rsa" ];
 then
     ssh-keygen -f $HOME/.ssh/id_rsa -t rsa -b 4096 -C "joshua.gf.arul@gmail.com" -N ''
     eval "$(ssh-agent -s)"
