@@ -9,7 +9,9 @@ call vundle#begin()
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
-Plugin 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim/'}
+Plugin 'jaredgorski/spacecamp'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'vim-airline/vim-airline'
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -38,6 +40,7 @@ nnoremap <CR> :noh<CR><CR>
 inoremap <silent> <Esc> <C-O>:stopinsert<CR>
 
 " Visuals
+colorscheme spacecamp_lite
 syntax on
 let python_highlight_all=1
 set hlsearch
