@@ -21,9 +21,10 @@ echo "source ~/.dotfiles/termux/Omega.sh" > ~/.bashrc
 if ! [ -d "$HOME/.vim" ];
 then
     git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-    cp "../global/.vimrc" "$HOME"/
-    vim +PluginInstall +qall
 fi
+
+cp "../global/.vimrc" "$HOME"/
+vim +PluginInstall +qall
 
 # Generate and add ssh key to ssh-agent
 if ! [ -f "$HOME/.ssh/id_rsa" ];
