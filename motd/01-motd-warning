@@ -1,0 +1,9 @@
+#!/bin/bash
+
+GREEN='\033[0;32m'
+RED='\033[0;31m'
+WHITE='\033[0;37m'
+RESET='\033[0m'
+
+/usr/games/lolcat -f /etc/update-motd.d/motd.asc
+printf "\n$(cat /etc/update-motd.d/warning.asc)\n"
