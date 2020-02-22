@@ -9,4 +9,5 @@ warning.asc - Warns about unauthorized access.
 To install,
   Copy 01-motd-warning to /etc/update-motd.d/
   chmod +x /etc/update-motd.d/01-motd-warning
+  You may have to empty /etc/motd. 
   Enjoy, Mr. Arulsamy!
