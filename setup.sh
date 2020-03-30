@@ -1,4 +1,5 @@
-#!/bin/bash
+#!/usr/bin/bash
+
 dotfilesDir=$(pwd)
 
 function linkDotfile {

@@ -1,3 +1,5 @@
+#!/usr/bin/bash
+
 function install {
   which $1 &> /dev/null
 
