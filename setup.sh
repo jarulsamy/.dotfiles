@@ -32,10 +32,13 @@ linkDotfile .zshrc
 linkDotfile .gitconfig
 linkDotfile .tmux.conf
 
+# Copy MOTD
 sudo rm /etc/update-motd.d/*
 sudo cp motd/motd.asc /etc/update-motd.d
 sudo cp motd/warning.asc /etc/update-motd.d
 sudo cp motd/01-motd-warning /etc/update-motd.d
+# Remove default MOTD
+sudo truncate -s 0 /etc/motd
 
 mkdir -p $dotfilesDir/.vim/bundle
 cd $dotfilesDir/.vim/bundle
