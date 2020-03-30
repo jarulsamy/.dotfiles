@@ -17,5 +17,6 @@ install wget
 install curl
 install zsh
 install lolcat
+install xclip
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
