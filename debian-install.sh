@@ -15,3 +15,6 @@ install vim-nox
 install tmux
 install wget
 install curl
+install zsh
+
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
