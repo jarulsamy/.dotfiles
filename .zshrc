@@ -122,8 +122,6 @@ if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] &&
   exec tmux
 fi
 
-eval $(thefuck --alias)
-
 # Aliases for quick adding to clipboard.
 alias setclip="xclip -selection c"
 alias getclip="xclip -selection c -o"
