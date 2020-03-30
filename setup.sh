@@ -32,6 +32,11 @@ linkDotfile .zshrc
 linkDotfile .gitconfig
 linkDotfile .tmux.conf
 
+sudo rm /etc/update-motd.d/*
+sudo cp motd/motd.asc /etc/update-motd.d
+sudo cp motd/warning.asc /etc/update-motd.d
+sudo cp motd/01-motd-warning /etc/update-motd.d
+
 mkdir -p $dotfilesDir/.vim/bundle
 cd $dotfilesDir/.vim/bundle
 git clone git://github.com/VundleVim/Vundle.vim.git
