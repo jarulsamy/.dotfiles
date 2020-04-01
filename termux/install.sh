@@ -9,11 +9,29 @@ set -o pipefail # Use last non-zero exit code in a pipeline
 # GENERAL
 termux-setup-storage
 
-# Update and install frequently used apps.
+function install {
+  which $1 &> /dev/null
+
+  if [ $? -ne 0 ]; then
+    echo "Installing: ${1}..."
+    apt -y install $1
+  else
+    echo "Already installed: ${1}"
+  fi
+}
+
 apt update
-apt install -y git termux-api vim-python openssh wget curl rsync
+install git
+install termux-api
+install vim-nox
+install openssh
+install wget
+install curl
+install rsync
+
 # Append public key to authorized keys.
 cat id_rsa.pub > ~/.ssh/authorized_keys
+
 # Add custom functions to bashrc
 echo "source ~/.dotfiles/termux/Omega.sh" > ~/.bashrc
 
