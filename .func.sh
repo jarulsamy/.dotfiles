@@ -10,20 +10,20 @@ function clone ()
                 echo "Options:"
                 echo "-h, --help        show brief help"
                 echo "-i                https instead of ssh"
-                exit 0
+                break
                 ;;
             -i)
-            shift
-            if test $# -gt 0; then
-                git clone "git@github.com:jarulsamy/$1"
-            else
-                git clone "git@github.com:jarulsamy/$1"
-            fi
-            shift
-            ;;
-        *)
-            break
-            ;;
+                shift
+                if test $# -gt 0; then
+                    git clone "https://github.com/jarulsamy/$1"
+                else
+                    git clone "git@github.com:jarulsamy/$1"
+                fi
+                shift
+                ;;
+            *)
+                break
+                ;;
         esac
     done
 }
