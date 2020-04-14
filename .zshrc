@@ -103,6 +103,7 @@ fi
 # Example aliases
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
+alias vimconfig="vim ~/.vimrc"
 
 # Aliases for quick adding to clipboard.
 alias setclip="xclip -selection c"
