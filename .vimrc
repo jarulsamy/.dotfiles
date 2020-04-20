@@ -11,6 +11,7 @@ Plugin 'vim-syntastic/syntastic'
 Plugin 'nvie/vim-flake8'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-airline/vim-airline'
+Plugin 'ycm-core/YouCompleteMe'
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'

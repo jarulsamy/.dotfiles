@@ -75,6 +75,7 @@ plugins=(
 	systemd
 	tmux
 	vscode
+	z
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -102,6 +103,7 @@ fi
 # Example aliases
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
+alias vimconfig="vim ~/.vimrc"
 
 # Aliases for quick adding to clipboard.
 alias setclip="xclip -selection c"
@@ -110,20 +112,20 @@ alias getclip="xclip -selection c -o"
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 
-# __conda_setup="$('/home/joshua/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-# if [ $? -eq 0 ]; then
-#     eval "$__conda_setup"
-# else
-#     if [ -f "/home/joshua/miniconda3/etc/profile.d/conda.sh" ]; then
-#         . "/home/joshua/miniconda3/etc/profile.d/conda.sh"
-#     else
-#         export PATH="/home/joshua/miniconda3/bin:$PATH"
-#     fi
-# fi
-# unset __conda_setup
+__conda_setup="$('/home/joshua/miniconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/joshua/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/joshua/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/joshua/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
 
 # <<< conda initialize <<<
 
-# if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-#   exec tmux
-# fi
+if command -v tmux &> /dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+   exec tmux
+fi

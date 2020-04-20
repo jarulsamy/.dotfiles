@@ -31,6 +31,8 @@ linkDotfile .vimrc
 linkDotfile .zshrc
 linkDotfile .gitconfig
 linkDotfile .tmux.conf
+linkDotfile .tmux.conf.local
+linkDotfile .func.sh
 
 # Copy MOTD
 sudo rm /etc/update-motd.d/*
