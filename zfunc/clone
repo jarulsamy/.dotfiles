@@ -1,0 +1,30 @@
+while test $# -gt 0; do
+    case "$1" in
+    -h | --help)
+        echo "$package - Simplifies the github experience."
+        echo "Shortens command to clone from my github."
+        echo "Options:"
+        echo "-h, --help        show brief help"
+        echo "-i                https instead of ssh"
+
+        echo "Example: "
+        echo "  $ clone .dotfiles"
+        echo "  Cloning using SSH: git@github.com:jarulsamy/.dotfiles"
+        echo "  Cloning into '.dotfiles'..."
+        break
+        ;;
+    -i)
+        shift
+        URL="https://github.com/jarulsamy/$1"
+        echo "Cloning using HTTPS: $URL"
+        git clone "$URL"
+        break
+        ;;
+    *)
+        URL="git@github.com:jarulsamy/$1"
+        echo "Cloning using SSH: $URL"
+        git clone "$URL"
+        break
+        ;;
+    esac
+done
