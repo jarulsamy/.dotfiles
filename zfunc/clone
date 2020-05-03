@@ -5,7 +5,9 @@ while test $# -gt 0; do
         echo "Shortens command to clone from my github."
         echo "Options:"
         echo "-h, --help        show brief help"
-        echo "-i                https instead of ssh"
+        echo "-i                Clones using https instead of ssh"
+        echo "-di               Displays full ssh clone path"
+        echo "-di               Displays full https clone path"
 
         echo "Example: "
         echo "  $ clone .dotfiles"
@@ -18,6 +20,18 @@ while test $# -gt 0; do
         URL="https://github.com/jarulsamy/$1"
         echo "Cloning using HTTPS: $URL"
         git clone "$URL"
+        break
+        ;;
+    -di)
+        shift
+        URL="https://github.com/jarulsamy/$1"
+        echo "$URL"
+        break
+        ;;
+    -d)
+        shift
+        URL="git@github.com:jarulsamy/$1"
+        echo "$URL"
         break
         ;;
     *)
