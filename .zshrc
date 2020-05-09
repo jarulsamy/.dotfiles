@@ -98,7 +98,8 @@ export ARCHFLAGS="-arch x86_64"
 
 # Include custom scripts
 fpath=(~/.dotfiles/zsh_functions "${fpath[@]}")
-autoload -Uz ~/.dotfiles/zfunc/clone
+autoload -Uz "$HOME/.dotfiles/zfunc/clone"
+autoload -Uz "$HOME/.dotfiles/zfunc/gh-ssh"
 
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
