@@ -1,0 +1,6 @@
+
+conda create -n reddit python=3.8
+
+conda activate reddit
+
+pip install autopep8 pep8 pylint flake8 black pre-commit
