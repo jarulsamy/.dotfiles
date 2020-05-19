@@ -286,10 +286,7 @@ tmux_conf_copy_to_os_clipboard=true
 # move status line to top
 set -g status-position top
 
-# | \ to split horizontally
-# - _ to split vertically
+# | to split horizontally
+# - to split vertically
 bind | split-window -h
 bind - split-window -v
-
-bind \\ split-window -h
-bind _ split-window -v
