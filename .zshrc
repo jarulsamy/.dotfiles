@@ -76,7 +76,6 @@ plugins=(
     sudo
     systemd
     tmux
-    vscode
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -102,9 +101,15 @@ autoload -Uz "$HOME/.dotfiles/zfunc/clone"
 autoload -Uz "$HOME/.dotfiles/zfunc/gh-ssh"
 autoload -Uz "$HOME/.dotfiles/zfunc/reddit"
 
+# Source custom keybinds
+source ~/.dotfiles/zfunc/keybinds.sh
+
+# Auto ls on cd
+chpwd() ls
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
+# users are encouraged to define aliases within the ZSH_CUSTOM (zfunc) folder.
 # For a full list of active aliases, run `alias`.
 
 # Example aliases
