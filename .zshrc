@@ -120,6 +120,8 @@ alias vimconfig="vim ~/.vimrc"
 # Aliases for quick adding to clipboard.
 alias setclip="xclip -selection c"
 alias getclip="xclip -selection c -o"
+# Echo motd
+alias motd="bash ~/.dotfiles/motd/01-motd-warning"
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
