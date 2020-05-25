@@ -7,13 +7,12 @@ call vundle#begin()
 
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'vim-syntastic/syntastic'
-Plugin 'nvie/vim-flake8'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-airline/vim-airline'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tell-k/vim-autopep8'
 Plugin 'scrooloose/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'davidhalter/jedi-vim'
+Plugin 'psf/black'
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -38,27 +37,14 @@ au BufNewFile,BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf,*.nginx
 " Flag whitespace
 au BufNewFile, BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf,*.nginx match BadWhitespace /\s\+$/
 
-" PEP8
-let g:autopep8_max_line_length=100
-
-" NerdTree
-"autocmd StdinReadPre * let s:std_in=1
-"autocmd VimEnter * if argc() == 0 && !exists(“s:std_in”) | NERDTree | endif
-"let NERDTreeQuitOnOpen = 1
-"autocmd bufenter * if (winnr(“$”) == 1 && exists(“b:NERDTreeType”) && b:NERDTreeType == “primary”) | q | endif
-let NERDTreeAutoDeleteBuffer = 1
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
-
+" Autoformat python files with Black
+autocmd BufWritePre *.py execute ':Black'
 
 " Binds
-
 " Clear highlights on enter
 nnoremap <CR> :noh<CR><CR>
-" inoremap <silent> <Esc> <C-O>:stopinsert<CR>
-
-" F8 Calls Autopep8 for formatting
-autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
+" Format on F9
+nnoremap <F9> :Black<CR>
 
 " Visuals
 syntax on
@@ -69,6 +55,7 @@ set nu
 
 " Misc
 set encoding=utf-8
+" Global clipboard
 set clipboard=unnamed
 
 " :W sudo saves the file
