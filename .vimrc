@@ -42,9 +42,21 @@ autocmd BufWritePre *.py execute ':Black'
 
 " Binds
 " Clear highlights on enter
-nnoremap <CR> :noh<CR><CR>
-" Format on F9
-nnoremap <F9> :Black<CR>
+nnoremap <CR> :noh<CR><CR> " Format on F9 nnoremap <F9> :Black<CR>
+
+" Nerdtree
+autocmd vimenter * NERDTree
+map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" If more than one window and previous buffer was NERDTree, go back to it.
+autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
+" Show dotfiles
+let NERDTreeShowHidden=1
+"Switch between different windows by their direction`
+no <C-j> <C-w>j| "switching to below window 
+no <C-k> <C-w>k| "switching to above window
+no <C-l> <C-w>l| "switching to right window 
+no <C-h> <C-w>h| "switching to left window
 
 " Visuals
 syntax on
