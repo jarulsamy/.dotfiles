@@ -13,6 +13,7 @@ Plugin 'preservim/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'davidhalter/jedi-vim'
 Plugin 'psf/black'
+Plugin 'morhetz/gruvbox'
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -24,15 +25,17 @@ Plugin 'gmarik/Vundle.vim'
 call vundle#end()
 filetype plugin indent on
 
-" File specific tweaks
-au BufNewFile,BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf,*.nginx
-    \ set tabstop=4 |
-    \ set softtabstop=4 |
-    \ set shiftwidth=4 |
-    \ set textwidth=79 |
-    \ set expandtab |
-    \ set autoindent |
-    \ set fileformat=unix
+" Theme
+autocmd vimenter * colorscheme gruvbox
+
+" Editor Tweaks
+set tabstop=4 |
+set softtabstop=4 |
+set shiftwidth=4 |
+set textwidth=79 |
+set expandtab |
+set autoindent |
+set fileformat=unix
 
 " Flag whitespace
 au BufNewFile, BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf,*.nginx match BadWhitespace /\s\+$/
