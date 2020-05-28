@@ -55,6 +55,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
 " Show dotfiles
 let NERDTreeShowHidden=1
+" Ignore files in tree
+let NERDTreeIgnore = ['\.pyc$', '__pycache__/']
 "Switch between different windows by their direction`
 no <C-j> <C-w>j| "switching to below window 
 no <C-k> <C-w>k| "switching to above window

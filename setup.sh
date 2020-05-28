@@ -45,3 +45,7 @@ mkdir -p $dotfilesDir/.vim/bundle
 cd $dotfilesDir/.vim/bundle
 git clone git://github.com/VundleVim/Vundle.vim.git
 vim +PluginInstall +qall
+
+# Set black to stable branch
+cd "$HOME/.vim/bundle/black"
+git checkout origin/stable -b stable
