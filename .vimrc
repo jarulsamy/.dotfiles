@@ -7,8 +7,8 @@ call vundle#begin()
 
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'vim-syntastic/syntastic'
-Plugin 'vim-airline/vim-airline-themes'
 Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'preservim/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'davidhalter/jedi-vim'
@@ -45,7 +45,11 @@ autocmd BufWritePre *.py execute ':Black'
 
 " Binds
 " Clear highlights on enter
-nnoremap <CR> :noh<CR><CR> " Format on F9 nnoremap <F9> :Black<CR>
+nnoremap <CR> :noh<CR><CR>
+" Format on F9 nnoremap
+nnoremap <F9> :Black<CR>
+" Paste Toggle F2
+set pastetoggle=<F2>
 
 " Nerdtree
 autocmd vimenter * NERDTree
@@ -58,10 +62,23 @@ let NERDTreeShowHidden=1
 " Ignore files in tree
 let NERDTreeIgnore = ['\.pyc$', '__pycache__/']
 "Switch between different windows by their direction`
-no <C-j> <C-w>j| "switching to below window 
+no <C-j> <C-w>j| "switching to below window
 no <C-k> <C-w>k| "switching to above window
-no <C-l> <C-w>l| "switching to right window 
+no <C-l> <C-w>l| "switching to right window
 no <C-h> <C-w>h| "switching to left window
+
+" Jedi
+let g:jedi#popup_on_dot = 0
+let g:jedi#popup_select_first = 0
+let g:jedi#show_call_signatures = "1"
+let g:jedi#goto_command = "<leader>d"
+let g:jedi#goto_assignments_command = "<leader>g"
+let g:jedi#goto_stubs_command = "<leader>s"
+let g:jedi#goto_definitions_command = ""
+let g:jedi#documentation_command = "K"
+let g:jedi#usages_command = "<leader>n"
+let g:jedi#completions_command = "<C-Space>"
+let g:jedi#rename_command = "<leader>r"
 
 " Visuals
 syntax on
@@ -74,8 +91,6 @@ set nu
 set encoding=utf-8
 " Global clipboard
 set clipboard=unnamed
-" Paste keybind
-set pastetoggle=<F2>
 
 " :W sudo saves the file
 command W w !sudo tee % > /dev/null

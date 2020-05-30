@@ -4,6 +4,9 @@
 
 \- Arch Wiki
 
+[![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
+[![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
+
 This is a series of scripts and configurations pertaining to my environment.
 
 ## Editor
@@ -18,33 +21,33 @@ My vim setup is optimized for Python, C/C++, and general unix configuration file
 
 This is accomplished with the following plugins:
 
--   IndentPython
+-   [IndentPython](https://github.com/vim-scripts/indentpython.vim)
 
--   Syntastic
+-   [Syntastic](https://github.com/vim-syntastic/syntastic)
 
--   Vim-flake8
+-   [Vim-airline](https://github.com/vim-airline/vim-airline) / [Vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
 
--   Vim-airline / Vim-airline-themes
+-   [Nerdtree](https://github.com/preservim/nerdtree)
 
--   Vim-gitgutter
+-   [Nerdtree-git](https://github.com/Xuyuanp/nerdtree-git-plugin)
 
--   Vim-autopep8
+-   [Jedi](https://github.com/davidhalter/jedi-vim)
 
--   Nerdtree
+-   [Black](https://github.com/psf/black)
 
--   Nerdtree-git
+-   [Gruvbox](https://github.com/morhetz/gruvbox)
 
 All, of course, detailed in the [vimrc](/.vimrc).
+
+![vim](assets/vim.png)
 
 ## Shell
 
 ZSH + Tmux = :heart:
 
-I use a heavily customized version of ZSH with Tmux to create an optimal terminal experience.
+I use a heavily customized version of ZSH and Tmux (using oh-my-zsh and oh-my-tmux) to create an optimal terminal experience.
 
-I use oh-my-zsh and oh-my-tmux.
-
-![Terminal](/assets/terminal.png)
+![Terminal](/assets/neofetch.png)
 
 Tmux header features include, session counter, interactive weather tracker, battery tracker, date/time, user, root warning, and hostname.
 
@@ -52,13 +55,15 @@ Tmux header features include, session counter, interactive weather tracker, batt
 
 I am actively developing a handful of convience scripts that I use daily.
 
-[clone]("/zfunc/clone") - Shortens github clone commands.
+[clone]("zfunc/clone") - Shortens github clone commands.
 
 > For example, `git clone git@github.com:jarulsamy/example` becomes `clone example`
 
-[gh-ssh]("/zfunc/gh-ssh") - Automatically generates and adds a SSH key to the SSH agent and copies to clipboard. Helpful for setting up new systems.
+[gh-ssh]("zfunc/gh-ssh") - Automatically generates and adds a SSH key to the SSH agent and copies to clipboard. Helpful for setting up new systems.
 
-[reddit]("/zfunc/reddit) - Auto create my daily driver conda environment with commonly used tools.
+[reddit]("zfunc/reddit) - Auto create my daily driver conda environment with commonly used tools.
+
+> Essentially, creates python 3.8 conda environment named `reddit` with various autoformatters preinstalled.
 
 ## Custom MOTD
 
@@ -66,7 +71,7 @@ By default, `setup.sh` should also install a custom MOTD.
 
 The text can be customized by editing the files in [motd](/motd).
 
-![MOTD](/assets/motd.png)
+![MOTD](assets/motd.png)
 
 ## Setup
 
@@ -83,5 +88,6 @@ The text can be customized by editing the files in [motd](/motd).
         ./setup.sh
 
     > All the vim plugins should automatically be installed with Vundle.
+    > Note: this symbolic links ALL relevant files in this repository. Ensure you edit `.gitconfig` to change your identity.
 
-4.  Install a powerline compatible font. I usually use [Ubuntu Mono](https://design.ubuntu.com/font/).
+4.  Install a powerline compatible font. I usually use [Cascadia Code PL](https://github.com/microsoft/cascadia-code) or [Ubuntu Mono](https://design.ubuntu.com/font).

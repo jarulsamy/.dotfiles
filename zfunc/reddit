@@ -1,4 +1,3 @@
-
 conda create -n reddit python=3.8
 
 conda activate reddit
