@@ -74,6 +74,8 @@ set nu
 set encoding=utf-8
 " Global clipboard
 set clipboard=unnamed
+" Paste keybind
+set pastetoggle=<F2>
 
 " :W sudo saves the file
 command W w !sudo tee % > /dev/null
