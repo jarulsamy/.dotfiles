@@ -1,0 +1,3 @@
+#!/bin/bash
+
+2>/dev/null 1>/dev/null xdg-open "$(clone -di $1)"

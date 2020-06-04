@@ -100,6 +100,7 @@ fpath=(~/.dotfiles/zsh_functions "${fpath[@]}")
 autoload -Uz "$HOME/.dotfiles/zfunc/clone"
 autoload -Uz "$HOME/.dotfiles/zfunc/gh-ssh"
 autoload -Uz "$HOME/.dotfiles/zfunc/reddit"
+autoload -Uz "$HOME/.dotfiles/zfunc/ghw"
 
 # Source custom keybinds
 source ~/.dotfiles/zfunc/keybinds.sh
