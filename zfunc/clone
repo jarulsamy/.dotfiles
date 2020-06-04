@@ -8,7 +8,7 @@ while test $# -gt 0; do
         echo "Options:"
         echo "-h, --help        show brief help"
         echo "-i                Clones using https instead of ssh"
-        echo "-di               Displays full ssh clone path"
+        echo "-d                Displays full ssh clone path"
         echo "-di               Displays full https clone path"
 
         echo "Example: "
@@ -24,15 +24,15 @@ while test $# -gt 0; do
         git clone "$URL"
         break
         ;;
-    -di)
-        shift
-        URL="https://github.com/jarulsamy/$1"
-        echo "$URL"
-        break
-        ;;
     -d)
         shift
         URL="git@github.com:jarulsamy/$1"
+        echo "$URL"
+        break
+        ;;
+    -di)
+        shift
+        URL="https://github.com/jarulsamy/$1"
         echo "$URL"
         break
         ;;
