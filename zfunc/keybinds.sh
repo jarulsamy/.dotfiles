@@ -1,4 +1,6 @@
-# Sudo
+#!/bin/bash
+
+# ctrl-s adds sudo to start
 function add_sudo() {
     BUFFER="sudo $BUFFER"
     zle end-of-line
