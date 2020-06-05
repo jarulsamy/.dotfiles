@@ -6,10 +6,10 @@ function linkDotfile() {
   dest="${HOME}/${1}"
   dateStr=$(date +%Y-%m-%d-%H%M)
 
-  if [ -h ~/${1} ]; then
+  if [ -h "${HOME}/${1}" ]; then
     # Existing symlink
     echo "Removing existing symlink: ${dest}"
-    rm ${dest}
+    rm "${dest}"
 
   elif [ -f "${dest}" ]; then
     # Existing file
@@ -23,7 +23,7 @@ function linkDotfile() {
   fi
 
   echo "Creating new symlink: ${dest}"
-  ln -s ${dotfilesDir}/${1} ${dest}
+  ln -s "${dotfilesDir}/${1} ${dest}"
 }
 
 linkDotfile .vim
@@ -41,8 +41,8 @@ sudo cp motd/01-motd-warning /etc/update-motd.d
 # Remove default MOTD
 sudo truncate -s 0 /etc/motd
 
-mkdir -p $dotfilesDir/.vim/bundle
-cd $dotfilesDir/.vim/bundle
+mkdir -p "$dotfilesDir/.vim/bundle"
+cd "$dotfilesDir/.vim/bundle"
 git clone git://github.com/VundleVim/Vundle.vim.git
 vim +PluginInstall +qall
 
