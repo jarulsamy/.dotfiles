@@ -22,19 +22,12 @@ My vim setup is optimized for Python, C/C++, and general unix configuration file
 This is accomplished with the following plugins:
 
 -   [IndentPython](https://github.com/vim-scripts/indentpython.vim)
-
 -   [Syntastic](https://github.com/vim-syntastic/syntastic)
-
 -   [Vim-airline](https://github.com/vim-airline/vim-airline) / [Vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
-
 -   [Nerdtree](https://github.com/preservim/nerdtree)
-
 -   [Nerdtree-git](https://github.com/Xuyuanp/nerdtree-git-plugin)
-
 -   [Jedi](https://github.com/davidhalter/jedi-vim)
-
 -   [Black](https://github.com/psf/black)
-
 -   [Gruvbox](https://github.com/morhetz/gruvbox)
 
 All, of course, detailed in the [vimrc](/.vimrc).
