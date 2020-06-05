@@ -4,6 +4,7 @@
 
 \- Arch Wiki
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f00ab44f952048b983da8904ef775232)](https://app.codacy.com/manual/jarulsamy/.dotfiles?utm_source=github.com&utm_medium=referral&utm_content=jarulsamy/.dotfiles&utm_campaign=Badge_Grade_Dashboard)
 [![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.png?v=103)](https://github.com/ellerbrock/open-source-badges/)
 [![GPL Licence](https://badges.frapsoft.com/os/gpl/gpl.svg?v=103)](https://opensource.org/licenses/GPL-3.0/)
 
