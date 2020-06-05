@@ -14,16 +14,16 @@ function linkDotfile() {
   elif [ -f "${dest}" ]; then
     # Existing file
     echo "Backing up existing file: ${dest}"
-    mv ${dest}{,.${dateStr}}
+    mv "${dest}{,.${dateStr}}"
 
   elif [ -d "${dest}" ]; then
     # Existing dir
     echo "Backing up existing dir: ${dest}"
-    mv ${dest}{,.${dateStr}}
+    mv "${dest}{,.${dateStr}}"
   fi
 
   echo "Creating new symlink: ${dest}"
-  ln -s "${dotfilesDir}/${1} ${dest}"
+  ln -s "${dotfilesDir}/${1}" "${dest}"
 }
 
 linkDotfile .vim
@@ -43,9 +43,9 @@ sudo truncate -s 0 /etc/motd
 
 mkdir -p "$dotfilesDir/.vim/bundle"
 cd "$dotfilesDir/.vim/bundle"
-git clone git://github.com/VundleVim/Vundle.vim.git
+git clone git://github.com/VundleVim/Vundle.vim.git 2> /dev/null
 vim +PluginInstall +qall
 
 # Set black to stable branch
 cd "$HOME/.vim/bundle/black"
-git checkout origin/stable -b stable
+git checkout origin/stable -b stable 2> /dev/null
