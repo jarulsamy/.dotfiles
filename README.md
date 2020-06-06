@@ -48,6 +48,7 @@ Tmux header features include, session counter, interactive weather tracker, batt
 ## Custom ZSH Functions
 
 I am actively developing a handful of convience scripts that I use daily.
+I'm extremely lazy and hate typing long commands.
 
 [clone]("zfunc/clone") - Shortens github clone commands.
 
@@ -58,6 +59,10 @@ I am actively developing a handful of convience scripts that I use daily.
 [reddit]("zfunc/reddit) - Auto create my daily driver conda environment with commonly used tools.
 
 > Essentially, creates python 3.8 conda environment named `reddit` with various autoformatters preinstalled.
+
+[ghw]("/zfunc/ghw") - Shorthand way to open github repositories in the default web browser.
+
+> For example `chrome https://github.com/jarulsamy/.dotfiles` becomes `ghw .dotfiles`.
 
 ## Custom MOTD
 
