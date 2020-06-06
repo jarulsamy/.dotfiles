@@ -34,6 +34,7 @@ install curl
 install zsh
 install lolcat
 install xclip
+install xdg-utils
 
 # Install oh-my-zsh
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
