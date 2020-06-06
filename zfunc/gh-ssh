@@ -1,12 +1,16 @@
 #!/bin/bash
 
 # A simple script to automatically generate an ssh key and add it to the ssh-agent.
+source <(grep email "$HOME/.dotfiles/.gitconfig" | sed 's/ *= */=/g')
+if [ -z ${email+x} ]; then
+    exit -1
+fi
 
 PRIV_KEY="$HOME/.ssh/id_rsa"
 PUB_KEY="$HOME/.ssh/id_rsa.pub"
 
 if ! [ -f "$PRIV_KEY" ]; then
-    ssh-keygen -t rsa -b 4096 -C "joshua.gf.arul@gmail.com"
+    ssh-keygen -t rsa -b 4096 -C "$email"
     eval "$(ssh-agent -s)"
     ssh-add "$HOME/.ssh/id_rsa"
 else
@@ -16,4 +20,3 @@ fi
 # Copy to clipboard
 cat $PUB_KEY | xclip -selection c
 echo "Public key copied to clipboard."
-
