@@ -9,8 +9,11 @@ if ! [ -f "$PRIV_KEY" ]; then
     ssh-keygen -t rsa -b 4096 -C "joshua.gf.arul@gmail.com"
     eval "$(ssh-agent -s)"
     ssh-add "$HOME/.ssh/id_rsa"
-    cat $PUB_KEY | xclip -selection c
-    echo "Public key copied to clipboard."
 else
     echo "SSH key already exists."
 fi
+
+# Copy to clipboard
+cat $PUB_KEY | xclip -selection c
+echo "Public key copied to clipboard."
+
