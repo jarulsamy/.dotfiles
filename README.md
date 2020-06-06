@@ -22,14 +22,14 @@ My vim setup is optimized for Python, C/C++, and general unix configuration file
 
 This is accomplished with the following plugins:
 
-- [IndentPython](https://github.com/vim-scripts/indentpython.vim)
-- [Syntastic](https://github.com/vim-syntastic/syntastic)
-- [Vim-airline](https://github.com/vim-airline/vim-airline) / [Vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
-- [Nerdtree](https://github.com/preservim/nerdtree)
-- [Nerdtree-git](https://github.com/Xuyuanp/nerdtree-git-plugin)
-- [Jedi](https://github.com/davidhalter/jedi-vim)
-- [Black](https://github.com/psf/black)
-- [Gruvbox](https://github.com/morhetz/gruvbox)
+*   [IndentPython](https://github.com/vim-scripts/indentpython.vim)
+*   [Syntastic](https://github.com/vim-syntastic/syntastic)
+*   [Vim-airline](https://github.com/vim-airline/vim-airline) / [Vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
+*   [Nerdtree](https://github.com/preservim/nerdtree)
+*   [Nerdtree-git](https://github.com/Xuyuanp/nerdtree-git-plugin)
+*   [Jedi](https://github.com/davidhalter/jedi-vim)
+*   [Black](https://github.com/psf/black)
+*   [Gruvbox](https://github.com/morhetz/gruvbox)
 
 All, of course, detailed in the [vimrc](/.vimrc).
 
@@ -52,7 +52,7 @@ I'm extremely lazy and hate typing long commands.
 
 [clone]("zfunc/clone") - Shortens github clone commands.
 
-> For example, `git clone git@github.com:jarulsamy/example` becomes `clone example`
+> For example, `git clone git@github.com:jarulsamy/example` becomes `clone example` 
 
 [gh-ssh]("zfunc/gh-ssh") - Automatically generates and adds a SSH key to the SSH agent and copies to clipboard. Helpful for setting up new systems.
 
@@ -62,7 +62,7 @@ I'm extremely lazy and hate typing long commands.
 
 [ghw]("/zfunc/ghw") - Shorthand way to open github repositories in the default web browser.
 
-> For example `chrome https://github.com/jarulsamy/.dotfiles` becomes `ghw .dotfiles`.
+> For example `chrome https://github.com/jarulsamy/.dotfiles` becomes `ghw .dotfiles` .
 
 ## Custom MOTD
 
