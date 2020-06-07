@@ -26,7 +26,7 @@ call vundle#end()
 filetype plugin indent on
 
 " Theme
-autocmd vimenter * colorscheme gruvbox
+"autocmd vimenter * colorscheme gruvbox
 
 " Editor Tweaks
 set tabstop=4 |

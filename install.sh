@@ -6,12 +6,12 @@ osInfo[/etc/debian_version]="apt-get install -y"
 osInfo[/etc/alpine-release]="apk --update add"
 osInfo[/etc/centos-release]="yum install -y"
 osInfo[/etc/fedora-release]="dnf install -y"
-osInfo[/etc/arch-release]="pacman -S --noconfirm"
+osInfo[/etc/arch-release]="/usr/bin/pacman -S --noconfirm"
 
 for f in ${!osInfo[@]}
 do
     if [[ -f $f ]];then
-        package_manager=${osInfo[$f]}
+        pac=${osInfo[$f]}
     fi
 done
 
@@ -20,7 +20,7 @@ function install() {
 
   if [ $? -ne 0 ]; then
     echo "Installing: ${1}..."
-    sudo "${package_manager}" "${1}"
+    sudo "${pac}" "${1}"
   else
     echo "Already installed: ${1}"
   fi

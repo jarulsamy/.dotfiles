@@ -14,12 +14,12 @@ function linkDotfile() {
   elif [ -f "${dest}" ]; then
     # Existing file
     echo "Backing up existing file: ${dest}"
-    mv "${dest}{,.${dateStr}}"
+    mv "${dest}" "{,.${dateStr}}"
 
   elif [ -d "${dest}" ]; then
     # Existing dir
     echo "Backing up existing dir: ${dest}"
-    mv "${dest}{,.${dateStr}}"
+    mv "${dest}" "{,.${dateStr}}"
   fi
 
   echo "Creating new symlink: ${dest}"
@@ -53,13 +53,16 @@ linkDotfile .gitconfig
 linkDotfile .tmux.conf
 linkDotfile .tmux.conf.local
 
+# Install zsh theme
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel10k
+
 # Copy MOTD
-sudo rm /etc/update-motd.d/*
-sudo cp motd/motd.asc /etc/update-motd.d
-sudo cp motd/warning.asc /etc/update-motd.d
-sudo cp motd/01-motd-warning /etc/update-motd.d
+sudo rm /etc/update-motd.d/* 2>/dev/null
+sudo cp motd/motd.asc /etc/update-motd.d 2>/dev/null
+sudo cp motd/warning.asc /etc/update-motd.d 2>/dev/null
+sudo cp motd/01-motd-warning /etc/update-motd.d 2>/dev/null
 # Remove default MOTD
-sudo truncate -s 0 /etc/motd
+sudo truncate -s 0 /etc/motd 2>/dev/null
 
 mkdir -p "$dotfilesDir/.vim/bundle"
 cd "$dotfilesDir/.vim/bundle"
