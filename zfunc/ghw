@@ -1,3 +1,19 @@
 #!/usr/bin/env bash
 
-xdg-open "$(clone -di $1)" 2>/dev/null 1>/dev/null
+if [ -n "$1" ]; then
+    xdg-open "$(clone -di $1)" 2>/dev/null 1>/dev/null
+    return
+fi
+
+url="$(git config --get remote.origin.url)"
+if [[ "$url" ]]; then
+    # Check if HTTPS
+    if [[ "$url" == "https" ]]; then
+        xdg-open "$url" 2>/dev/null 1>/dev/null
+    else
+        url="$(echo "$url" | awk 'BEGIN { FS = ":" } ; {print $2}')"
+        xdg-open "https://github.com/$url" 2>/dev/null 1>/dev/null
+    fi
+else
+    xdg-open "$(clone -di $1)" 2>/dev/null 1>/dev/null
+fi
