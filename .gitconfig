@@ -2,6 +2,9 @@
 name = Joshua Arulsamy
 email = joshua.gf.arul@gmail.com
 
+[diff]
+tool = vimdiff
+
 [color]
 diff = auto
 status = auto
