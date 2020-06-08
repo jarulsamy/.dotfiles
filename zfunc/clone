@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Load github_username
 source <(grep github_username "$HOME/.dotfiles/config.ini" | sed 's/ *= */=/g')

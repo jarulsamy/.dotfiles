@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # ctrl-s adds sudo to start
 function add_sudo() {

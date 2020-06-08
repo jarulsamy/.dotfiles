@@ -6,7 +6,7 @@ osInfo[/etc/debian_version]="apt-get install -y"
 osInfo[/etc/alpine-release]="apk --update add"
 osInfo[/etc/centos-release]="yum install -y"
 osInfo[/etc/fedora-release]="dnf install -y"
-osInfo[/etc/arch-release]="/usr/bin/pacman -S --noconfirm"
+osInfo[/etc/arch-release]="pacman -S --noconfirm"
 
 for f in ${!osInfo[@]}
 do

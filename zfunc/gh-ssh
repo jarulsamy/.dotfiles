@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # A simple script to automatically generate an ssh key and add it to the ssh-agent.
 source <(grep email "$HOME/.dotfiles/.gitconfig" | sed 's/ *= */=/g')
