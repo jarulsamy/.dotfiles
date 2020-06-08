@@ -26,7 +26,7 @@ call vundle#end()
 filetype plugin indent on
 
 " Theme
-"autocmd vimenter * colorscheme gruvbox
+autocmd vimenter * colorscheme gruvbox
 
 " Editor Tweaks
 set tabstop=4 |
@@ -40,13 +40,16 @@ set fileformat=unix
 " Flag whitespace
 au BufNewFile, BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf,*.nginx match BadWhitespace /\s\+$/
 
+" Auto remove trailing whitespace
+autocmd BufWritePre *.* :%s/\s\+$//e
+
 " Autoformat python files with Black
 autocmd BufWritePre *.py execute ':Black'
 
 " Binds
 " Clear highlights on enter
 nnoremap <CR> :noh<CR><CR>
-" Format on F9 nnoremap
+" Format on F9
 nnoremap <F9> :Black<CR>
 " Paste Toggle F2
 set pastetoggle=<F2>
@@ -115,4 +118,3 @@ augroup resCur
   autocmd!
   autocmd BufWinEnter * call ResCur()
 augroup END
-"
