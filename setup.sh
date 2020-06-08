@@ -14,12 +14,12 @@ function linkDotfile() {
   elif [ -f "${dest}" ]; then
     # Existing file
     echo "Backing up existing file: ${dest}"
-    mv "${dest}" "{,.${dateStr}}"
+    mv ${dest}{,.${dateStr}}
 
   elif [ -d "${dest}" ]; then
     # Existing dir
     echo "Backing up existing dir: ${dest}"
-    mv "${dest}" "{,.${dateStr}}"
+    mv ${dest}{,.${dateStr}}
   fi
 
   echo "Creating new symlink: ${dest}"
