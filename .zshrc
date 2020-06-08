@@ -84,6 +84,7 @@ plugins=(
     sudo
     systemd
     tmux
+    zsh-autosuggestions
 )
 
 source $ZSH/oh-my-zsh.sh

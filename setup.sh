@@ -55,7 +55,9 @@ linkDotfile .tmux.conf.local
 linkDotfile .p10k.zsh
 
 # Install zsh theme
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/custom/themes/powerlevel10k"
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" 2> /dev/null
+# Install autosuggestions plugin
+git clone https://github.com/zsh-users/zsh-autosuggestions  "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" 2> /dev/null
 
 # Copy MOTD
 sudo rm /etc/update-motd.d/* 2>/dev/null
