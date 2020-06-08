@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # Pick a package manager.
 declare -A osInfo;
@@ -11,7 +11,7 @@ osInfo[/etc/arch-release]="/usr/bin/pacman -S --noconfirm"
 for f in ${!osInfo[@]}
 do
     if [[ -f $f ]];then
-        pac=${osInfo[$f]}
+        pac="${osInfo[$f]}"
     fi
 done
 
@@ -20,7 +20,7 @@ function install() {
 
   if [ $? -ne 0 ]; then
     echo "Installing: ${1}..."
-    sudo "${pac}" "${1}"
+    sudo ${pac} ${1}
   else
     echo "Already installed: ${1}"
   fi
