@@ -92,6 +92,8 @@ set nu
 
 " Misc
 set encoding=utf-8
+set textwidth=0
+set wrapmargin=0
 " Global clipboard
 set clipboard=unnamed
 
