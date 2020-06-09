@@ -10,6 +10,32 @@
 
 This is a series of scripts and configurations pertaining to my environment.
 
+## Setup
+
+1.  Clone this repo to your home directory.
+
+2.  Edit `config.ini` and `.gitconfig` to fit your needs.
+
+    > By default, both these files point to my own personal github details.
+    > Most other scripts utilize these variables.
+
+3.  Install all the required dependencies with:
+
+        ./install.sh
+
+    > Hopefully distro agnostic :)
+
+4.  Symbolic link all the dotfiles using:
+
+        ./setup.sh
+
+    > All the vim plugins should automatically be installed with Vundle.
+    > Note: this symbolic links ALL relevant files in this repository. Ensure you edit `.gitconfig` to change your identity.
+
+5.  Install a powerline compatible font. I usually use [Cascadia Code PL](https://github.com/microsoft/cascadia-code) or [Ubuntu Mono](https://design.ubuntu.com/font).
+
+> A note about terminal emulators: I primarily use alacritty as my terminal emulator. I don't have it auto install, since I use `setup.sh` with a lot of headless machines. After manually installing alacritty, my conifg should auto load. The config file is symbolic linked automatically.
+
 ## Editor
 
 Main Development - VSCode.
@@ -43,7 +69,15 @@ I use a heavily customized version of ZSH and Tmux (using oh-my-zsh and oh-my-tm
 
 ![Terminal](/assets/neofetch.png)
 
-Tmux header features include, session counter, interactive weather tracker, battery tracker, date/time, user, root warning, and hostname.
+Tmux header features include; session counter, battery tracker, date/time, user, root warning, and hostname.
+
+## Keybinds
+
+Here are a few of the custom keybinds I implemented.
+
+* `ctrl-s` - Adds sudo to start of prompt.
+* `ctrl-k` - Fast `cd ..` alternative.
+* `ctrl-q` - Kill all other tmux sessions.
 
 ## Custom ZSH Functions
 
@@ -71,27 +105,3 @@ By default, `setup.sh` should also install a custom MOTD.
 The text can be customized by editing the files in [motd](/motd).
 
 ![MOTD](assets/motd.png)
-
-## Setup
-
-1.  Clone this repo to your home directory.
-
-2.  Edit `config.ini` and `.gitconfig` to fit your needs.
-
-    > By default, both these files point to my own personal github details.
-    > Most other scripts utilize these variables.
-
-3.  Install all the required dependencies with:
-
-        ./install.sh
-
-    > Hopefully distro agnostic :)
-
-4.  Symbolic link all the dotfiles using:
-
-        ./setup.sh
-
-    > All the vim plugins should automatically be installed with Vundle.
-    > Note: this symbolic links ALL relevant files in this repository. Ensure you edit `.gitconfig` to change your identity.
-
-5.  Install a powerline compatible font. I usually use [Cascadia Code PL](https://github.com/microsoft/cascadia-code) or [Ubuntu Mono](https://design.ubuntu.com/font).
