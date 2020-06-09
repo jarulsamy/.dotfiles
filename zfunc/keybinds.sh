@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # ctrl-s adds sudo to start
-function add_sudo() {
+add_sudo() {
     BUFFER="sudo $BUFFER"
     zle end-of-line
 }
@@ -9,9 +9,16 @@ zle -N add_sudo
 bindkey "^s" add_sudo
 
 # Move up one directory with ctrl+k
-function up() {
+up() {
     BUFFER="cd .."
     zle accept-line
 }
 zle -N up
 bindkey "^k" up
+
+# Kill all other termux sessions with ctrl+q
+kill_other() {
+    tmux kill-session -a
+}
+zle -N kill_other
+bindkey "^q" kill_other
