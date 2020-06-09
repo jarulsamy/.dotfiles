@@ -27,6 +27,9 @@ mergeoptions =
 [push]
 default = current
 
+[pull]
+rebase = false
+
 [giggle]
 main-window-maximized = false
 main-window-geometry = 1269x839+117+89
