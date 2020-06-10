@@ -21,7 +21,7 @@ old = red
 new = green
 
 [core]
-editor = /usr/bin/vim
+editor = vim
 mergeoptions =
 
 [push]
