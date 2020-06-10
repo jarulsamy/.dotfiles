@@ -39,6 +39,7 @@ set textwidth=79 |
 set expandtab |
 set autoindent |
 set fileformat=unix
+set backspace=indent,eol,start
 
 " Flag whitespace
 au BufNewFile, BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf,*.nginx match BadWhitespace /\s\+$/
@@ -56,6 +57,8 @@ nnoremap <CR> :noh<CR><CR>
 nnoremap <F9> :Black<CR>
 " Paste Toggle F2
 set pastetoggle=<F2>
+" Syntastic toggle passive mode
+nnoremap <F3> :SyntasticToggleMode<CR>
 
 " Nerdtree
 autocmd vimenter * NERDTree
@@ -74,8 +77,9 @@ no <C-l> <C-w>l| "switching to right window
 no <C-h> <C-w>h| "switching to left window
 
 " Jedi
-let g:jedi#popup_on_dot = 0
-let g:jedi#popup_select_first = 0
+let g:jedi#auto_initialization = 1
+let g:jedi#popup_on_dot = 1
+let g:jedi#popup_select_first = 1
 let g:jedi#show_call_signatures = "1"
 let g:jedi#goto_command = "<leader>d"
 let g:jedi#goto_assignments_command = "<leader>g"
@@ -85,6 +89,21 @@ let g:jedi#documentation_command = "K"
 let g:jedi#usages_command = "<leader>n"
 let g:jedi#completions_command = "<C-Space>"
 let g:jedi#rename_command = "<leader>r"
+let g:jedi#use_splits_not_buffers = "top"
+
+" Black
+let g:black_fast = 1
+let black_linelength = 120
+
+" Syntastic
+let g:syntastic_python_checker = ['flake8']
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 0
+let g:syntastic_check_on_wq = 0
 
 " Visuals
 syntax on
