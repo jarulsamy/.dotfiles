@@ -27,6 +27,9 @@ filetype plugin indent on
 
 " Theme
 autocmd vimenter * colorscheme gruvbox
+" Airline
+let g:airline_powerline_fonts = 1
+let g:airline_highlighting_cache = 1
 
 " Editor Tweaks
 set tabstop=4 |
@@ -94,8 +97,8 @@ set nu
 set encoding=utf-8
 set textwidth=0
 set wrapmargin=0
-" Global clipboard
-set clipboard=unnamed
+" System clipboard
+set clipboard=unnamedplus
 
 " :W sudo saves the file
 command W w !sudo tee % > /dev/null
