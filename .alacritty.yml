@@ -4,7 +4,7 @@
 # environment variables. Some entries may override variables
 # set by alacritty itself.
 
-env:
+#env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
@@ -12,7 +12,7 @@ env:
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
   # Using `alacritty` here breaks tmux on some systems.
-  TERM: xterm-256color
+  #TERM: xterm-256color
 
 window:
   # Window dimensions (changes require restart)
