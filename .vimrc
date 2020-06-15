@@ -93,7 +93,7 @@ let g:jedi#use_splits_not_buffers = "top"
 
 " Black
 let g:black_fast = 1
-let black_linelength = 120
+let g:black_linelength = 120
 
 " Syntastic
 let g:syntastic_python_checker = ['flake8']
@@ -121,6 +121,8 @@ set clipboard=unnamedplus
 
 " :W sudo saves the file
 command W w !sudo tee % > /dev/null
+" :Q Don't save anything and quit all.
+command Q qa!
 
 " Save cursor position
 " Tell vim to remember certain things when we exit
