@@ -57,17 +57,19 @@ linkDotfile .alacritty.yml
 linkDotfile .flake8
 
 # Install zsh theme
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" 2> /dev/null
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" 2>/dev/null
 # Install autosuggestions plugin
-git clone https://github.com/zsh-users/zsh-autosuggestions  "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" 2> /dev/null
+git clone https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" 2>/dev/null
 
-# Copy MOTD
-sudo rm /etc/update-motd.d/* 2>/dev/null
-sudo cp motd/motd.asc /etc/update-motd.d 2>/dev/null
-sudo cp motd/warning.asc /etc/update-motd.d 2>/dev/null
-sudo cp motd/01-motd-warning /etc/update-motd.d 2>/dev/null
-# Remove default MOTD
-sudo truncate -s 0 /etc/motd 2>/dev/null
+# Debian based distro specific motd.
+if [ -f "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]; then
+  sudo rm /etc/update-motd.d/* 2>/dev/null
+  sudo cp motd/motd.asc /etc/update-motd.d 2>/dev/null
+  sudo cp motd/warning.asc /etc/update-motd.d 2>/dev/null
+  sudo cp motd/01-motd-warning /etc/update-motd.d 2>/dev/null
+  # Remove default MOTD
+  sudo truncate -s 0 /etc/motd 2>/dev/null
+fi
 
 mkdir -p "$dotfilesDir/.vim/bundle"
 cd "$dotfilesDir/.vim/bundle"
