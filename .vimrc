@@ -35,7 +35,7 @@ let g:airline_highlighting_cache = 1
 set tabstop=4 |
 set softtabstop=4 |
 set shiftwidth=4 |
-set textwidth=79 |
+set textwidth=120 |
 set expandtab |
 set autoindent |
 set fileformat=unix
@@ -116,12 +116,12 @@ set nu
 set encoding=utf-8
 set textwidth=0
 set wrapmargin=0
-" System clipboard
+" System clipboard - Most likely have to compile vim from source
 set clipboard=unnamedplus
 
 " :W sudo saves the file
 command W w !sudo tee % > /dev/null
-" :Q Don't save anything and quit all.
+" :Q -> :qa!
 command Q qa!
 
 " Save cursor position
