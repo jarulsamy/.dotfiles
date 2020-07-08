@@ -38,6 +38,9 @@ function authorize_github_keys() {
   # URL to keys
   URL="https://github.com/$github_username.keys"
   # Save keys to authorized_keys
+
+  mkdir -p ~/.ssh
+
   curl "$URL" -o "$HOME/.ssh/authorized_keys" 2>/dev/null 1>/dev/null
   # Ensure permissions are correct
   chmod 700 ~/.ssh
