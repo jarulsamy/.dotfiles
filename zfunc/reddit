@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-conda create -n reddit python=3.8
+conda create -n reddit python=3.7
 
 conda activate reddit
 
