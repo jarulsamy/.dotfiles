@@ -75,9 +75,11 @@ Tmux header features include; session counter, battery tracker, date/time, user,
 
 Here are a few of the custom keybinds I implemented.
 
-*   `ctrl-s` - Adds sudo to start of prompt.
-*   `ctrl-k` - Fast `cd ..` alternative.
-*   `ctrl-q` - Kill all other tmux sessions.
+| Keybind  | Action                        |
+| :------: | :---------------------------- |
+| `ctrl-s` | Adds sudo to start of line    |
+| `ctrl-k` | `cd ..`                       |
+| `ctrl-q` | Kill all other tmux sessions. |
 
 ## Custom ZSH Functions
 
@@ -87,7 +89,6 @@ I'm extremely lazy and hate typing long commands.
 [clone]("zfunc/clone") - Shortens github clone commands.
 
 > For example, `git clone git@github.com:jarulsamy/example` becomes `clone example`
-
 [gh-ssh]("zfunc/gh-ssh") - Automatically generates and adds a SSH key to the SSH agent and copies to clipboard. Helpful for setting up new systems.
 
 [reddit]("zfunc/reddit) - Auto create my daily driver conda environment with commonly used tools.
