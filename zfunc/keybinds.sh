@@ -19,6 +19,7 @@ bindkey "^k" up
 # Kill all other termux sessions with ctrl+q
 kill_other() {
     tmux kill-session -a
+    tmux rename-session 0
 }
 zle -N kill_other
 bindkey "^q" kill_other
