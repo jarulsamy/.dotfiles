@@ -58,6 +58,8 @@ linkDotfile .tmux.conf.local
 linkDotfile .p10k.zsh
 linkDotfile .alacritty.yml
 linkDotfile .flake8
+linkDotfile .config/i3
+linkDotfile .config/polybar
 
 # Install zsh theme
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" 2>/dev/null
