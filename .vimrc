@@ -61,11 +61,10 @@ set pastetoggle=<F2>
 nnoremap <F3> :SyntasticToggleMode<CR>
 
 " Nerdtree
-autocmd vimenter * NERDTree
 map <C-n> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" If more than one window and previous buffer was NERDTree, go back to it.
-autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
+ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+ " If more than one window and previous buffer was NERDTree, go back to it.
+ autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
 " Show dotfiles
 let NERDTreeShowHidden=1
 " Ignore files in tree
