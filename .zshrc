@@ -83,18 +83,16 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-if [[ -n $SSH_CONNECTION ]]; then
-    export EDITOR='vim'
-fi
+export EDITOR='vim'
 
 # Compilation flags
-export ARCHFLAGS="-arch x86_64"
+export ARCHFLAGS="-arch x86_64 -j4"
+export MAKEOPTS="-j4"
+export MAKEFLAGS="-j4"
 
 # Include custom scripts
 fpath=(~/.dotfiles/zsh_functions "${fpath[@]}")
@@ -109,15 +107,13 @@ source ~/.dotfiles/zfunc/keybinds.sh
 # Auto ls on cd
 chpwd() ls
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM (zfunc) folder.
 # For a full list of active aliases, run `alias`.
-
 # Example aliases
 alias zshconfig="vim ~/.zshrc"
 alias ohmyzsh="vim ~/.oh-my-zsh"
 alias vimconfig="vim ~/.vimrc"
+alias i3config="vim ~/.config/i3/config"
+alias polyconfig="vim ~/.config/polybar/"
 
 # Aliases for quick adding to clipboard.
 alias setclip="xclip -selection c"
@@ -125,24 +121,35 @@ alias getclip="xclip -selection c -o"
 # Echo motd
 alias motd="bash ~/.dotfiles/motd/01-motd-warning"
 
+# ALWAYS install conda to $HOME/anaconda3
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/joshua/anaconda3/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
+__conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "/home/joshua/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/joshua/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "$HOME/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="/home/joshua/anaconda3/bin:$PATH"
+        export PATH="$HOME/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-if command -v tmux &>/dev/null && [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
-    exec tmux
-fi
+# Perl stuff
+PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
+PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
+
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# Activate tmux if ssh'ed into.
+if [[ -n "$PS1" ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_CONNECTION" ]]; then
+    tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
+fi
+
