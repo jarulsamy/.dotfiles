@@ -58,6 +58,10 @@ linkDotfile .tmux.conf.local
 linkDotfile .p10k.zsh
 linkDotfile .alacritty.yml
 linkDotfile .flake8
+
+# Ensure .config exists
+mkdir -p "$HOME/.config"
+
 linkDotfile .config/i3
 linkDotfile .config/polybar
 
