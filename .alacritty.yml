@@ -4,7 +4,7 @@
 # environment variables. Some entries may override variables
 # set by alacritty itself.
 
-#env:
+env:
   # TERM variable
   #
   # This value is used to set the `$TERM` environment variable for
@@ -12,7 +12,7 @@
   # check the local terminfo database and use `alacritty` if it is
   # available, otherwise `xterm-256color` is used.
   # Using `alacritty` here breaks tmux on some systems.
-  #TERM: xterm-256color
+  TERM: xterm-256color
 
 window:
   # Window dimensions (changes require restart)
@@ -49,7 +49,7 @@ window:
   #     - transparent: Title bar, transparent background and title bar buttons
   #     - buttonless: Title bar, transparent background, but no title bar buttons
   # Note: if you get a weird title bar, check to ensure you are using Xorg NOT Wayland.
-  decorations: full
+  decorations: none
 
   # Startup Mode (changes require restart)
   #
@@ -122,33 +122,35 @@ font:
 # If `true`, bold text is drawn using the bright color variants.
 draw_bold_text_with_bright_colors: true
 
+# Colors (Gruvbox dark)
 colors:
-  # Default colors
   primary:
-    background: '0x000000'
-    foreground: '0xffffff'
+    # hard contrast: background = '0x1d2021'
+    # soft contrast: background = '0x32302f'
+    background: '0x282828'
+    foreground: '0xebdbb2'
 
   # Normal colors
   normal:
-    black:   '0x000000'
-    red:     '0xcc0000'
-    green:   '0x4e9a06'
-    yellow:  '0xc4a000'
-    blue:    '0x3465a4'
-    magenta: '0x75507b'
-    cyan:    '0x06989a'
-    white:   '0xd3d7cf'
+    black:   '0x282828'
+    red:     '0xcc241d'
+    green:   '0x98971a'
+    yellow:  '0xd79921'
+    blue:    '0x458588'
+    magenta: '0xb16286'
+    cyan:    '0x689d6a'
+    white:   '0xa89984'
 
   # Bright colors
   bright:
-    black:   '0x555753'
-    red:     '0xef2929'
-    green:   '0x8ae234'
-    yellow:  '0xfce94f'
-    blue:    '0x729fcf'
-    magenta: '0xad7fa8'
-    cyan:    '0x34e2e2'
-    white:   '0xeeeeec'
+    black:   '0x928374'
+    red:     '0xfb4934'
+    green:   '0xb8bb26'
+    yellow:  '0xfabd2f'
+    blue:    '0x83a598'
+    magenta: '0xd3869b'
+    cyan:    '0x8ec07c'
+    white:   '0xebdbb2'
 
   # Cursor colors
   #
@@ -198,7 +200,7 @@ colors:
 #   - EaseOutExpo
 #   - EaseOutCirc
 #   - Linear
-#
+
 # Specifying a `duration` of `0` will disable the visual bell.
 visual_bell:
   animation: Ease
@@ -206,7 +208,7 @@ visual_bell:
   color: '#ffffff'
 
 # Background opacity
-#
+
 # Window opacity as a floating point number from `0.0` to `1.0`.
 # The value `0.0` is completely transparent and `1.0` is opaque.
 background_opacity: 1.0
@@ -226,7 +228,7 @@ cursor:
   #   - ▇ Block
   #   - _ Underline
   #   - | Beam
-  style: Beam
+  style: Block
 
   # If this is `true`, the cursor will be rendered as a hollow box when the
   # window is not focused.
