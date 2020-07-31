@@ -150,6 +150,6 @@ PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 
 # Activate tmux if ssh'ed into.
 if [[ -n "$PS1" ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_CONNECTION" ]]; then
-    tmux attach-session -t ssh_tmux || tmux new-session -s ssh_tmux
+    tmux attach-session -t ssh_tmux || exec tmux new-session -s ssh_tmux
 fi
 
