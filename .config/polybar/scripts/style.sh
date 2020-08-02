@@ -19,7 +19,7 @@ if [[ $1 = "-Feather" ]]; then
     # Removing Old File
     clean
     # Coping New File
-    cp -r "$PDIR/source/feather/*" $PDIR
+    cp -r "$PDIR/source/feather/*" "$PDIR"
     # Restarting polybar
     $LAUNCH &
 
@@ -27,7 +27,7 @@ elif [[ $1 = "-Material" ]]; then
     # Removing Old File
     clean
     # Coping New File
-    cp -r "$PDIR/source/material/*" $PDIR
+    cp -r "$PDIR/source/material/*" "$PDIR"
     # Restarting polybar
     $LAUNCH &
 
