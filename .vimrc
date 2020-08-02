@@ -11,9 +11,11 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
 Plugin 'preservim/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'davidhalter/jedi-vim'
 Plugin 'psf/black'
 Plugin 'morhetz/gruvbox'
+Plugin 'wakatime/vim-wakatime'
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'tpope/vim-surround'
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -74,21 +76,6 @@ no <C-j> <C-w>j| "switching to below window
 no <C-k> <C-w>k| "switching to above window
 no <C-l> <C-w>l| "switching to right window
 no <C-h> <C-w>h| "switching to left window
-
-" Jedi
-let g:jedi#auto_initialization = 1
-let g:jedi#popup_on_dot = 1
-let g:jedi#popup_select_first = 1
-let g:jedi#show_call_signatures = "1"
-let g:jedi#goto_command = "<leader>d"
-let g:jedi#goto_assignments_command = "<leader>g"
-let g:jedi#goto_stubs_command = "<leader>s"
-let g:jedi#goto_definitions_command = ""
-let g:jedi#documentation_command = "K"
-let g:jedi#usages_command = "<leader>n"
-let g:jedi#completions_command = "<C-Space>"
-let g:jedi#rename_command = "<leader>r"
-let g:jedi#use_splits_not_buffers = "top"
 
 " Black
 let g:black_fast = 1

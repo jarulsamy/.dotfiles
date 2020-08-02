@@ -49,6 +49,9 @@ function authorize_github_keys() {
   echo "Grabbed authorized_keys from $URL"
 }
 
+# Ensure config folders exists
+mkdir -p "$HOME/.config"
+
 linkDotfile .vim
 linkDotfile .vimrc
 linkDotfile .zshrc
@@ -59,12 +62,17 @@ linkDotfile .p10k.zsh
 linkDotfile .alacritty.yml
 linkDotfile .flake8
 
-# Ensure .config exists
-mkdir -p "$HOME/.config"
-
 linkDotfile .config/i3
 linkDotfile .config/polybar
 linkDotfile .config/ranger
+linkDotfile .config/mpd
+linkDotfile .config/ncmpcpp
+
+# Create mpd required playlist folder
+mkdir -p "$HOME/.config/mpd/playlists"
+
+# Delete .mpd folder
+rm -rf "$HOME/.mpd"
 
 # Install zsh theme
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" 2>/dev/null
@@ -81,12 +89,13 @@ if [ -f "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]; then
   sudo truncate -s 0 /etc/motd 2>/dev/null
 fi
 
+# Install Vundle
 mkdir -p "$dotfilesDir/.vim/bundle"
 cd "$dotfilesDir/.vim/bundle"
 git clone git://github.com/VundleVim/Vundle.vim.git 2>/dev/null
 vim +PluginInstall +qall
 
-# Set black to stable branch
+# Set black vim plugin to stable branch
 cd "$HOME/.vim/bundle/black"
 git checkout origin/stable -b stable 2>/dev/null
 
