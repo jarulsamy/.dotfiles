@@ -38,11 +38,9 @@ This is a series of scripts and configurations pertaining to my environment.
 
 ## Editor
 
-Main Development - VSCode.
+Visual Studio Code and Vim.
 
-I use VSCode with a series of plugins. Using this [settings sync plugin](https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync), all my configuration are stored on this [gist](https://gist.github.com/jarulsamy/6c3ff1d6f599d703cf0fba2b050fedec).
-
-Headless - Vim
+I use VSCode with a series of plugins. Using this [settings sync plugin](https://marketplace.visualstudio.com/items?itemName=Shan.code-settings-sync), all my configuration are stored on this [gist](https://gist.github.com/jarulsamy/a1a11a59eeadf0b429b1c357c4d51238).
 
 My vim setup is optimized for Python, C/C++, and general unix configuration files.
 
@@ -53,9 +51,11 @@ This is accomplished with the following plugins:
 *   [Vim-airline](https://github.com/vim-airline/vim-airline) / [Vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
 *   [Nerdtree](https://github.com/preservim/nerdtree)
 *   [Nerdtree-git](https://github.com/Xuyuanp/nerdtree-git-plugin)
-*   [Jedi](https://github.com/davidhalter/jedi-vim)
 *   [Black](https://github.com/psf/black)
 *   [Gruvbox](https://github.com/morhetz/gruvbox)
+*   [Wakatime](https://github.com/wakatime/vim-wakatime)
+*   [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe)
+*   [vim-surround](https://github.com/tpope/vim-surround)
 
 All, of course, detailed in the [vimrc](/.vimrc).
 
@@ -63,13 +63,49 @@ All, of course, detailed in the [vimrc](/.vimrc).
 
 ## Shell
 
-ZSH + Tmux = :heart:
-
-I use a heavily customized version of ZSH and Tmux (using oh-my-zsh and oh-my-tmux) to create an optimal terminal experience.
+I use a heavily customized version of ZSH using oh-my-zsh to create an optimal terminal experience.
 
 ![Terminal](/assets/neofetch.png)
 
-Tmux header features include; session counter, battery tracker, date/time, user, root warning, and hostname.
+By default, my `.zshrc` auto starts tmux on remote ssh sessions.
+
+![Shell+Tmux](/assets/shell_tmux.png)
+
+## i3
+
+I Primarily use i3 gaps as my WM on my desktop machines, usually alongside Arch.
+
+All my config files pertinent to i3 and other utilities follow the XDG configuration scheme, and therefore are in `.config`.
+
+By default, all the necessary config files should be correctly symbolically linked. However, **not all dependencies are installed by default.** This is by design, as these same scripts are often used on  headless servers.
+
+Stuff not installed by `install.sh`
+
+*   i3
+*   mpd
+*   mpc
+*   ncmpcpp
+*   polybar
+*   rofi
+*   ranger
+
+If you use Arch like me most of the dependencies are in the mainline repos:
+
+    sudo pacman -S i3-gaps mpd mpc
+
+The rest can be installed from the AUR with your favorite AUR helper:
+
+    yay -S polybar
+
+
+<img src="assets/1.png" width="804">
+
+<img src="assets/2.png" width="804">
+
+<img src="assets/3.png" width="804">
+
+
+Thanks to @adi1090x for the [polybar themes](https://github.com/adi1090x/polybar-themes).
 
 ## Keybinds
 
@@ -81,7 +117,7 @@ Here are a few of the custom keybinds I implemented.
 | `ctrl-k` | `cd ..`                       |
 | `ctrl-q` | Kill all other tmux sessions. |
 
-## Custom ZSH Functions
+## ZSH Functions
 
 I am actively developing a handful of convience scripts that I use daily.
 I'm extremely lazy and hate typing long commands.
@@ -99,9 +135,10 @@ I'm extremely lazy and hate typing long commands.
 
 > For example `chrome https://github.com/jarulsamy/.dotfiles` becomes `ghw .dotfiles` .
 
-## Custom MOTD
+## MOTD
 
 By default, `setup.sh` should also install a custom MOTD.
+> The custom MOTD is only auto-installed on Debian based distros.
 
 The text can be customized by editing the files in [motd](/motd).
 
