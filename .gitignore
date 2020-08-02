@@ -1,1 +1,9 @@
 .vim/
+.vscode/
+*.db
+*.log
+*.pid
+playlists
+mpdstate
+log
+database
