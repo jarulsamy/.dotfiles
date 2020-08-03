@@ -8,7 +8,7 @@ fi
 url="$(git config --get remote.origin.url)"
 if [[ "$url" ]]; then
     # Check if HTTPS
-    if [[ "$url" == "https" ]]; then
+    if [[ "$url" == *"https"* ]]; then
         xdg-open "$url" 2>/dev/null 1>/dev/null
     else
         url="$(echo "$url" | awk 'BEGIN { FS = ":" } ; {print $2}')"
