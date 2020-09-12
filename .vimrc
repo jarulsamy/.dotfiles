@@ -43,6 +43,12 @@ set autoindent |
 set fileformat=unix
 set backspace=indent,eol,start
 
+" Lisp specific stuff
+au BufNewFile,BufRead *.lisp
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2
+
 " Flag whitespace
 au BufNewFile, BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf,*.nginx match BadWhitespace /\s\+$/
 
@@ -82,14 +88,16 @@ let g:black_fast = 1
 let g:black_linelength = 120
 
 " Syntastic
-let g:syntastic_python_checker = ['flake8']
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+let g:syntastic_python_checker = ['flake8']
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
+" let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
+" nnoremap <C-w>E :SyntasticCheck<CR>
 
 " Visuals
 syntax on
