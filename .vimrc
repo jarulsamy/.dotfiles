@@ -16,6 +16,7 @@ Plugin 'morhetz/gruvbox'
 Plugin 'wakatime/vim-wakatime'
 Plugin 'ycm-core/YouCompleteMe'
 Plugin 'tpope/vim-surround'
+Plugin 'vim-pandoc/vim-pandoc'
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'

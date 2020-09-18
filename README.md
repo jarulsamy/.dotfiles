@@ -12,29 +12,29 @@ This is a series of scripts and configurations pertaining to my environment.
 
 ## Setup
 
-1. Clone this repo to your home directory.
+1.  Clone this repo to your home directory.
 
-2. Edit `config.ini` and `.gitconfig` to fit your needs.
+2.  Edit `config.ini` and `.gitconfig` to fit your needs.
 
     > By default, both these files point to my own personal github details.
     > Most other scripts utilize these variables.
 
-3. Install all the required dependencies with:
+3.  Install all the required dependencies with:
 
         ./install.sh
 
     > Hopefully distro agnostic :)
 
-4. Symbolic link all the dotfiles using:
+4.  Symbolic link all the dotfiles using:
 
         ./setup.sh
 
     > All the vim plugins should automatically be installed with Vundle.
     > Note: this symbolic links ALL relevant files in this repository. Ensure you edit `.gitconfig` to change your identity.
 
-5. Install a powerline compatible font. I usually use [Cascadia Code PL](https://github.com/microsoft/cascadia-code) or [Ubuntu Mono](https://design.ubuntu.com/font).
+5.  Install fonts with:
 
-> A note about terminal emulators: I primarily use alacritty as my terminal emulator. I don't have it auto install, since I use `setup.sh` with a lot of headless machines. After manually installing alacritty, my conifg should auto load. The config file is symbolic linked automatically.
+        ./fonts.sh
 
 ## Editor
 
@@ -46,16 +46,17 @@ My vim setup is optimized for Python, C/C++, and general unix configuration file
 
 This is accomplished with the following plugins:
 
-* [IndentPython](https://github.com/vim-scripts/indentpython.vim)
-* [Syntastic](https://github.com/vim-syntastic/syntastic)
-* [Vim-airline](https://github.com/vim-airline/vim-airline) / [Vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
-* [Nerdtree](https://github.com/preservim/nerdtree)
-* [Nerdtree-git](https://github.com/Xuyuanp/nerdtree-git-plugin)
-* [Black](https://github.com/psf/black)
-* [Gruvbox](https://github.com/morhetz/gruvbox)
-* [Wakatime](https://github.com/wakatime/vim-wakatime)
-* [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe)
-* [vim-surround](https://github.com/tpope/vim-surround)
+-   [IndentPython](https://github.com/vim-scripts/indentpython.vim)
+-   [Syntastic](https://github.com/vim-syntastic/syntastic)
+-   [Vim-airline](https://github.com/vim-airline/vim-airline) / [Vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
+-   [Nerdtree](https://github.com/preservim/nerdtree)
+-   [Nerdtree-git](https://github.com/Xuyuanp/nerdtree-git-plugin)
+-   [Black](https://github.com/psf/black)
+-   [Gruvbox](https://github.com/morhetz/gruvbox)
+-   [Wakatime](https://github.com/wakatime/vim-wakatime)
+-   [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe)
+-   [vim-surround](https://github.com/tpope/vim-surround)
+-   [vim-pandoc](https://github.com/vim-pandoc/vim-pandoc)
 
 All, of course, detailed in the [vimrc](/.vimrc).
 
@@ -73,39 +74,44 @@ By default, my `.zshrc` auto starts tmux on remote ssh sessions.
 
 ## i3
 
-I Primarily use i3 gaps as my WM on my desktop machines, usually alongside Arch.
+I Primarily use i3 gaps as my WM on my desktop machines usually alongside Arch.
 
-All my config files pertinent to i3 and other utilities follow the XDG configuration scheme, and therefore are in `.config`.
+Most of my configuration files follow the XDG configuration scheme, and therefore are in `~/.config`.
 
-By default, all the necessary config files should be correctly symbolically linked. However, **not all dependencies are installed by default.** This is by design, as these same scripts are often used on  headless servers.
+By default, all the necessary config files should be symbolically linked. However, **not all dependencies are installed by default.** This is by design, as these same scripts are often used on  headless servers.
 
 Stuff not installed by `install.sh`
 
-* i3
-* mpd
-* mpc
-* ncmpcpp
-* polybar
-* rofi
-* ranger
-* dmenu
-* networkmanager_dmenu
+-   xorg-server
+-   xorg-xrandr
+-   xorg-xauth
+-   xorg-xbacklight
+-   i3-gaps
+-   alacritty
+-   feh
+-   mpc
+-   mpd
+-   ncmpcpp
+-   rofi
+-   dmenu
+-   ranger
+-   pulseaudio-alsa
+-   polybar
+-   networkmanager_dmenu
 
 If you use Arch like me most of the dependencies are in the mainline repos:
 
-    sudo pacman -S i3-gaps mpd mpc dmenu
+    sudo pacman -S xorg-server xorg-xrandr xorg-xauth xorg-xbacklight i3-gaps alacritty feh mpc mpd ncmpcpp rofi dmenu ranger pulseaudio-alsa
 
 The rest can be installed from the AUR with your favorite AUR helper:
 
-    yay -S polybar networkmanager_dmenu
-
+    yay -S polybar networkmanager-dmenu
 
 <img src="assets/1.png" width="804">
 
 <img src="assets/2.png" width="804">
 
 <img src="assets/3.png" width="804">
-
 
 Thanks to @adi1090x for the [polybar themes](https://github.com/adi1090x/polybar-themes).
 
@@ -124,22 +130,24 @@ Here are a few of the custom keybinds I implemented.
 I am actively developing a handful of convience scripts that I use daily.
 I'm extremely lazy and hate typing long commands.
 
-[clone]("zfunc/clone") - Shortens github clone commands.
+[clone](zfunc/clone) - Shortens github clone commands.
 
 > For example, `git clone git@github.com:jarulsamy/example` becomes `clone example`
-[gh-ssh]("zfunc/gh-ssh") - Automatically generates and adds a SSH key to the SSH agent and copies to clipboard. Helpful for setting up new systems.
 
-[reddit]("zfunc/reddit) - Auto create my daily driver conda environment with commonly used tools.
+[gh-ssh](zfunc/gh-ssh) - Automatically generates and adds a SSH key to the SSH agent and copies to clipboard. Helpful for setting up new systems.
 
-> Essentially, creates python 3.8 conda environment named `reddit` with various autoformatters preinstalled.
+[reddit](zfunc/reddit) - Auto create my daily driver conda environment with commonly used tools.
 
-[ghw]("/zfunc/ghw") - Shorthand way to open github repositories in the default web browser.
+> Essentially, creates python 3.7 conda environment named `reddit` with various autoformatters preinstalled.
 
-> For example `chrome https://github.com/jarulsamy/.dotfiles` becomes `ghw .dotfiles` .
+[ghw](zfunc/ghw) - Shorthand way to open github repositories in the default web browser.
+
+> For example `firefox https://github.com/jarulsamy/.dotfiles` becomes `ghw .dotfiles`.
 
 ## MOTD
 
 By default, `setup.sh` should also install a custom MOTD.
+
 > The custom MOTD is only auto-installed on Debian based distros.
 
 The text can be customized by editing the files in [motd](/motd).

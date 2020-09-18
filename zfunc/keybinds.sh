@@ -2,7 +2,12 @@
 
 # ctrl-s adds sudo to start
 add_sudo() {
-    BUFFER="sudo $BUFFER"
+    sudo_present="$(echo "$BUFFER" | cut -d " " -f1)"
+    if [[ $sudo_present = "sudo" ]]; then
+        BUFFER="$(echo "$BUFFER" | cut -d " " -f2-)"
+    else
+        BUFFER="sudo $BUFFER"
+    fi
     zle end-of-line
 }
 zle -N add_sudo
