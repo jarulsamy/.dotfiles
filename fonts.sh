@@ -5,8 +5,8 @@ fontsDest="$HOME/.local/share/fonts"
 # Ensure dest exists
 mkdir -p "${fontsDest}"
 # Copy font files over
-find "${fonts}/" -mindepth 1 -maxdepth 1 -type f -exec cp {} ${fontsDest}/ ';'
-find "${fonts}/" -mindepth 1 -maxdepth 1 -type d -exec cp -r {} ${fontsDest}/ ';'
+find "${fonts}/" -mindepth 1 -maxdepth 1 -type f -exec cp {} "${fontsDest}/" ';'
+find "${fonts}/" -mindepth 1 -maxdepth 1 -type d -exec cp -r {} "${fontsDest}"/ ';'
 
 # Install nerdfonts if pacman is available
 if [[ -f "/etc/arch-release" ]]; then
@@ -17,6 +17,6 @@ else
 fi
 
 # Reload font cache
-2>/dev/null 1>&2 fc-cache -f -v
+fc-cache 2>/dev/null 1>&2 -f -v
 
 echo "Done installing fonts!"

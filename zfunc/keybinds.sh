@@ -2,9 +2,9 @@
 
 # ctrl-s adds sudo to start
 add_sudo() {
-    sudo_present="$(echo $BUFFER | cut -d " " -f1)"
+    sudo_present="$(echo "$BUFFER" | cut -d " " -f1)"
     if [[ $sudo_present = "sudo" ]]; then
-        BUFFER="$(echo $BUFFER | cut -d " " -f2-)"
+        BUFFER="$(echo "$BUFFER" | cut -d " " -f2-)"
     else
         BUFFER="sudo $BUFFER"
     fi
