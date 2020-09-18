@@ -12,27 +12,27 @@ This is a series of scripts and configurations pertaining to my environment.
 
 ## Setup
 
-1. Clone this repo to your home directory.
+1.  Clone this repo to your home directory.
 
-2. Edit `config.ini` and `.gitconfig` to fit your needs.
+2.  Edit `config.ini` and `.gitconfig` to fit your needs.
 
     > By default, both these files point to my own personal github details.
     > Most other scripts utilize these variables.
 
-3. Install all the required dependencies with:
+3.  Install all the required dependencies with:
 
         ./install.sh
 
     > Hopefully distro agnostic :)
 
-4. Symbolic link all the dotfiles using:
+4.  Symbolic link all the dotfiles using:
 
         ./setup.sh
 
     > All the vim plugins should automatically be installed with Vundle.
     > Note: this symbolic links ALL relevant files in this repository. Ensure you edit `.gitconfig` to change your identity.
 
-5. Install fonts with:
+5.  Install fonts with:
 
         ./fonts.sh
 
@@ -46,17 +46,17 @@ My vim setup is optimized for Python, C/C++, and general unix configuration file
 
 This is accomplished with the following plugins:
 
-* [IndentPython](https://github.com/vim-scripts/indentpython.vim)
-* [Syntastic](https://github.com/vim-syntastic/syntastic)
-* [Vim-airline](https://github.com/vim-airline/vim-airline) / [Vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
-* [Nerdtree](https://github.com/preservim/nerdtree)
-* [Nerdtree-git](https://github.com/Xuyuanp/nerdtree-git-plugin)
-* [Black](https://github.com/psf/black)
-* [Gruvbox](https://github.com/morhetz/gruvbox)
-* [Wakatime](https://github.com/wakatime/vim-wakatime)
-* [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe)
-* [vim-surround](https://github.com/tpope/vim-surround)
-* [vim-pandoc](https://github.com/vim-pandoc/vim-pandoc)
+-   [IndentPython](https://github.com/vim-scripts/indentpython.vim)
+-   [Syntastic](https://github.com/vim-syntastic/syntastic)
+-   [Vim-airline](https://github.com/vim-airline/vim-airline) / [Vim-airline-themes](https://github.com/vim-airline/vim-airline-themes)
+-   [Nerdtree](https://github.com/preservim/nerdtree)
+-   [Nerdtree-git](https://github.com/Xuyuanp/nerdtree-git-plugin)
+-   [Black](https://github.com/psf/black)
+-   [Gruvbox](https://github.com/morhetz/gruvbox)
+-   [Wakatime](https://github.com/wakatime/vim-wakatime)
+-   [YouCompleteMe](https://github.com/ycm-core/YouCompleteMe)
+-   [vim-surround](https://github.com/tpope/vim-surround)
+-   [vim-pandoc](https://github.com/vim-pandoc/vim-pandoc)
 
 All, of course, detailed in the [vimrc](/.vimrc).
 
@@ -82,22 +82,22 @@ By default, all the necessary config files should be symbolically linked. Howeve
 
 Stuff not installed by `install.sh`
 
-* xorg-server
-* xorg-xrandr
-* xorg-xauth
-* xorg-xbacklight
-* i3-gaps
-* alacritty
-* feh
-* mpc
-* mpd
-* ncmpcpp
-* rofi
-* dmenu
-* ranger
-* pulseaudio-alsa
-* polybar
-* networkmanager_dmenu
+-   xorg-server
+-   xorg-xrandr
+-   xorg-xauth
+-   xorg-xbacklight
+-   i3-gaps
+-   alacritty
+-   feh
+-   mpc
+-   mpd
+-   ncmpcpp
+-   rofi
+-   dmenu
+-   ranger
+-   pulseaudio-alsa
+-   polybar
+-   networkmanager_dmenu
 
 If you use Arch like me most of the dependencies are in the mainline repos:
 
@@ -147,6 +147,7 @@ I'm extremely lazy and hate typing long commands.
 ## MOTD
 
 By default, `setup.sh` should also install a custom MOTD.
+
 > The custom MOTD is only auto-installed on Debian based distros.
 
 The text can be customized by editing the files in [motd](/motd).
