@@ -102,27 +102,17 @@ autoload -Uz "$HOME/.dotfiles/zfunc/gh-ssh"
 autoload -Uz "$HOME/.dotfiles/zfunc/reddit"
 autoload -Uz "$HOME/.dotfiles/zfunc/ghw"
 
-# Source custom keybinds
-source ~/.dotfiles/zfunc/keybinds.sh
+# Load custom keybinds
+source "$HOME/.dotfiles/zfunc/keybinds.sh"
+
+# Load aliases
+source "$HOME/.dotfiles/zfunc/aliases.sh"
 
 # Auto ls on cd
 chpwd() ls
 
-# For a full list of active aliases, run `alias`.
-# Example aliases
-alias zshconfig="vim ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
-alias vimconfig="vim ~/.vimrc"
-alias i3config="vim ~/.config/i3/config"
-alias polyconfig="vim ~/.config/polybar/"
-
-# Aliases for quick adding to clipboard.
-alias setclip="xclip -selection c"
-alias getclip="xclip -selection c -o"
-# Echo motd
-alias motd="bash ~/.dotfiles/motd/01-motd-warning"
-
 # ALWAYS install conda to $HOME/anaconda3
+# If prompted, DO NOT auto initialize conda.
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
@@ -153,4 +143,3 @@ PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 if [[ -n "$PS1" ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_CONNECTION" ]]; then
     tmux attach-session -t ssh_tmux || exec tmux new-session -s ssh_tmux
 fi
-

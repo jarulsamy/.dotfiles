@@ -10,13 +10,14 @@ if [ -n "$1" ]; then
 fi
 
 url="$(git config --get remote.origin.url)"
+current_branch="$(git branch --show-current)"
 if [[ "$url" ]]; then
     # Check if HTTPS
     if [[ "$url" == *"https"* ]]; then
         open_url "$url"
     else
         url="$(echo "$url" | awk 'BEGIN { FS = ":" } ; {print $2}')"
-        open_url "https://github.com/$url"
+        open_url "https://github.com/$url/tree/$current_branch"
     fi
 else
     open_url "$(clone -di $1)"
