@@ -96,12 +96,7 @@ export MAKEOPTS="-j4"
 export MAKEFLAGS="-j4"
 
 # Include custom scripts
-fpath=(~/.dotfiles/zsh_functions "${fpath[@]}")
-autoload -Uz "$HOME/.dotfiles/zfunc/clone"
-autoload -Uz "$HOME/.dotfiles/zfunc/gh-ssh"
-autoload -Uz "$HOME/.dotfiles/zfunc/reddit"
-autoload -Uz "$HOME/.dotfiles/zfunc/ghw"
-
+export PATH="$HOME/.dotfiles/zfunc:$PATH"
 # Load custom keybinds
 source "$HOME/.dotfiles/zfunc/keybinds.sh"
 
