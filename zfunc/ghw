@@ -50,7 +50,7 @@ def get_remote_url(name=None, branch_name=None):
         # Try and grab current git repo.
         # If there isn't one, just open profile.
         url_name = subprocess.run(["git", "config", "--get", "remote.origin.url"], capture_output=True)
-        if url_name.stderr:
+        if url_name.stdout.decode() == "":
             return GH_PROFILE.format(username=GITHUB_USERNAME)
 
         # Cleanup output.
@@ -85,13 +85,10 @@ def process_args(args):
     if args.get("-b"):
         url = get_remote_url(branch_name=args.get("<branch_name>"))
     # Open specified repo with specified branch. 
-    else:
-        name = args.get("<repo_name>")
-        branch = args.get("<branch_name>")
-        url = get_remote_url(name=name, branch_name=branch)
-
+    name = args.get("<repo_name>")
+    branch = args.get("<branch_name>")
+    url = get_remote_url(name=name, branch_name=branch)
     open_url(url)
-
 
 if __name__ != "__main__":
     print("Do not import ghw", file=sys.stderr)
