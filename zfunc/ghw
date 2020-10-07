@@ -1,24 +1,84 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
+"""Get to GitHub really fast!
 
-open_url () {
-    xdg-open "${1}" & disown
-}
+Usage:
+    ghw [<repo_name>] [<branch_name>]
+    ghw (-p <profile_name/repo_name>)
+    ghw (-h | --help | --version)
+"""
 
-if [ -n "$1" ]; then
-    open_url "$(clone -di $1)" 
-    return
-fi
+from docopt import docopt
+import subprocess
+import sys
 
-url="$(git config --get remote.origin.url)"
-current_branch="$(git branch --show-current)"
-if [[ "$url" ]]; then
-    # Check if HTTPS
-    if [[ "$url" == *"https"* ]]; then
-        open_url "$url"
-    else
-        url="$(echo "$url" | awk 'BEGIN { FS = ":" } ; {print $2}')"
-        open_url "https://github.com/$url/tree/$current_branch"
-    fi
-else
-    open_url "$(clone -di $1)"
-fi
+VERSION = "0.0.1"
+GITHUB_USERNAME = "jarulsamy"
+
+URL_TEMPLATE = "https://github.com/{username}/{repo_name}/tree/{branch_name}"
+GH_PROFILE = "https://github.com/{username}"
+
+
+def ssh_to_https(ssh_url):
+    if "@" not in ssh_url:
+        return ssh_url
+    url = ssh_url.split("@")[1]
+    url = url.replace(":", "/")
+    url = f"https://{url}"
+    return url
+
+
+def get_current_branch():
+    branch_name = subprocess.run(["git", "branch", "--show-current"], capture_output=True)
+    if branch_name.stderr:
+        return None
+    return branch_name.stdout.decode().strip()
+
+
+def get_remote_url(name=None, branch_name=None):
+    # Get the right branch name, default to master.
+    if not name:
+        branch_name = get_current_branch()
+        # Try and grab current git repo.
+        # If there isn't one, just open profile.
+        url_name = subprocess.run(["git", "config", "--get", "remote.origin.url"], capture_output=True)
+        if url_name.stderr:
+            return GH_PROFILE.format(username=GITHUB_USERNAME)
+
+        # Cleanup output.
+        url = url_name.stdout.decode().strip()
+        # Ensure URL is in proper HTTPS schema.
+        url = ssh_to_https(url)
+        url = f"{url}/tree/{branch_name}"
+
+        return url
+
+    # Complete template for URL.
+    url = URL_TEMPLATE.format(username=GITHUB_USERNAME, repo_name=name, branch_name=branch_name)
+    # Handle missing branch condition.
+    if branch_name is None:
+        url = url.replace("/tree/None", "")
+
+    return url
+
+
+def open_url(url):
+    """Use xdg-open to open a URL"""
+    subprocess.call(["xdg-open", f"{url}"])
+
+
+def process_args(args):
+    if args.get("<profile_name/repo_name>"):
+        open_url(GH_PROFILE.format(username=args.get("<profile_name/repo_name>")))
+        return
+
+    name = args.get("<repo_name>")
+    branch = args.get("<branch_name>")
+    url = get_remote_url(name=name, branch_name=branch)
+    open_url(url)
+
+
+if __name__ != "__main__":
+    print("Do not import ghw", file=sys.stderr)
+
+args = docopt(__doc__, version=VERSION)
+process_args(args)
