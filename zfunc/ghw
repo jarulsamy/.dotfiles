@@ -3,12 +3,14 @@
 
 Usage:
     ghw [<repo_name>] [<branch_name>]
+    ghw (-b <branch_name>)
     ghw (-p <profile_name/repo_name>)
     ghw (-h | --help | --version)
 """
 
 from docopt import docopt
 import subprocess
+from subprocess import PIPE
 import sys
 
 VERSION = "0.0.1"
@@ -19,6 +21,7 @@ GH_PROFILE = "https://github.com/{username}"
 
 
 def ssh_to_https(ssh_url):
+    """Convert ssh remote to https"""
     if "@" not in ssh_url:
         return ssh_url
     url = ssh_url.split("@")[1]
@@ -28,6 +31,7 @@ def ssh_to_https(ssh_url):
 
 
 def get_current_branch():
+    """Get the branch of the current git repo"""
     branch_name = subprocess.run(["git", "branch", "--show-current"], capture_output=True)
     if branch_name.stderr:
         return None
@@ -35,9 +39,14 @@ def get_current_branch():
 
 
 def get_remote_url(name=None, branch_name=None):
+    """Convert name of repo to URL
+
+    Converts either, the name of the repo, or the remote URL to
+    a GitHub HTTPS URL.
+    """
     # Get the right branch name, default to master.
     if not name:
-        branch_name = get_current_branch()
+        branch_name = branch_name or get_current_branch()
         # Try and grab current git repo.
         # If there isn't one, just open profile.
         url_name = subprocess.run(["git", "config", "--get", "remote.origin.url"], capture_output=True)
@@ -62,18 +71,25 @@ def get_remote_url(name=None, branch_name=None):
 
 
 def open_url(url):
-    """Use xdg-open to open a URL"""
-    subprocess.call(["xdg-open", f"{url}"])
-
+    """Use xdg-open to open a URL."""
+    p = subprocess.Popen(["xdg-open", f"{url}"])
 
 def process_args(args):
+    """Process CLI flags."""
+    # Open a profile optionally with a repo.
     if args.get("<profile_name/repo_name>"):
         open_url(GH_PROFILE.format(username=args.get("<profile_name/repo_name>")))
         return
 
-    name = args.get("<repo_name>")
-    branch = args.get("<branch_name>")
-    url = get_remote_url(name=name, branch_name=branch)
+    # Open current git repo with specified branch.
+    if args.get("-b"):
+        url = get_remote_url(branch_name=args.get("<branch_name>"))
+    # Open specified repo with specified branch. 
+    else:
+        name = args.get("<repo_name>")
+        branch = args.get("<branch_name>")
+        url = get_remote_url(name=name, branch_name=branch)
+
     open_url(url)
 
 
