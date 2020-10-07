@@ -1,5 +1,5 @@
 set nocompatible
-filetype off
+filetype on
 
 " Set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -44,29 +44,29 @@ set autoindent |
 set fileformat=unix
 set backspace=indent,eol,start
 
-" Lisp specific stuff
+" Lisp specific changes
 au BufNewFile,BufRead *.lisp
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2
 
-" Flag whitespace
-au BufNewFile, BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf,*.nginx match BadWhitespace /\s\+$/
+" Autoformat python files with Black
+autocmd BufWritePre *.py execute ':Black'
+
+" Flag bad whitespace
+au BufNewFile, BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf match BadWhitespace /\s\+$/
 
 " Auto remove trailing whitespace
 autocmd BufWritePre *.* :%s/\s\+$//e
-
-" Autoformat python files with Black
-autocmd BufWritePre *.py execute ':Black'
 
 " Binds
 " Clear highlights on enter
 nnoremap <CR> :noh<CR><CR>
 " Format on F9
 nnoremap <F9> :Black<CR>
-" Paste Toggle F2
+" Paste mode toggle F2
 set pastetoggle=<F2>
-" Syntastic toggle passive mode
+" Syntastic toggle passive mode F3
 nnoremap <F3> :SyntasticToggleMode<CR>
 
 " Nerdtree
@@ -78,6 +78,7 @@ map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 " Ignore files in tree
 let NERDTreeIgnore = ['\.pyc$', '__pycache__/', '\.swp$']
+
 "Switch between different windows by their direction`
 no <C-j> <C-w>j| "switching to below window
 no <C-k> <C-w>k| "switching to above window
@@ -97,15 +98,14 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
-" let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [],'passive_filetypes': [] }
-" nnoremap <C-w>E :SyntasticCheck<CR>
 
 " Visuals
 syntax on
-let python_highlight_all=1
+set nu
+set nowrap
 set hlsearch
 set background=dark
-set nu
+let python_highlight_all=1
 
 " Misc
 set encoding=utf-8
@@ -114,9 +114,14 @@ set wrapmargin=0
 " System clipboard - Most likely have to compile vim from source
 set clipboard=unnamedplus
 
+" Cursor shape (alacritty)
+let &t_SI = "\<ESC>[6 q"
+let &t_SR = "\<ESC>[4 q"
+let &t_EI = "\<ESC>[0 q"
+
 " :W sudo saves the file
 command W w !sudo tee % > /dev/null
-" :Q -> :qa!
+" :Q force quits everything
 command Q qa!
 
 " Save cursor position
@@ -139,3 +144,4 @@ augroup resCur
   autocmd!
   autocmd BufWinEnter * call ResCur()
 augroup END
+
