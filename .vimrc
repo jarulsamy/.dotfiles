@@ -69,6 +69,13 @@ nnoremap <F9> :Black<CR>
 set pastetoggle=<F2>
 " Syntastic toggle passive mode F3
 nnoremap <F3> :SyntasticToggleMode<CR>
+" :W sudo saves the file
+command W w !sudo tee % > /dev/null
+" :Q force quits everything
+command Q qa!
+" Quickly insert an empty line without entering insert mode
+nnoremap <silent> <Leader>o :<C-u>call append(line("."), repeat([""], v:count1))<CR>
+nnoremap <silent> <Leader>O :<C-u>call append(line(".")-1, repeat([""], v:count1))<CR>
 
 " Nerdtree
 map <C-n> :NERDTreeToggle<CR>
@@ -120,10 +127,6 @@ let &t_SI = "\<ESC>[6 q"
 let &t_SR = "\<ESC>[4 q"
 let &t_EI = "\<ESC>[0 q"
 
-" :W sudo saves the file
-command W w !sudo tee % > /dev/null
-" :Q force quits everything
-command Q qa!
 
 " Save cursor position
 " Tell vim to remember certain things when we exit
