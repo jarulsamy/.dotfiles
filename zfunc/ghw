@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 """Get to GitHub really fast!
 
+A simple command line interface to open GitHub repositories in a
+web browser without ever leavin g the terminal.
+
 Usage:
     ghw [<repo_name>] [<branch_name>]
     ghw (-b <branch_name>)
@@ -13,15 +16,26 @@ import subprocess
 from subprocess import PIPE
 import sys
 
-VERSION = "0.0.1"
+VERSION = "0.0.2"
 GITHUB_USERNAME = "jarulsamy"
 
+# Templates for URL completion
 URL_TEMPLATE = "https://github.com/{username}/{repo_name}/tree/{branch_name}"
 GH_PROFILE = "https://github.com/{username}"
 
 
 def ssh_to_https(ssh_url):
-    """Convert ssh remote to https"""
+    """Convert ssh remote to https
+
+    Args:
+        ssh_url: SSH URL to convert to HTTPS
+
+    Returns:
+        url: str to HTTPS url
+
+    Raises:
+        None
+    """
     if "@" not in ssh_url:
         return ssh_url
     url = ssh_url.split("@")[1]
@@ -31,7 +45,21 @@ def ssh_to_https(ssh_url):
 
 
 def get_current_branch():
-    """Get the branch of the current git repo"""
+    """Get the branch of the current git repo
+
+    Uses a external call to a subprocess to grab the
+    branch of the current git repository.
+
+    Args:
+        None
+
+    Returns:
+        branch: str name of branch
+        None: failed to get a branch name
+
+    Raises:
+        None
+    """
     branch_name = subprocess.run(["git", "branch", "--show-current"], capture_output=True)
     if branch_name.stderr:
         return None
@@ -43,6 +71,16 @@ def get_remote_url(name=None, branch_name=None):
 
     Converts either, the name of the repo, or the remote URL to
     a GitHub HTTPS URL.
+
+    Args:
+        name: Optionally, get the URL of a GitHub repo from its name
+        branch_name: Optionally, get the URL to the specific branch of a repo
+
+    Returns:
+        str: URL to repository
+
+    Raises:
+        None
     """
     # Get the right branch name, default to master.
     if not name:
@@ -71,11 +109,32 @@ def get_remote_url(name=None, branch_name=None):
 
 
 def open_url(url):
-    """Use xdg-open to open a URL."""
-    p = subprocess.Popen(["xdg-open", f"{url}"])
+    """Use xdg-open to open a URL.
+
+    Args:
+        url: str URL to open
+
+    Returns:
+        None
+
+    Raises:
+        None
+    """
+    subprocess.Popen(["xdg-open", f"{url}"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+
 
 def process_args(args):
-    """Process CLI flags."""
+    """Process CLI flags.
+
+    Args:
+        args: dict from docopt arg parser
+
+    Returns:
+        None
+
+    Raises:
+        None
+    """
     # Open a profile optionally with a repo.
     if args.get("<profile_name/repo_name>"):
         open_url(GH_PROFILE.format(username=args.get("<profile_name/repo_name>")))
@@ -84,14 +143,12 @@ def process_args(args):
     # Open current git repo with specified branch.
     if args.get("-b"):
         url = get_remote_url(branch_name=args.get("<branch_name>"))
-    # Open specified repo with specified branch. 
+    # Open specified repo with specified branch.
     name = args.get("<repo_name>")
     branch = args.get("<branch_name>")
     url = get_remote_url(name=name, branch_name=branch)
     open_url(url)
 
-if __name__ != "__main__":
-    print("Do not import ghw", file=sys.stderr)
 
 args = docopt(__doc__, version=VERSION)
 process_args(args)
