@@ -15,6 +15,7 @@ Plugin 'psf/black'
 Plugin 'morhetz/gruvbox'
 Plugin 'wakatime/vim-wakatime'
 Plugin 'ycm-core/YouCompleteMe'
+Plugin 'rhysd/vim-clang-format'
 Plugin 'tpope/vim-surround'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'airblade/vim-gitgutter'
@@ -36,14 +37,17 @@ let g:airline_powerline_fonts = 1
 let g:airline_highlighting_cache = 1
 
 " Editor Tweaks
-set tabstop=4 |
-set softtabstop=4 |
-set shiftwidth=4 |
-set textwidth=120 |
-set expandtab |
-set autoindent |
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set textwidth=120
+set expandtab
+set autoindent
 set fileformat=unix
 set backspace=indent,eol,start
+set autoread
+set hidden
+set history=1000
 
 " Lisp specific changes
 au BufNewFile,BufRead *.lisp
@@ -51,8 +55,9 @@ au BufNewFile,BufRead *.lisp
     \ set softtabstop=2 |
     \ set shiftwidth=2
 
-" Autoformat python files with Black
+" Autoformat files
 autocmd BufWritePre *.py execute ':Black'
+autocmd FileType c ClangFormatAutoEnable
 
 " Flag bad whitespace
 au BufNewFile, BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf match BadWhitespace /\s\+$/
@@ -63,12 +68,15 @@ autocmd BufWritePre *.* :%s/\s\+$//e
 " Binds
 " Clear highlights on enter
 nnoremap <CR> :noh<CR><CR>
-" Format on F9
+" Format Python on F9
 nnoremap <F9> :Black<CR>
 " Paste mode toggle F2
 set pastetoggle=<F2>
 " Syntastic toggle passive mode F3
 nnoremap <F3> :SyntasticToggleMode<CR>
+nnoremap <F5> :%y+<CR>
+" Toggle auto formatting:
+nmap <Leader>C :ClangFormatAutoToggle<CR>
 
 " Nerdtree
 map <C-n> :NERDTreeToggle<CR>
@@ -100,9 +108,12 @@ let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 0
 
-" Visuals
+" UI
 syntax on
-set nu
+set ruler
+set number
+set relativenumber
+set cursorline
 set nowrap
 set hlsearch
 set background=dark
