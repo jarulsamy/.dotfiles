@@ -28,6 +28,8 @@ function install() {
 
 # Install dependencies
 install vim
+install fzf
+install ripgrep
 install tmux
 install wget
 install curl
