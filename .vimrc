@@ -14,10 +14,8 @@ Plugin 'wakatime/vim-wakatime'
 Plugin 'ycm-core/YouCompleteMe'
 Plugin 'rhysd/vim-clang-format'
 Plugin 'tpope/vim-surround'
-Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'junegunn/fzf.vim'
-Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -30,6 +28,9 @@ call vundle#end()
 filetype plugin indent on
 
 " Theme
+let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_contrast_light='soft'
 autocmd vimenter * ++nested colorscheme gruvbox
 
 " Airline
@@ -54,6 +55,7 @@ set wrapmargin=0
 set backspace=indent,eol,start
 set ignorecase
 set smartcase
+set termguicolors
 " System clipboard - Most likely have to compile vim from source
 set clipboard=unnamedplus
 
@@ -125,6 +127,7 @@ nnoremap <silent> <Leader>h: :History:<CR>
 nnoremap <silent> <Leader>q/ :History/<CR>
 " Disable highlighting with return
 nnoremap <CR> :noh<CR><CR>
+nnoremap <silent> <F12> :let &bg=(&bg=='light'?'dark':'light')<cr>
 
 " Switch between different windows by their direction`
 no <C-j> <C-w>j|
