@@ -56,6 +56,7 @@ set backspace=indent,eol,start
 set ignorecase
 set smartcase
 set termguicolors
+set updatetime=100
 " System clipboard - Most likely have to compile vim from source
 set clipboard=unnamedplus
 
