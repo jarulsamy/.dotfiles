@@ -16,6 +16,7 @@ Plugin 'rhysd/vim-clang-format'
 Plugin 'tpope/vim-surround'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'junegunn/fzf.vim'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'

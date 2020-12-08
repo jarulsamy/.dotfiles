@@ -69,10 +69,14 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-
 plugins=(
+    cp
+    docker
+    docker-compose
+    fzf
     git
     python
+    safe-paste
     sudo
     systemd
     tmux
@@ -82,12 +86,11 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-export EDITOR='vim'
+export EDITOR="vim"
 export GIT_EDITOR="vim -c'startinsert|norm! ggA'"
 
 # Compilation flags
@@ -131,10 +134,9 @@ PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
 
 # FZF
 if type rg &> /dev/null; then
-  export FZF_DEFAULT_COMMAND='rg --files'
-  export FZF_DEFAULT_OPTS='-m --height 50% --border'
+  export FZF_DEFAULT_COMMAND="rg --files"
+  export FZF_DEFAULT_OPTS="-m --height 50% --border"
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
