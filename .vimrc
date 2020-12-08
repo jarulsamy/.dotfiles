@@ -171,3 +171,7 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
+" Supress 'warning changing a readonly file' warning
+au BufEnter * set noro
+" Write as sudo with :w!!
+cnoremap w!! execute 'silent! write !sudo tee % > /dev/null' <bar> edit!
