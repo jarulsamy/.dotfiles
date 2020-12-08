@@ -99,7 +99,6 @@ export MAKEFLAGS="-j4"
 export PATH="$HOME/.dotfiles/zfunc:$PATH"
 # Load custom keybinds
 source "$HOME/.dotfiles/zfunc/keybinds.sh"
-
 # Load aliases
 source "$HOME/.dotfiles/zfunc/aliases.sh"
 
@@ -139,7 +138,3 @@ fi
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# Activate tmux if ssh'ed into.
-if [[ -n "$PS1" ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_CONNECTION" ]]; then
-    tmux attach-session -t ssh_tmux || exec tmux new-session -s ssh_tmux
-fi
