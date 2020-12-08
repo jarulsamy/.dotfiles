@@ -5,18 +5,17 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'vim-scripts/indentpython.vim'
-Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'psf/black'
 Plugin 'morhetz/gruvbox'
 Plugin 'wakatime/vim-wakatime'
 Plugin 'ycm-core/YouCompleteMe'
-Plugin 'rhysd/vim-clang-format'
 Plugin 'tpope/vim-surround'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'junegunn/fzf.vim'
 Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'tpope/vim-commentary'
+Plugin 'dense-analysis/ale'
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -79,43 +78,41 @@ au BufNewFile,BufRead *.c,*.cpp,*.h,*.hpp,*.lisp
     \ set softtabstop=2 |
     \ set shiftwidth=2
 
-" Auto format files
-autocmd BufWritePre *.py execute ':Black'
-autocmd FileType c ClangFormatAutoEnable
 " Flag bad whitespace
 au BufNewFile, BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf match BadWhitespace /\s\+$/
 " Auto remove trailing whitespace
 autocmd BufWritePre *.* :%s/\s\+$//e
 
-" Python
-let g:black_fast = 1
-let g:black_linelength = 120
-let python_highlight_all=1
+" ALE
+let g:ale_linters = {'python': ['flake8', 'pydocstyle', 'bandit', 'mypy']}
+let g:ale_fixers = {
+            \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \ 'python': ['black', 'isort']
+            \}
+let g:ale_lint_on_insert_leave = 1
+let g:ale_fix_on_save = 1
+nmap <silent> <C-@> <Plug>(ale_next_wrap)
 
 " Binds
-" Format Python on F9
-nnoremap <F9> :Black<CR>
 " Paste mode toggle F2
 set pastetoggle=<F2>
-" Syntastic toggle passive mode F3
-nnoremap <F3> :SyntasticToggleMode<CR>
-" F5 yank entire file to clipboard
+" F5 yank entire file to clipboard - ACL2 D:
 nnoremap <F5> :%y+<CR>
-" Toggle auto formatting:
-nmap <Leader>C :ClangFormatAutoToggle<CR>
-" :WF saves file as root
-command WF w !sudo tee % > /dev/null
+
 " :Q force quits everything
 command Q qa!
+
 " Quickly insert an empty line without entering insert mode
 nnoremap <silent> <Leader>o :<C-u>call append(line("."), repeat([""], v:count1))<CR>
 nnoremap <silent> <Leader>O :<C-u>call append(line(".")-1, repeat([""], v:count1))<CR>
+
 " Cycle buffers with arrows
 nnoremap <Right> :bnext<CR>
 nnoremap <Left> :bprevious<CR>
 " Disable unused arrows
 noremap <Up> <Nop>
 noremap <Down> <Nop>
+
 " FZF
 nnoremap <silent> <Leader>b :Buffers<CR>
 nnoremap <silent> <C-p> :Files<CR>
@@ -127,8 +124,10 @@ nnoremap <silent> <Leader>H :Helptags<CR>
 nnoremap <silent> <Leader>hh :History<CR>
 nnoremap <silent> <Leader>h: :History:<CR>
 nnoremap <silent> <Leader>q/ :History/<CR>
+
 " Disable highlighting with return
 nnoremap <CR> :noh<CR><CR>
+" Switch to light mode
 nnoremap <silent> <F12> :let &bg=(&bg=='light'?'dark':'light')<cr>
 
 " Switch between different windows by their direction`
@@ -137,17 +136,7 @@ no <C-k> <C-w>k|
 no <C-l> <C-w>l|
 no <C-h> <C-w>h|
 
-" Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_python_checker = ['flake8']
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-
-" Cursor shape (alacritty)
+" Auto change cursor shape (alacritty)
 let &t_SI = "\<ESC>[6 q"
 let &t_SR = "\<ESC>[4 q"
 let &t_EI = "\<ESC>[0 q"
@@ -172,7 +161,8 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
-" Supress 'warning changing a readonly file' warning
+" Supress 'warning changing a readonly file'
 au BufEnter * set noro
+
 " Write as sudo with :w!!
 cnoremap w!! execute 'silent! write !sudo tee % > /dev/null' <bar> edit!
