@@ -2,7 +2,7 @@
 
 dotfilesDir=$(pwd)
 
-function linkDotfile() {
+linkDotfile() {
   dest="${HOME}/${1}"
   dateStr=$(date +%Y-%m-%d-%H%M)
 
@@ -26,7 +26,7 @@ function linkDotfile() {
   ln -s "${dotfilesDir}/${1}" "${dest}"
 }
 
-function authorize_github_keys() {
+authorize_github_keys() {
   # Grab username from config.ini
   source <(grep username .gitconfig | sed 's/ *= */=/g')
 

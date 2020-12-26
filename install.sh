@@ -15,7 +15,7 @@ do
     fi
 done
 
-function install() {
+install() {
   which "$1" &>/dev/null
 
   if [ $? -ne 0 ]; then
