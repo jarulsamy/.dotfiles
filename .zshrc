@@ -103,6 +103,8 @@ export MAKEFLAGS="-j4"
 
 # Include custom scripts
 export PATH="$HOME/.dotfiles/zfunc:$PATH"
+# Home bin dir
+export PATH="$HOME/.local/bin:$PATH"
 # Load custom keybinds
 source "$HOME/.dotfiles/zfunc/keybinds.sh"
 # Load aliases
