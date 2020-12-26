@@ -2,7 +2,7 @@
 
 dotfilesDir=$(pwd)
 
-function linkDotfile() {
+linkDotfile() {
   dest="${HOME}/${1}"
   dateStr=$(date +%Y-%m-%d-%H%M)
 
@@ -26,17 +26,17 @@ function linkDotfile() {
   ln -s "${dotfilesDir}/${1}" "${dest}"
 }
 
-function authorize_github_keys() {
+authorize_github_keys() {
   # Grab username from config.ini
-  source <(grep github_username "$HOME/.dotfiles/config.ini" | sed 's/ *= */=/g')
+  source <(grep username .gitconfig | sed 's/ *= */=/g')
 
-  if [ -z ${github_username+x} ]; then
-    echo "github_username unset, skipping..."
+  if [ -z ${username+x} ]; then
+    echo "Github username unset, skipping..."
     return
   fi
 
   # URL to keys
-  URL="https://github.com/$github_username.keys"
+  URL="https://github.com/$username.keys"
   # Save keys to authorized_keys
 
   mkdir -p ~/.ssh
@@ -90,15 +90,11 @@ if [ -f "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]; then
   sudo truncate -s 0 /etc/motd 2>/dev/null
 fi
 
+# Grab authorized_keys
+authorize_github_keys
+
 # Install Vundle
 mkdir -p "$dotfilesDir/.vim/bundle"
 cd "$dotfilesDir/.vim/bundle"
 git clone git://github.com/VundleVim/Vundle.vim.git 2>/dev/null
 vim +PluginInstall +qall
-
-# Set black vim plugin to stable branch
-cd "$HOME/.vim/bundle/black"
-git checkout origin/stable -b stable 2>/dev/null
-
-# Grab authorized_keys
-authorize_github_keys

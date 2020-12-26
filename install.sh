@@ -15,7 +15,7 @@ do
     fi
 done
 
-function install() {
+install() {
   which "$1" &>/dev/null
 
   if [ $? -ne 0 ]; then
@@ -28,6 +28,8 @@ function install() {
 
 # Install dependencies
 install vim
+install fzf
+install ripgrep
 install tmux
 install wget
 install curl

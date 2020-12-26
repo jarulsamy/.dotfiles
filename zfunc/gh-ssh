@@ -10,7 +10,7 @@ PRIV_KEY="$HOME/.ssh/id_rsa"
 PUB_KEY="$HOME/.ssh/id_rsa.pub"
 
 if ! [ -f "$PRIV_KEY" ]; then
-    ssh-keygen -t rsa -b 4096 -C "$email"
+    ssh-keygen -t ed25519 -f "$PRIV_KEY" -C "$email"
     eval "$(ssh-agent -s)"
     ssh-add "$HOME/.ssh/id_rsa"
 else

@@ -1,13 +1,5 @@
-# Josh's Ultimate tmux Config - 4/13/2020
+# Josh's Ultimate tmux Config
 # Using oh-my-tmux from: https://github.com/gpakosz/.tmux
-
-# -- navigation ----------------------------------------------------------------
-# if you're running tmux within iTerm2
-#   - and tmux is 1.9 or 1.9a
-#   - and iTerm2 is configured to let option key act as +Esc
-#   - and iTerm2 is configured to send [1;9A -> [1;9D for option + arrow keys
-# then uncomment the following line to make Meta + arrow keys mapping work
-#set -ga terminal-overrides "*:kUP3=\e[1;9A,*:kDN3=\e[1;9B,*:kRIT3=\e[1;9C,*:kLFT3=\e[1;9D"
 
 # -- windows & pane creation ---------------------------------------------------
 # new window retains current path, possible values are:
@@ -261,7 +253,6 @@ tmux_conf_theme_clock_style='24'
 #   - false (default)
 # on Linux, this requires xsel or xclip
 tmux_conf_copy_to_os_clipboard=true
-
 
 # -- misc customizations -------------------------------------------------------
 

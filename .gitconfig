@@ -1,6 +1,7 @@
 [user]
 name = Joshua Arulsamy
 email = joshua.gf.arul@gmail.com
+username = jarulsamy
 
 [diff]
 tool = vimdiff

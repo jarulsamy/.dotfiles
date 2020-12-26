@@ -14,3 +14,9 @@ alias getclip="xclip -selection c -o"
 # Pretty docker commands
 alias dcls="docker container ls --format 'table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Ports}}\t{{.Status}}'"
 alias dcdump="docker container ls --format='{{json .}}' | jq"
+
+# Activate or reconnect to a tmux ssh session
+alias tmux-ssh="exec tmux new-session -A -s tmux-ssh"
+
+# vi for vim
+alias vi=vim

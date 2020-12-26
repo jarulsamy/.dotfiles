@@ -1,6 +1,9 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -69,10 +72,14 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-
 plugins=(
+    cp
+    docker
+    docker-compose
+    fzf
     git
     python
+    safe-paste
     sudo
     systemd
     tmux
@@ -82,12 +89,11 @@ plugins=(
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
-
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
-export EDITOR='vim'
+export EDITOR="vim"
 export GIT_EDITOR="vim -c'startinsert|norm! ggA'"
 
 # Compilation flags
@@ -97,44 +103,36 @@ export MAKEFLAGS="-j4"
 
 # Include custom scripts
 export PATH="$HOME/.dotfiles/zfunc:$PATH"
+# Home bin dir
+export PATH="$HOME/.local/bin:$PATH"
 # Load custom keybinds
 source "$HOME/.dotfiles/zfunc/keybinds.sh"
-
 # Load aliases
 source "$HOME/.dotfiles/zfunc/aliases.sh"
 
 # Auto ls on cd
 chpwd() ls
 
-# ALWAYS install conda to $HOME/anaconda3
-# If prompted, DO NOT auto initialize conda.
+# FZF
+if type rg &> /dev/null; then
+  export FZF_DEFAULT_COMMAND="rg --files"
+  export FZF_DEFAULT_OPTS="-m --height 50% --border"
+fi
+
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/anaconda3/bin/conda' 'shell.zsh' 'hook' 2>/dev/null)"
+__conda_setup="$('/home/joshua/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-    if [ -f "$HOME/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "$HOME/anaconda3/etc/profile.d/conda.sh"
+    if [ -f "/home/joshua/anaconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/joshua/anaconda3/etc/profile.d/conda.sh"
     else
-        export PATH="$HOME/anaconda3/bin:$PATH"
+        export PATH="/home/joshua/anaconda3/bin:$PATH"
     fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-# Perl stuff
-PATH="$HOME/perl5/bin${PATH:+:${PATH}}"; export PATH;
-PERL5LIB="$HOME/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="$HOME/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"$HOME/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=$HOME/perl5"; export PERL_MM_OPT;
-
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# Activate tmux if ssh'ed into.
-if [[ -n "$PS1" ]] && [[ -z "$TMUX" ]] && [[ -n "$SSH_CONNECTION" ]]; then
-    tmux attach-session -t ssh_tmux || exec tmux new-session -s ssh_tmux
-fi

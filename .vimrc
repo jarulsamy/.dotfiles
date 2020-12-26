@@ -1,24 +1,21 @@
 set nocompatible
-filetype on
 
 " Set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 Plugin 'vim-scripts/indentpython.vim'
-Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-airline/vim-airline'
 Plugin 'vim-airline/vim-airline-themes'
-Plugin 'preservim/nerdtree'
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-Plugin 'psf/black'
 Plugin 'morhetz/gruvbox'
 Plugin 'wakatime/vim-wakatime'
 Plugin 'ycm-core/YouCompleteMe'
-Plugin 'rhysd/vim-clang-format'
 Plugin 'tpope/vim-surround'
-Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'junegunn/fzf.vim'
+Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plugin 'tpope/vim-commentary'
+Plugin 'dense-analysis/ale'
 
 " let Vundle manage Vundle, required
 Plugin 'gmarik/Vundle.vim'
@@ -31,91 +28,19 @@ call vundle#end()
 filetype plugin indent on
 
 " Theme
-autocmd vimenter * colorscheme gruvbox
+let g:gruvbox_italic=1
+let g:gruvbox_contrast_dark='medium'
+let g:gruvbox_contrast_light='soft'
+autocmd vimenter * ++nested colorscheme gruvbox
+
 " Airline
 let g:airline_powerline_fonts = 1
 let g:airline_highlighting_cache = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline_skip_empty_sections = 1
 
 " Editor Tweaks
-set tabstop=4
-set softtabstop=4
-set shiftwidth=4
-set textwidth=120
-set expandtab
-set autoindent
-set fileformat=unix
-set backspace=indent,eol,start
-set autoread
-set hidden
-set history=1000
-
-" Lisp specific changes
-au BufNewFile,BufRead *.lisp
-    \ set tabstop=2 |
-    \ set softtabstop=2 |
-    \ set shiftwidth=2
-
-" Autoformat files
-autocmd BufWritePre *.py execute ':Black'
-autocmd FileType c ClangFormatAutoEnable
-
-" Flag bad whitespace
-au BufNewFile, BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf match BadWhitespace /\s\+$/
-
-" Auto remove trailing whitespace
-autocmd BufWritePre *.* :%s/\s\+$//e
-
-" Binds
-" Clear highlights on enter
-nnoremap <CR> :noh<CR><CR>
-" Format Python on F9
-nnoremap <F9> :Black<CR>
-" Paste mode toggle F2
-set pastetoggle=<F2>
-" Syntastic toggle passive mode F3
-nnoremap <F3> :SyntasticToggleMode<CR>
-nnoremap <F5> :%y+<CR>
-" Toggle auto formatting:
-nmap <Leader>C :ClangFormatAutoToggle<CR>
-" :W sudo saves the file
-command W w !sudo tee % > /dev/null
-" :Q force quits everything
-command Q qa!
-" Quickly insert an empty line without entering insert mode
-nnoremap <silent> <Leader>o :<C-u>call append(line("."), repeat([""], v:count1))<CR>
-nnoremap <silent> <Leader>O :<C-u>call append(line(".")-1, repeat([""], v:count1))<CR>
-
-" Nerdtree
-map <C-n> :NERDTreeToggle<CR>
- autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
- " If more than one window and previous buffer was NERDTree, go back to it.
- autocmd BufEnter * if bufname('#') =~# "^NERD_tree_" && winnr('$') > 1 | b# | endif
-" Show dotfiles
-let NERDTreeShowHidden=1
-" Ignore files in tree
-let NERDTreeIgnore = ['\.pyc$', '__pycache__/', '\.swp$']
-
-"Switch between different windows by their direction`
-no <C-j> <C-w>j| "switching to below window
-no <C-k> <C-w>k| "switching to above window
-no <C-l> <C-w>l| "switching to right window
-no <C-h> <C-w>h| "switching to left window
-
-" Black
-let g:black_fast = 1
-let g:black_linelength = 120
-
-" Syntastic
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-let g:syntastic_python_checker = ['flake8']
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 0
-
-" UI
 syntax on
 set ruler
 set number
@@ -124,20 +49,97 @@ set cursorline
 set nowrap
 set hlsearch
 set background=dark
-let python_highlight_all=1
-
-" Misc
 set encoding=utf-8
 set textwidth=0
 set wrapmargin=0
+set backspace=indent,eol,start
+set ignorecase
+set smartcase
+set termguicolors
+set updatetime=100
 " System clipboard - Most likely have to compile vim from source
 set clipboard=unnamedplus
 
-" Cursor shape (alacritty)
+" Default file specs
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set textwidth=120
+set expandtab
+set autoindent
+set fileformat=unix
+set autoread
+set hidden
+set history=1000
+
+" Extension specific tweaks
+au BufNewFile,BufRead *.c,*.cpp,*.h,*.hpp,*.lisp
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2
+
+" Flag bad whitespace
+au BufNewFile, BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf match BadWhitespace /\s\+$/
+" Auto remove trailing whitespace
+autocmd BufWritePre *.* :%s/\s\+$//e
+
+" ALE
+let g:ale_linters = {'python': ['flake8', 'pydocstyle', 'bandit', 'mypy']}
+let g:ale_fixers = {
+            \ '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \ 'python': ['black', 'isort']
+            \}
+let g:ale_lint_on_insert_leave = 1
+let g:ale_fix_on_save = 1
+nmap <silent> <C-@> <Plug>(ale_next_wrap)
+
+" Binds
+" Paste mode toggle F2
+set pastetoggle=<F2>
+" F5 yank entire file to clipboard - ACL2 D:
+nnoremap <F5> :%y+<CR>
+
+" :Q force quits everything
+command Q qa!
+
+" Quickly insert an empty line without entering insert mode
+nnoremap <silent> <Leader>o :<C-u>call append(line("."), repeat([""], v:count1))<CR>
+nnoremap <silent> <Leader>O :<C-u>call append(line(".")-1, repeat([""], v:count1))<CR>
+
+" Cycle buffers with arrows
+nnoremap <Right> :bnext<CR>
+nnoremap <Left> :bprevious<CR>
+" Disable unused arrows
+noremap <Up> <Nop>
+noremap <Down> <Nop>
+
+" FZF
+nnoremap <silent> <Leader>b :Buffers<CR>
+nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <Leader>f :Rg<CR>
+nnoremap <silent> <Leader>/ :BLines<CR>
+nnoremap <silent> <Leader>' :Marks<CR>
+nnoremap <silent> <Leader>g :Commits<CR>
+nnoremap <silent> <Leader>H :Helptags<CR>
+nnoremap <silent> <Leader>hh :History<CR>
+nnoremap <silent> <Leader>h: :History:<CR>
+nnoremap <silent> <Leader>q/ :History/<CR>
+
+" Disable highlighting with return
+nnoremap <CR> :noh<CR><CR>
+" Switch to light mode
+nnoremap <silent> <F12> :let &bg=(&bg=='light'?'dark':'light')<cr>
+
+" Switch between different windows by their direction`
+no <C-j> <C-w>j|
+no <C-k> <C-w>k|
+no <C-l> <C-w>l|
+no <C-h> <C-w>h|
+
+" Auto change cursor shape (alacritty)
 let &t_SI = "\<ESC>[6 q"
 let &t_SR = "\<ESC>[4 q"
 let &t_EI = "\<ESC>[0 q"
-
 
 " Save cursor position
 " Tell vim to remember certain things when we exit
@@ -147,7 +149,6 @@ let &t_EI = "\<ESC>[0 q"
 "  %    :  saves and restores the buffer list
 "  n... :  where to save the viminfo files
 set viminfo='10,\"100,:20,%,n~/.viminfo
-
 function! ResCur()
   if line("'\"") <= line("$")
     normal! g`"
@@ -160,3 +161,8 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
+" Supress 'warning changing a readonly file'
+au BufEnter * set noro
+
+" Write as sudo with :w!!
+cnoremap w!! execute 'silent! write !sudo tee % > /dev/null' <bar> edit!
