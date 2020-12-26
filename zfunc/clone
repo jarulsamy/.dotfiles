@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Load github_username
-source <(grep github_username "$HOME/.dotfiles/config.ini" | sed 's/ *= */=/g')
+# Load github username
+source <(grep username "$HOME/.dotfiles/.gitconfig" | sed 's/ *= */=/g')
 
-if [ -z ${github_username+x} ]; then
+if [ -z ${username+x} ]; then
     exit -1
 fi
 
@@ -26,25 +26,25 @@ while test $# -gt 0; do
         ;;
     -i)
         shift
-        URL="https://github.com/$github_username/$1"
+        URL="https://github.com/$username/$1"
         echo "Cloning using HTTPS: $URL"
         git clone "$URL"
         break
         ;;
     -d)
         shift
-        URL="git@github.com:$github_username/$1"
+        URL="git@github.com:$username/$1"
         echo "$URL"
         break
         ;;
     -di)
         shift
-        URL="https://github.com/$github_username/$1"
+        URL="https://github.com/$username/$1"
         echo "$URL"
         break
         ;;
     *)
-        URL="git@github.com:$github_username/$1"
+        URL="git@github.com:$username/$1"
         echo "Cloning using SSH: $URL"
         git clone "$URL"
         break
