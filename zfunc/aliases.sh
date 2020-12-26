@@ -17,3 +17,6 @@ alias dcdump="docker container ls --format='{{json .}}' | jq"
 
 # Activate or reconnect to a tmux ssh session
 alias tmux-ssh="exec tmux new-session -A -s tmux-ssh"
+
+# vi for vim
+alias vi=vim
