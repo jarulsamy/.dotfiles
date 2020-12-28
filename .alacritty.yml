@@ -63,7 +63,7 @@ window:
   dynamic_title: true
 
   # Window title (If unspecified)
-  #title: Alacritty
+  title: Alacritty
 
   # Window class (Linux/BSD only):
   class:
