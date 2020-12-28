@@ -113,6 +113,9 @@ source "$HOME/.dotfiles/zfunc/aliases.sh"
 # Auto ls on cd
 chpwd() ls
 
+# Disable 'auto cd'
+unsetopt AUTO_CD
+
 # FZF
 if type rg &> /dev/null; then
   export FZF_DEFAULT_COMMAND="rg --files"
