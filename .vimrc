@@ -175,7 +175,7 @@ let g:ale_fixers = {
 
 let g:ale_lint_on_insert_leave = 1
 let g:ale_fix_on_save = 1
-nmap <silent> <C-@> <Plug>(ale_next_wrap)
+nmap <silent> <F4> <Plug>(ale_next_wrap)
 
 " ====================== YCM ======================
 
