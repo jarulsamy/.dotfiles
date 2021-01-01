@@ -28,32 +28,38 @@ scriptencoding utf-8
 " Flag bad whitespace
 " au BufNewFile, BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf match BadWhitespace /\s\+$/
 
-" ====================== Vundle ======================
+" ====================== Vim Plug ======================
 
-set runtimepath+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Install vim-plug if not found
+if empty(glob('~/.vim/autoload/plug.vim'))
+    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
 
-Plugin 'vim-scripts/indentpython.vim'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'morhetz/gruvbox'
-Plugin 'wakatime/vim-wakatime'
-Plugin 'ycm-core/YouCompleteMe'
-Plugin 'tpope/vim-surround'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'junegunn/fzf.vim'
-Plugin 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plugin 'tpope/vim-commentary'
-Plugin 'dense-analysis/ale'
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+            \| PlugInstall --sync | source $MYVIMRC
+            \| endif
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+call plug#begin()
+call plug#begin('~/.vim/plugged')
 
-" Older Plugins Bundles
-" <Bundle HERE>
+Plug 'vim-scripts/indentpython.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'morhetz/gruvbox'
+Plug 'wakatime/vim-wakatime'
+Plug 'ycm-core/YouCompleteMe'
+Plug 'tpope/vim-surround'
+Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'tpope/vim-commentary'
+Plug 'dense-analysis/ale'
 
 " All of Plugins must be added before the following line
-call vundle#end()
+call plug#end()
 
 " ====================== Swap Files ======================
 
@@ -205,6 +211,7 @@ noremap <Down> <Nop>
 " FZF
 nnoremap <silent> <Leader>b :Buffers<CR>
 nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <Leader>p :Files<CR>
 nnoremap <silent> <Leader>f :Rg<CR>
 nnoremap <silent> <Leader>/ :BLines<CR>
 nnoremap <silent> <Leader>' :Marks<CR>
