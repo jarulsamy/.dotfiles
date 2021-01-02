@@ -42,7 +42,6 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
             \| PlugInstall --sync | source $MYVIMRC
             \| endif
 
-call plug#begin()
 call plug#begin('~/.vim/plugged')
 
 Plug 'vim-scripts/indentpython.vim'
@@ -54,7 +53,6 @@ Plug 'ycm-core/YouCompleteMe'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf.vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'tpope/vim-commentary'
 Plug 'dense-analysis/ale'
 
