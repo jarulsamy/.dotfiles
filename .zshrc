@@ -113,6 +113,9 @@ source "$HOME/.dotfiles/zfunc/aliases.sh"
 # Auto ls on cd
 chpwd() ls
 
+# Disable 'auto cd'
+unsetopt AUTO_CD
+
 # FZF
 if type rg &> /dev/null; then
   export FZF_DEFAULT_COMMAND="rg --files"
@@ -126,7 +129,7 @@ if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
     if [ -f "/home/joshua/anaconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/joshua/anaconda3/etc/profile.d/conda.sh"
+        source "/home/joshua/anaconda3/etc/profile.d/conda.sh"
     else
         export PATH="/home/joshua/anaconda3/bin:$PATH"
     fi
@@ -136,3 +139,4 @@ unset __conda_setup
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+

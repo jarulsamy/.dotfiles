@@ -95,6 +95,6 @@ authorize_github_keys
 
 # Install Vundle
 mkdir -p "$dotfilesDir/.vim/bundle"
-cd "$dotfilesDir/.vim/bundle"
+cd "$dotfilesDir/.vim/bundle" || exit
 git clone git://github.com/VundleVim/Vundle.vim.git 2>/dev/null
 vim +PluginInstall +qall
