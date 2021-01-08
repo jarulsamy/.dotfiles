@@ -55,6 +55,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-commentary'
 Plug 'dense-analysis/ale'
+Plug'godlygeek/tabular'
+Plug'plasticboy/vim-markdown'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 
 " All of Plugins must be added before the following line
 call plug#end()
@@ -186,6 +189,23 @@ nmap <silent> <F4> <Plug>(ale_next_wrap)
 " ====================== YCM ======================
 
 let g:ycm_autoclose_preview_window_after_completion = 1
+
+" ====================== Markdown ======================
+
+" Opening function
+function! Firefox(url)
+    silent exec "!firefox -new-window '".a:url."'"
+endfunction
+
+let g:vim_markdown_folding_disabled = 1
+let g:vim_markdown_toc_autofit = 1
+let g:vim_markdown_strikethrough = 1
+let g:vim_markdown_autowrite = 1
+let g:vim_markdown_edit_url_in = 'vsplit'
+let g:mkdp_browserfunc = 'Firefox'
+
+let g:mkdp_auto_start = 1
+let g:mkdp_auto_close = 1
 
 " ====================== Binds ======================
 
