@@ -168,12 +168,14 @@ let g:airline_skip_empty_sections = 1
 
 let g:ale_linters = {
             \ 'python': ['flake8', 'pydocstyle', 'bandit', 'mypy'],
+            \ 'markdown': ['markdownlint'],
             \ 'sh': ['shellcheck']
             \}
 
 let g:ale_fixers = {
             \ '*': ['remove_trailing_lines', 'trim_whitespace'],
             \ 'python': ['black', 'isort'],
+            \ 'markdown': ['prettier'],
             \ 'sh': ['shfmt']
             \}
 
