@@ -170,15 +170,19 @@ let g:airline_skip_empty_sections = 1
 " ====================== ALE ======================
 
 let g:ale_linters = {
-            \ 'python': ['flake8', 'pydocstyle', 'bandit', 'mypy'],
+            \ 'c': ['cc'],
+            \ 'cpp': ['cc','cpplint'],
             \ 'markdown': ['markdownlint'],
+            \ 'python': ['flake8', 'pydocstyle', 'bandit', 'mypy'],
             \ 'sh': ['shellcheck']
             \}
 
 let g:ale_fixers = {
             \ '*': ['remove_trailing_lines', 'trim_whitespace'],
-            \ 'python': ['black', 'isort'],
+            \ 'c': ['clang-format', 'clangtidy'],
+            \ 'cpp': ['clang-format', 'clangtidy'],
             \ 'markdown': ['prettier'],
+            \ 'python': ['black', 'isort'],
             \ 'sh': ['shfmt']
             \}
 
