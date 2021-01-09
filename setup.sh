@@ -68,6 +68,7 @@ linkDotfile .config/polybar
 linkDotfile .config/ranger
 linkDotfile .config/mpd
 linkDotfile .config/ncmpcpp
+linkDotfile .config/redshift
 
 # Create mpd required playlist folder
 mkdir -p "$HOME/.config/mpd/playlists"
