@@ -31,7 +31,7 @@ HYPHEN_INSENSITIVE="true"
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -82,8 +82,9 @@ plugins=(
     safe-paste
     sudo
     systemd
-    tmux
+    ufw
     zsh-autosuggestions
+    zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -97,7 +98,7 @@ export EDITOR="vim"
 export GIT_EDITOR="vim -c'startinsert|norm! ggA'"
 
 # Compilation flags
-export ARCHFLAGS="-arch x86_64 -j4"
+export ARCHFLAGS="-march=native"
 export MAKEOPTS="-j4"
 export MAKEFLAGS="-j4"
 
@@ -113,8 +114,12 @@ source "$HOME/.dotfiles/zfunc/aliases.sh"
 # Auto ls on cd
 chpwd() ls
 
+# Options
 # Disable 'auto cd'
 unsetopt AUTO_CD
+# Disable autocorrection
+unsetopt correct
+unsetopt correct_all
 
 # FZF
 if type rg &> /dev/null; then
@@ -139,4 +144,3 @@ unset __conda_setup
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-

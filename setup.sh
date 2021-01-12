@@ -79,17 +79,9 @@ rm -rf "$HOME/.mpd"
 # Install zsh theme
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/custom/themes/powerlevel10k" 2>/dev/null
 # Install autosuggestions plugin
-git clone https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" 2>/dev/null
-
-# Debian based distro specific motd.
-if [ -f "$(grep -Ei 'debian|buntu|mint' /etc/*release)" ]; then
-  sudo rm /etc/update-motd.d/* 2>/dev/null
-  sudo cp motd/motd.asc /etc/update-motd.d 2>/dev/null
-  sudo cp motd/warning.asc /etc/update-motd.d 2>/dev/null
-  sudo cp motd/01-motd-warning /etc/update-motd.d 2>/dev/null
-  # Remove default MOTD
-  sudo truncate -s 0 /etc/motd 2>/dev/null
-fi
+git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" 2>/dev/null
+# Install syntax highlighting plugin
+git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" 2>/dev/null
 
 # Grab authorized_keys
 authorize_github_keys
