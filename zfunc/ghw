@@ -11,10 +11,11 @@ Usage:
     ghw (-h | --help | --version)
 """
 
-from docopt import docopt
 import subprocess
-from subprocess import PIPE
 import sys
+from subprocess import PIPE
+
+from docopt import docopt
 
 VERSION = "0.0.2"
 GITHUB_USERNAME = "jarulsamy"
@@ -60,7 +61,9 @@ def get_current_branch():
     Raises:
         None
     """
-    branch_name = subprocess.run(["git", "branch", "--show-current"], capture_output=True)
+    branch_name = subprocess.run(
+        ["git", "branch", "--show-current"], capture_output=True
+    )
     if branch_name.stderr:
         return None
     return branch_name.stdout.decode().strip()
@@ -87,7 +90,9 @@ def get_remote_url(name=None, branch_name=None):
         branch_name = branch_name or get_current_branch()
         # Try and grab current git repo.
         # If there isn't one, just open profile.
-        url_name = subprocess.run(["git", "config", "--get", "remote.origin.url"], capture_output=True)
+        url_name = subprocess.run(
+            ["git", "config", "--get", "remote.origin.url"], capture_output=True
+        )
         if url_name.stdout.decode() == "":
             return GH_PROFILE.format(username=GITHUB_USERNAME)
 
@@ -100,7 +105,9 @@ def get_remote_url(name=None, branch_name=None):
         return url
 
     # Complete template for URL.
-    url = URL_TEMPLATE.format(username=GITHUB_USERNAME, repo_name=name, branch_name=branch_name)
+    url = URL_TEMPLATE.format(
+        username=GITHUB_USERNAME, repo_name=name, branch_name=branch_name
+    )
     # Handle missing branch condition.
     if branch_name is None:
         url = url.replace("/tree/None", "")
@@ -120,7 +127,9 @@ def open_url(url):
     Raises:
         None
     """
-    subprocess.Popen(["xdg-open", f"{url}"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    subprocess.Popen(
+        ["xdg-open", f"{url}"], stdout=subprocess.PIPE, stderr=subprocess.STDOUT
+    )
 
 
 def process_args(args):
