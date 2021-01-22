@@ -4,7 +4,7 @@
 source <(grep username "$HOME/.dotfiles/.gitconfig" | sed 's/ *= */=/g')
 
 if [ -z ${username+x} ]; then
-    exit -1
+    exit 1
 fi
 
 while test $# -gt 0; do
