@@ -5,19 +5,24 @@ A simple command line interface to open GitHub repositories in a
 web browser without ever leavin g the terminal.
 
 Usage:
-    ghw [<repo_name>] [<branch_name>]
+    ghw [-d] [<repo_name>] [<branch_name>]
     ghw (-b <branch_name>)
     ghw (-p <profile_name/repo_name>)
     ghw (-h | --help | --version)
+
+Options:
+    -d --dry-run       Don't actually open, just print URL.
+    -b --branch        Name of branch to go to on GitHub
+    -p --profile_name  Go to GitHub user
+    -h --help          Show this help
+    -v --version       Show version
 """
 
 import subprocess
-import sys
-from subprocess import PIPE
 
 from docopt import docopt
 
-VERSION = "0.0.2"
+VERSION = "0.0.3"
 GITHUB_USERNAME = "jarulsamy"
 
 # Templates for URL completion
@@ -39,9 +44,11 @@ def ssh_to_https(ssh_url):
     """
     if "@" not in ssh_url:
         return ssh_url
+
     url = ssh_url.split("@")[1]
     url = url.replace(":", "/")
     url = f"https://{url}"
+
     return url
 
 
@@ -93,11 +100,13 @@ def get_remote_url(name=None, branch_name=None):
         url_name = subprocess.run(
             ["git", "config", "--get", "remote.origin.url"], capture_output=True
         )
-        if url_name.stdout.decode() == "":
-            return GH_PROFILE.format(username=GITHUB_USERNAME)
-
         # Cleanup output.
         url = url_name.stdout.decode().strip()
+        if url == "":
+            return GH_PROFILE.format(username=GITHUB_USERNAME)
+        elif url.endswith(".git"):
+            url = url[:-4]
+
         # Ensure URL is in proper HTTPS schema.
         url = ssh_to_https(url)
         url = f"{url}/tree/{branch_name}"
@@ -146,17 +155,21 @@ def process_args(args):
     """
     # Open a profile optionally with a repo.
     if args.get("<profile_name/repo_name>"):
-        open_url(GH_PROFILE.format(username=args.get("<profile_name/repo_name>")))
-        return
+        url = GH_PROFILE.format(username=args.get("<profile_name/repo_name>"))
+    else:
+        # Open current git repo with specified branch.
+        if args.get("--branch"):
+            url = get_remote_url(branch_name=args.get("<branch_name>"))
 
-    # Open current git repo with specified branch.
-    if args.get("-b"):
-        url = get_remote_url(branch_name=args.get("<branch_name>"))
-    # Open specified repo with specified branch.
-    name = args.get("<repo_name>")
-    branch = args.get("<branch_name>")
-    url = get_remote_url(name=name, branch_name=branch)
-    open_url(url)
+        # Open specified repo with specified branch.
+        name = args.get("<repo_name>")
+        branch = args.get("<branch_name>")
+        url = get_remote_url(name=name, branch_name=branch)
+
+    if args.get("--dry-run"):
+        print(url)
+    else:
+        open_url(url)
 
 
 args = docopt(__doc__, version=VERSION)
