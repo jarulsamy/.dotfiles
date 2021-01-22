@@ -2,7 +2,7 @@
 """Get to GitHub really fast!
 
 A simple command line interface to open GitHub repositories in a
-web browser without ever leavin g the terminal.
+web browser without ever leaving the terminal.
 
 Usage:
     ghw [-d] [<repo_name>] [<branch_name>]
@@ -22,7 +22,7 @@ import subprocess
 
 from docopt import docopt
 
-VERSION = "0.0.3"
+VERSION = "0.0.4"
 GITHUB_USERNAME = "jarulsamy"
 
 # Templates for URL completion
