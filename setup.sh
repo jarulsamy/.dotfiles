@@ -85,9 +85,3 @@ git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting "$HOME/
 
 # Grab authorized_keys
 authorize_github_keys
-
-# Install Vundle
-mkdir -p "$dotfilesDir/.vim/bundle"
-cd "$dotfilesDir/.vim/bundle" || exit
-git clone git://github.com/VundleVim/Vundle.vim.git 2>/dev/null
-vim +PluginInstall +qall
