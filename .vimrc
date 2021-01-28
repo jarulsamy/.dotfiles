@@ -113,7 +113,7 @@ set expandtab
 
 augroup FileExtIdents
     " File extension specific
-    au BufNewFile,BufRead *.c,*.cpp,*.h,*.hpp,*.lisp,*.vim,*.zsh,*.sh
+    au BufNewFile,BufRead *.c,*.cpp,*.h,*.hpp,*.lisp,*.vim,*.zsh,*.sh,*.zsh,*.js
                 \ set tabstop=2 |
                 \ set softtabstop=2 |
                 \ set shiftwidth=2
