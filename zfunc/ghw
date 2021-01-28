@@ -19,11 +19,18 @@ Options:
 """
 
 import subprocess
+import sys
+from pathlib import Path
 
 from docopt import docopt
 
+DOTFILES_DIR = Path(Path.home(), ".dotfiles", "zfunc", "dotEngine")
+sys.path.insert(0, str(DOTFILES_DIR))
+
+from dotEngine import get_git_username
+
 VERSION = "0.0.4"
-GITHUB_USERNAME = "jarulsamy"
+GITHUB_USERNAME = get_git_username()
 
 # Templates for URL completion
 URL_TEMPLATE = "https://github.com/{username}/{repo_name}/tree/{branch_name}"

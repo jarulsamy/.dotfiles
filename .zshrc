@@ -70,7 +70,6 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     cp
@@ -106,17 +105,23 @@ export MAKEFLAGS="-j4"
 export PATH="$HOME/.dotfiles/zfunc:$PATH"
 # Home bin dir
 export PATH="$HOME/.local/bin:$PATH"
-# Load custom keybinds
-source "$HOME/.dotfiles/zfunc/keybinds.sh"
-# Load aliases
-source "$HOME/.dotfiles/zfunc/aliases.sh"
+
+# Ensure dir exists before sourcing.
+if [ -d "$HOME/.dotfiles" ] ; then
+    # Load custom keybinds
+    source "$HOME/.dotfiles/zfunc/keybinds.sh"
+    # Load aliases
+    source "$HOME/.dotfiles/zfunc/aliases.sh"
+    # Load custom autocompletion
+    source "$HOME/.dotfiles/zfunc/autocompletion.sh"
+fi
 
 # Auto ls on cd
 chpwd() ls
 
-# Options
 # Disable 'auto cd'
 unsetopt AUTO_CD
+
 # Disable autocorrection
 unsetopt correct
 unsetopt correct_all
