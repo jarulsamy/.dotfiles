@@ -1,0 +1,7 @@
+
+configuration {
+    modi: "window,drun,ssh,combi";
+    theme: "gruvbox-dark-hard";
+    font: "Cascadia Code PL 10";
+    combi-modi: "window,drun,ssh";
+}

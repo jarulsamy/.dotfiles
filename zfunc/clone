@@ -1,53 +1,63 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
+"""Clone GitHub repos really fast!
 
-# Load github username
-source <(grep username "$HOME/.dotfiles/.gitconfig" | sed 's/ *= */=/g')
+A simple command line interface to clone personal GitHub
+repositories without having to use the web interface.
 
-if [ -z ${username+x} ]; then
-    exit -1
-fi
+Usage:
+    clone [-d] [-H] <repo_name> [<dest>]
+    clone (-h | --help | --version)
 
-while test $# -gt 0; do
-    case "$1" in
-    -h | --help)
-        echo "$package - Simplifies the github experience."
-        echo "Shortens command to clone from my github."
-        echo "Options:"
-        echo "-h, --help        show brief help"
-        echo "-i                Clones using https instead of ssh"
-        echo "-d                Displays full ssh clone path"
-        echo "-di               Displays full https clone path"
+Options:
+    -d --dry-run    Don't actually clone, just echo the remote url of the repo.
+    -H --http       Use HTTP instead of SSH
+    -h --help       Show this help
+    -v --version    Show version
+"""
 
-        echo "Example: "
-        echo "  $ clone .dotfiles"
-        echo "  Cloning using SSH: git@github.com:jarulsamy/.dotfiles"
-        echo "  Cloning into '.dotfiles'..."
-        break
-        ;;
-    -i)
-        shift
-        URL="https://github.com/$username/$1"
-        echo "Cloning using HTTPS: $URL"
-        git clone "$URL"
-        break
-        ;;
-    -d)
-        shift
-        URL="git@github.com:$username/$1"
-        echo "$URL"
-        break
-        ;;
-    -di)
-        shift
-        URL="https://github.com/$username/$1"
-        echo "$URL"
-        break
-        ;;
-    *)
-        URL="git@github.com:$username/$1"
-        echo "Cloning using SSH: $URL"
-        git clone "$URL"
-        break
-        ;;
-    esac
-done
+import subprocess
+import sys
+from pathlib import Path
+
+from docopt import docopt
+
+DOTFILES_DIR = Path(Path.home(), ".dotfiles", "zfunc", "dotEngine")
+sys.path.insert(0, str(DOTFILES_DIR))
+
+from dotEngine import get_git_username
+
+VERSION = "0.0.2"
+USERNAME = get_git_username()
+
+
+def clone(url, dest=None):
+    if dest is None:
+        subprocess.run(["git", "clone", url])
+    else:
+        subprocess.run(["git", "clone", url, dest])
+
+
+def http_url(stub):
+    return f"https://github.com/{stub}"
+
+
+def ssh_url(stub):
+    return f"git@github.com:{stub}"
+
+
+def process_args(args):
+    name = args.get("<repo_name>")
+    if "/" not in name:
+        name = f"{USERNAME}/" + name
+    if args.get("--http"):
+        url = http_url(name)
+    else:
+        url = ssh_url(name)
+    if args.get("--dry-run"):
+        print(url)
+    else:
+        clone(url, args.get("<dest>"))
+
+
+args = docopt(__doc__, version=VERSION)
+process_args(args)

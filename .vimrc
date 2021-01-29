@@ -25,9 +25,6 @@ set hidden
 set encoding=utf-8
 scriptencoding utf-8
 
-" Flag bad whitespace
-" au BufNewFile, BufRead *.py,*.c,*.h,*.cpp,*.hpp,*.sh,*.conf match BadWhitespace /\s\+$/
-
 " ====================== Vim Plug ======================
 
 " Install vim-plug if not found
@@ -49,7 +46,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'morhetz/gruvbox'
 Plug 'wakatime/vim-wakatime'
-Plug 'ycm-core/YouCompleteMe'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf.vim'
@@ -58,6 +54,13 @@ Plug 'dense-analysis/ale'
 Plug'godlygeek/tabular'
 Plug'plasticboy/vim-markdown'
 Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'mhinz/vim-startify'
+Plug 'kshenoy/vim-signature'
+Plug 'mzlogin/vim-markdown-toc'
+
+if version >= 802
+    Plug 'ycm-core/YouCompleteMe'
+endif
 
 " All of Plugins must be added before the following line
 call plug#end()
@@ -110,7 +113,7 @@ set expandtab
 
 augroup FileExtIdents
     " File extension specific
-    au BufNewFile,BufRead *.c,*.cpp,*.h,*.hpp,*.lisp,*.vim,*.zsh,*.sh
+    au BufNewFile,BufRead *.c,*.cpp,*.h,*.hpp,*.lisp,*.vim,*.zsh,*.sh,*.zsh,*.js
                 \ set tabstop=2 |
                 \ set softtabstop=2 |
                 \ set shiftwidth=2
@@ -153,10 +156,13 @@ set nomodeline
 " ====================== Theme ======================
 
 augroup Theme
-    let g:gruvbox_italic=1
     let g:gruvbox_contrast_dark='medium'
     let g:gruvbox_contrast_light='soft'
-    au vimenter * ++nested colorscheme gruvbox
+    let g:gruvbox_bold=1
+    let g:gruvbox_italic=1
+    let g:gruvbox_undercurl=1
+    let g:gruvbox_termcolors=256
+    colorscheme gruvbox
 augroup END
 
 " ====================== Airline ======================
@@ -210,6 +216,22 @@ let g:mkdp_browserfunc = 'Firefox'
 
 let g:mkdp_auto_start = 1
 let g:mkdp_auto_close = 1
+
+" 80 char line limit
+autocmd BufNewFile,BufRead *.md,*.txt
+            \ set textwidth=80 |
+            \ set colorcolumn=+1
+
+" Spellcheck
+autocmd FileType markdown setlocal spell
+autocmd FileType gitcommit setlocal spell
+
+" Dictionary auto-complete
+autocmd FileType markdown setlocal complete+=kspell
+autocmd FileType gitcommit setlocal complete+=kspell
+
+" Highlight misspelled words
+hi SpellBad ctermfg=red guifg=red
 
 " ====================== Binds ======================
 

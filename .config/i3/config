@@ -3,7 +3,9 @@
 # i3 config file (v4)
 
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
+# win primary, alt secondary
 set $mod Mod4
+set $mod2 Mod1
 
 # Font for window titles
 font pango:Cascadia Code PL 12
@@ -19,11 +21,8 @@ exec_always --no-startup-id feh --bg-scale $HOME/Pictures/wallpaper.png
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 
 # Bind capslock to ESC (xorg-xmodmap)
-exec_always --no-startup-id xmodmap -e "clear lock" #disable caps lock switch
-exec_always --no-startup-id xmodmap -e "keysym Caps_Lock = Escape" #set caps_lock as escape
-
-# Start xflux
-exec_always --no-startup-id "xflux -z 82072"
+exec_always --no-startup-id xmodmap -e "clear lock"
+exec_always --no-startup-id xmodmap -e "keysym Caps_Lock = Escape"
 
 # Global volume / mute controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +2%
@@ -58,7 +57,7 @@ bindsym $mod+Return exec alacritty
 bindsym $mod+q kill
 
 # Start rofi
-bindsym $mod+d exec --no-startup-id rofi -show drun -show-icons
+bindsym $mod+d exec --no-startup-id "bash ~/.dotfiles/.config/i3/launcher"
 
 # change focus (vi binds :D)
 bindsym $mod+h focus left
@@ -123,6 +122,18 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
+# Bind a second set with second modifier
+set $ws11 "11"
+set $ws12 "12"
+set $ws13 "13"
+set $ws14 "14"
+set $ws15 "15"
+set $ws16 "16"
+set $ws17 "17"
+set $ws18 "18"
+set $ws19 "19"
+set $ws20 "20: Music"
+
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -134,6 +145,18 @@ bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
+
+# Second version with dedicated modifier
+bindsym $mod2+1 workspace number $ws11
+bindsym $mod2+2 workspace number $ws12
+bindsym $mod2+3 workspace number $ws13
+bindsym $mod2+4 workspace number $ws14
+bindsym $mod2+5 workspace number $ws15
+bindsym $mod2+6 workspace number $ws16
+bindsym $mod2+7 workspace number $ws17
+bindsym $mod2+8 workspace number $ws18
+bindsym $mod2+9 workspace number $ws19
+bindsym $mod2+0 workspace number $ws20
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -147,12 +170,24 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
+# Second version with dedicated modifier
+bindsym $mod2+Shift+1 move container to workspace number $ws11
+bindsym $mod2+Shift+2 move container to workspace number $ws12
+bindsym $mod2+Shift+3 move container to workspace number $ws13
+bindsym $mod2+Shift+4 move container to workspace number $ws14
+bindsym $mod2+Shift+5 move container to workspace number $ws15
+bindsym $mod2+Shift+6 move container to workspace number $ws16
+bindsym $mod2+Shift+7 move container to workspace number $ws17
+bindsym $mod2+Shift+8 move container to workspace number $ws18
+bindsym $mod2+Shift+9 move container to workspace number $ws19
+bindsym $mod2+Shift+0 move container to workspace number $ws20
+
 # reload the configuration file
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # custom powermenu
-bindsym $mod+Shift+e exec --no-startup-id "bash ~/.dotfiles/.config/i3/powermenu.sh"
+bindsym $mod+Shift+e exec --no-startup-id "bash ~/.dotfiles/.config/i3/powermenu"
 
 bindsym $mod+r mode "resize"
 
@@ -193,6 +228,7 @@ bindsym $mod+g gaps outer current set 0; gaps inner current set 0;
 # Switch mode
 bindsym $mod+Shift+g mode "$mode_gaps_inner"
 
+# Change gaps size
 mode "$mode_gaps_inner" {
         bindsym plus  gaps inner current plus 5
         bindsym minus gaps inner current minus 5

@@ -31,7 +31,7 @@ HYPHEN_INSENSITIVE="true"
 # DISABLE_AUTO_UPDATE="true"
 
 # Uncomment the following line to automatically update without prompting.
-# DISABLE_UPDATE_PROMPT="true"
+DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
 # export UPDATE_ZSH_DAYS=13
@@ -70,7 +70,6 @@ COMPLETION_WAITING_DOTS="true"
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
     cp
@@ -82,8 +81,9 @@ plugins=(
     safe-paste
     sudo
     systemd
-    tmux
+    ufw
     zsh-autosuggestions
+    zsh-syntax-highlighting
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -97,7 +97,7 @@ export EDITOR="vim"
 export GIT_EDITOR="vim -c'startinsert|norm! ggA'"
 
 # Compilation flags
-export ARCHFLAGS="-arch x86_64 -j4"
+export ARCHFLAGS="-march=native"
 export MAKEOPTS="-j4"
 export MAKEFLAGS="-j4"
 
@@ -105,16 +105,26 @@ export MAKEFLAGS="-j4"
 export PATH="$HOME/.dotfiles/zfunc:$PATH"
 # Home bin dir
 export PATH="$HOME/.local/bin:$PATH"
-# Load custom keybinds
-source "$HOME/.dotfiles/zfunc/keybinds.sh"
-# Load aliases
-source "$HOME/.dotfiles/zfunc/aliases.sh"
+
+# Ensure dir exists before sourcing.
+if [ -d "$HOME/.dotfiles" ] ; then
+    # Load custom keybinds
+    source "$HOME/.dotfiles/zfunc/keybinds.sh"
+    # Load aliases
+    source "$HOME/.dotfiles/zfunc/aliases.sh"
+    # Load custom autocompletion
+    source "$HOME/.dotfiles/zfunc/autocompletion.sh"
+fi
 
 # Auto ls on cd
 chpwd() ls
 
 # Disable 'auto cd'
 unsetopt AUTO_CD
+
+# Disable autocorrection
+unsetopt correct
+unsetopt correct_all
 
 # FZF
 if type rg &> /dev/null; then
@@ -139,4 +149,3 @@ unset __conda_setup
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-

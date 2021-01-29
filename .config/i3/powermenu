@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+option0="Screen Saver"
+option1="Lock"
+option2="Logout"
+option3="Suspend"
+option4="Reboot"
+option5="Poweroff"
+
+# options passed into variable
+options="$option0\n$option1\n$option2\n$option3\n$option4\n$option5"
+
+chosen="$(echo -e "$options" | rofi -lines 6 -dmenu -p "Power" -width 15 -hide-scrollbar -line-padding 4 -padding 20 -i)"
+case $chosen in
+"$option0")
+  sleep 3
+  xset s activate
+  ;;
+"$option1")
+  i3lock -c 000000
+  ;;
+"$option2")
+  i3-msg exit
+  ;;
+"$option3")
+  systemctl suspend
+  ;;
+"$option4")
+  systemctl reboot
+  ;;
+"$option5")
+  systemctl poweroff
+  ;;
+esac

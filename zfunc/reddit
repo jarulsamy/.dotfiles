@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-conda create -n reddit python=3.7
-
-conda activate reddit
-
-pip install autopep8 pep8 pylint flake8 black pre-commit

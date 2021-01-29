@@ -19,4 +19,8 @@ alias dcdump="docker container ls --format='{{json .}}' | jq"
 alias tmux-ssh="exec tmux new-session -A -s tmux-ssh"
 
 # vi for vim
-alias vi=vim
+alias vi="vim"
+
+# Reload zsh
+alias zshreload="source $HOME/.zshrc"
+
