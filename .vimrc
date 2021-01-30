@@ -188,6 +188,7 @@ let g:ale_fixers = {
             \ 'c': ['clang-format', 'clangtidy'],
             \ 'cpp': ['clang-format', 'clangtidy'],
             \ 'markdown': ['prettier'],
+            \ 'html': ['prettier'],
             \ 'python': ['black', 'isort'],
             \ 'sh': ['shfmt']
             \}
