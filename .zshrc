@@ -72,16 +72,12 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    cp
     docker
     docker-compose
     fzf
     git
-    python
-    safe-paste
-    sudo
-    systemd
-    ufw
+    taskwarrior
+    virtualenvwrapper
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
@@ -132,20 +128,17 @@ if type rg &> /dev/null; then
   export FZF_DEFAULT_OPTS="-m --height 50% --border"
 fi
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/joshua/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/joshua/anaconda3/etc/profile.d/conda.sh" ]; then
-        source "/home/joshua/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/joshua/anaconda3/bin:$PATH"
-    fi
+# Virtualenv
+export WORKON_HOME="$HOME/.virtualenvs"
+export PROJECT_HOME="$HOME/repos"
+export VIRTUALENVWRAPPER_SCRIPT="/usr/local/bin/virtualenvwrapper.sh"
+[[ ! -f "$VIRTUALENVWRAPPER_SCRIPT" ]] || source "$VIRTUALENVWRAPPER_SCRIPT"
+
+# Auto activate base
+envs=$(workon)
+if [[ $envs == *"base"* ]] then;
+    workon base
 fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
