@@ -82,7 +82,6 @@ plugins=(
     fzf
     git
     taskwarrior
-    virtualenvwrapper
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
@@ -132,7 +131,8 @@ fi
 # Virtualenv
 export WORKON_HOME="$HOME/.virtualenvs"
 export PROJECT_HOME="$HOME/repos"
-export VIRTUALENVWRAPPER_SCRIPT="/usr/local/bin/virtualenvwrapper.sh"
+export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3"
+export VIRTUALENVWRAPPER_SCRIPT="$HOME/.local/bin/virtualenvwrapper.sh"
 [[ ! -f "$VIRTUALENVWRAPPER_SCRIPT" ]] || source "$VIRTUALENVWRAPPER_SCRIPT"
 
 # Auto activate base
