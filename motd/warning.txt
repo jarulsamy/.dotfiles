@@ -1,0 +1,14 @@
+
+                              NOTICE TO USERS
+=============================================================================
+This is a computer system owned by Joshua Arulsamy, which may be accessed and
+used only for authorized business by authorized personnel. Unauthorized
+access or use of this computer system may subject violators to criminal,
+civil, and/or administrative action. All information on this computer
+system may be intercepted, recorded, read, copied, and disclosed by and to
+authorized personnel for any purpose. Access or use of this computer system
+by any person, whether authorized or unauthorized, constitutes consent to
+these terms. There is no right of privacy in this system. Discontinue access
+immediately if you do not agree with the conditions stated in this notice.
+=============================================================================
+
