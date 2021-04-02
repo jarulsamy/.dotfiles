@@ -51,13 +51,16 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/fzf.vim'
 Plug 'tpope/vim-commentary'
 Plug 'dense-analysis/ale'
-Plug'godlygeek/tabular'
-Plug'plasticboy/vim-markdown'
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+Plug 'godlygeek/tabular'
+Plug 'plasticboy/vim-markdown'
 Plug 'mhinz/vim-startify'
 Plug 'kshenoy/vim-signature'
 Plug 'mzlogin/vim-markdown-toc'
 
+" Only show preview if DISPLAY is defined
+if !empty($DISPLAY)
+    Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
+endif
 if version >= 802
     Plug 'ycm-core/YouCompleteMe'
 endif

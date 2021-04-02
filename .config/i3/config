@@ -15,7 +15,7 @@ font pango:Cascadia Code PL 12
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # Set desktop wallpaper
-exec_always --no-startup-id feh --bg-scale $HOME/Pictures/wallpaper.png
+exec_always --no-startup-id feh --bg-scale --randomize $HOME/.dotfiles/wallpapers/* 
 
 # Start polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh

@@ -10,13 +10,13 @@ while true; do
     if (ping -c 1 archlinux.org || ping -c 1 google.com || ping -c 1 bitbucket.org || ping -c 1 github.com || ping -c 1 sourceforge.net) &>/dev/null; then
         if [[ $ID == e* ]]; then
             echo "$ethernet_connected"
-            sleep 25
+            sleep 10
         else
             echo "$wireless_connected"
-            sleep 25
+            sleep 10
         fi
     else
         echo "$disconnected"
-        sleep 0.5
+        sleep 1
     fi
 done

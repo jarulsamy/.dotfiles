@@ -1,5 +1,9 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
@@ -46,7 +50,7 @@ DISABLE_UPDATE_PROMPT="true"
 DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="false"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 COMPLETION_WAITING_DOTS="true"
@@ -72,16 +76,12 @@ COMPLETION_WAITING_DOTS="true"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    cp
+    colored-man-pages
     docker
     docker-compose
     fzf
     git
-    python
-    safe-paste
-    sudo
-    systemd
-    ufw
+    taskwarrior
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
@@ -122,30 +122,24 @@ chpwd() ls
 # Disable 'auto cd'
 unsetopt AUTO_CD
 
-# Disable autocorrection
-unsetopt correct
-unsetopt correct_all
-
 # FZF
 if type rg &> /dev/null; then
   export FZF_DEFAULT_COMMAND="rg --files"
   export FZF_DEFAULT_OPTS="-m --height 50% --border"
 fi
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/joshua/anaconda3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/joshua/anaconda3/etc/profile.d/conda.sh" ]; then
-        source "/home/joshua/anaconda3/etc/profile.d/conda.sh"
-    else
-        export PATH="/home/joshua/anaconda3/bin:$PATH"
-    fi
+# Virtualenv
+export WORKON_HOME="$HOME/.virtualenvs"
+export PROJECT_HOME="$HOME/repos"
+export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3"
+export VIRTUALENVWRAPPER_SCRIPT="$HOME/.local/bin/virtualenvwrapper.sh"
+[[ ! -f "$VIRTUALENVWRAPPER_SCRIPT" ]] || source "$VIRTUALENVWRAPPER_SCRIPT"
+
+# Auto activate base
+envs=$(workon)
+if [[ $envs == *"base"* ]] then;
+    workon base
 fi
-unset __conda_setup
-# <<< conda initialize <<<
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

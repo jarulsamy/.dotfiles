@@ -91,9 +91,9 @@
 
 from __future__ import absolute_import, division, print_function
 
-from collections import deque
 import os
 import re
+from collections import deque
 
 from ranger.api.commands import Command
 
@@ -186,10 +186,9 @@ class cd(Command):
 
         if ends_with_sep:
             try:
-                return (
-                    [os.path.join(dest, path) for path in next(os.walk(dest_abs))[1]],
-                    "",
-                )
+                return [
+                    os.path.join(dest, path) for path in next(os.walk(dest_abs))[1]
+                ], ""
             except (OSError, StopIteration):
                 return [], ""
 
@@ -212,14 +211,9 @@ class cd(Command):
         except (OSError, StopIteration):
             return [], ""
 
-        return (
-            [
-                os.path.join(dest_dir, d)
-                for d in dirnames
-                if self._tab_match(dest_base, d)
-            ],
-            "",
-        )
+        return [
+            os.path.join(dest_dir, d) for d in dirnames if self._tab_match(dest_base, d)
+        ], ""
 
     def _tab_fuzzy_match(self, basepath, tokens):
         """ Find directories matching tokens recursively """
@@ -916,8 +910,9 @@ class load_copy_buffer(Command):
 
     def execute(self):
         import sys
-        from ranger.container.file import File
         from os.path import exists
+
+        from ranger.container.file import File
 
         fname = self.fm.datapath(self.copy_buffer_filename)
         unreadable = IOError if sys.version_info[0] < 3 else OSError
@@ -976,8 +971,8 @@ class mkdir(Command):
     """
 
     def execute(self):
-        from os.path import join, expanduser, lexists
         from os import makedirs
+        from os.path import expanduser, join, lexists
 
         dirname = join(self.fm.thisdir.path, expanduser(self.rest(1)))
         if not lexists(dirname):
@@ -996,7 +991,7 @@ class touch(Command):
     """
 
     def execute(self):
-        from os.path import join, expanduser, lexists
+        from os.path import expanduser, join, lexists
 
         fname = join(self.fm.thisdir.path, expanduser(self.rest(1)))
         if not lexists(fname):
@@ -1078,8 +1073,9 @@ class rename(Command):
     """
 
     def execute(self):
-        from ranger.container.file import File
         from os import access
+
+        from ranger.container.file import File
 
         new_name = self.rest(1)
 
@@ -1203,6 +1199,7 @@ class bulkrename(Command):
         # pylint: disable=too-many-locals,too-many-statements,too-many-branches
         import sys
         import tempfile
+
         from ranger.container.file import File
         from ranger.ext.shell_escape import shell_escape as esc
 
@@ -1779,7 +1776,7 @@ class filter_stack(Command):
     """
 
     def execute(self):
-        from ranger.core.filter_stack import SIMPLE_FILTERS, FILTER_COMBINATORS
+        from ranger.core.filter_stack import FILTER_COMBINATORS, SIMPLE_FILTERS
 
         subcommand = self.arg(1)
 
@@ -2027,10 +2024,20 @@ class yank(Command):
             from ranger.ext.get_executables import get_executables
 
             clipboard_managers = {
-                "xclip": [["xclip"], ["xclip", "-selection", "clipboard"],],
-                "xsel": [["xsel"], ["xsel", "-b"],],
-                "wl-copy": [["wl-copy"],],
-                "pbcopy": [["pbcopy"],],
+                "xclip": [
+                    ["xclip"],
+                    ["xclip", "-selection", "clipboard"],
+                ],
+                "xsel": [
+                    ["xsel"],
+                    ["xsel", "-b"],
+                ],
+                "wl-copy": [
+                    ["wl-copy"],
+                ],
+                "pbcopy": [
+                    ["pbcopy"],
+                ],
             }
             ordered_managers = ["pbcopy", "wl-copy", "xclip", "xsel"]
             executables = get_executables()
