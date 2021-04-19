@@ -52,7 +52,6 @@ authorize_github_keys() {
 # Ensure config folders exists
 mkdir -p "$HOME/.config"
 
-linkDotfile .vim
 linkDotfile .vimrc
 linkDotfile .zshrc
 linkDotfile .gitconfig
@@ -69,6 +68,7 @@ linkDotfile .config/ranger
 linkDotfile .config/mpd
 linkDotfile .config/ncmpcpp
 linkDotfile .config/redshift
+linkDotfile .config/dunst
 
 # Create mpd required playlist folder
 mkdir -p "$HOME/.config/mpd/playlists"
