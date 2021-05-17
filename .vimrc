@@ -123,6 +123,9 @@ augroup FileExtIdents
 
     " Auto remove trailing whitespace
     au BufWritePre *.* :%s/\s\+$//e
+
+    " YAML
+    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 augroup END
 
 " Auto indent pasted text
