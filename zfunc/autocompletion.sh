@@ -6,6 +6,7 @@ _clone() {
     '--dry-run[Do not actually clone, just echo the remote url of the repo]' \
     '--http[Use HTTP instead of SSH]' \
     '--version[Show version]' \
-    "1:first arg:($(~/.dotfiles/zfunc/dotEngine/utils.py))" \
+
+  _describe 'command' "($(dotEngine -z))"
 }
 compdef _clone clone
