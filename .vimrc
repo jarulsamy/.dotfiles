@@ -182,7 +182,7 @@ let g:airline_skip_empty_sections = 1
 " ====================== ALE ======================
 
 let g:ale_linters = {
-            \ 'c': ['cc'],
+            \ 'c': ['cc', 'ccls', 'clangd'],
             \ 'cpp': ['cc','cpplint'],
             \ 'markdown': ['markdownlint'],
             \ 'python': ['flake8', 'pydocstyle', 'bandit', 'mypy'],
