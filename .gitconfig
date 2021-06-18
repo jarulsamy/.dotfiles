@@ -1,44 +1,49 @@
 [user]
-name = Joshua Arulsamy
-email = joshua.gf.arul@gmail.com
-username = jarulsamy
+    name = Joshua Arulsamy
+    email = joshua.gf.arul@gmail.com
+
+[dotEngine]
+    username = jarulsamy
 
 [diff]
-tool = vimdiff
+    tool = vimdiff
 
 [color]
-diff = auto
-status = auto
-branch = auto
+    diff = auto
+    status = auto
+    branch = auto
 
 [color "status"]
-added = green
-changed = blue
-untracked = red
+    added = green
+    changed = blue
+    untracked = red
 
 [color "diff"]
-meta = yellow
-old = red
-new = green
+    meta = yellow
+    old = red
+    new = green
 
 [core]
-editor = vim
-mergeoptions =
+    editor = vim
+    mergeoptions =
 
 [push]
-default = current
+    default = current
 
 [pull]
-rebase = false
+    rebase = false
 
 [giggle]
-main-window-maximized = false
-main-window-geometry = 1269x839+117+89
+    main-window-maximized = false
+    main-window-geometry = 1269x839+117+89
 
 [include]
-path = .gitlocal
+    path = .gitlocal
 
 [alias]
-lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
-lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
-lg = !"git lg1"
+    lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+    lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+    lg = !"git lg1"
+
+[includeIf "gitdir:workRepos/"]
+    path = .gitconfig-work
