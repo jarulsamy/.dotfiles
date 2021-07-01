@@ -179,29 +179,5 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-# Gaps stuff, disabled by default
-for_window [class=".*"] border pixel 4
-gaps inner 0
-gaps outer 0
-smart_borders on
-
-# Enable gaps
-bindsym $mod+g gaps outer current set 0; gaps inner current set 10;
-# Disable gaps
-bindsym $mod+Shift+g gaps outer current set 0; gaps inner current set 0;
-
-# Gaps size adjustment mode
-bindsym ctrl+$mod+g mode "$mode_gaps_inner"
-# Change gaps size
-mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
-
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
-
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
-}
+# Disable borders
+for_window [class=".*"] border pixel 1
