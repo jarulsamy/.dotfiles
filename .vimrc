@@ -41,26 +41,33 @@ autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'vim-scripts/indentpython.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'dense-analysis/ale'
+Plug 'ervandew/supertab'
+Plug 'godlygeek/tabular'
+Plug 'godlygeek/tabular'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/vim-peekaboo'
+Plug 'kshenoy/vim-signature'
+Plug 'mbbill/undotree'
+Plug 'mhinz/vim-startify'
+Plug 'morhetz/gruvbox'
+Plug 'mzlogin/vim-markdown-toc'
+Plug 'plasticboy/vim-markdown'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'morhetz/gruvbox'
+Plug 'vim-scripts/indentpython.vim'
 Plug 'wakatime/vim-wakatime'
-Plug 'tpope/vim-surround'
-Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/fzf.vim'
-Plug 'tpope/vim-commentary'
-Plug 'dense-analysis/ale'
-Plug 'godlygeek/tabular'
-Plug 'plasticboy/vim-markdown'
-Plug 'mhinz/vim-startify'
-Plug 'kshenoy/vim-signature'
-Plug 'mzlogin/vim-markdown-toc'
+Plug 'yggdroot/indentline'
 
 " Only show preview if DISPLAY is defined
 if !empty($DISPLAY)
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 endif
+" New enough version for YCM
 if version >= 802
     Plug 'ycm-core/YouCompleteMe'
 endif
@@ -182,7 +189,7 @@ let g:airline_skip_empty_sections = 1
 " ====================== ALE ======================
 
 let g:ale_linters = {
-            \ 'c': ['cc'],
+            \ 'c': ['cc', 'ccls', 'clangd'],
             \ 'cpp': ['cc','cpplint'],
             \ 'markdown': ['markdownlint'],
             \ 'python': ['flake8', 'pydocstyle', 'bandit', 'mypy'],

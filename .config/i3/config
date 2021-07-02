@@ -3,19 +3,15 @@
 # i3 config file (v4)
 
 # Please see https://i3wm.org/docs/userguide.html for a complete reference!
-# win primary, alt secondary
+# Win primary, Alt secondary
 set $mod Mod4
 set $mod2 Mod1
 
 # Font for window titles
 font pango:Cascadia Code PL 12
 
-# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
-# screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
 # Set desktop wallpaper
-exec_always --no-startup-id feh --bg-scale --randomize $HOME/.dotfiles/wallpapers/* 
+exec_always --no-startup-id feh --bg-scale --randomize $HOME/.dotfiles/wallpapers/*
 
 # Start polybar
 exec_always --no-startup-id ~/.config/polybar/launch.sh
@@ -59,51 +55,57 @@ bindsym $mod+q kill
 # Start rofi
 bindsym $mod+d exec --no-startup-id "bash ~/.dotfiles/.config/i3/launcher"
 
-# change focus (vi binds :D)
+# Change focus (vi binds)
 bindsym $mod+h focus left
 bindsym $mod+j focus down
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
-# change focus (direction keys)
+# Change focus (direction keys)
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# move focused (vi binds :D)
+# Move focused (vi binds)
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
 bindsym $mod+Shift+l move right
 
-# move focused (direction keys)
+# Move focused (direction keys)
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
+# Move between monitors
+bindsym $mod2+Shift+h move workspace to output left
+bindsym $mod2+Shift+j move workspace to output down
+bindsym $mod2+Shift+k move workspace to output up
+bindsym $mod2+Shift+l move workspace to output right
+
+# Split horizontally
 bindsym $mod+semicolon split h
 
-# split in vertical orientation
+# Split vertically
 bindsym $mod+v split v
 
-# enter fullscreen mode for focused container
+# Enter fullscreen mode for focused container
 bindsym $mod+f fullscreen toggle
 
-# change container layout
+# Change container layout
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
 
-# toggle tiling / floating
+# Toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 
-# change focus between tiling / floating windows
+# Change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# focus the parent container
+# Focus the parent container
 bindsym $mod+a focus parent
 
 # focus the child container
@@ -122,18 +124,6 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-# Bind a second set with second modifier
-set $ws11 "11"
-set $ws12 "12"
-set $ws13 "13"
-set $ws14 "14"
-set $ws15 "15"
-set $ws16 "16"
-set $ws17 "17"
-set $ws18 "18"
-set $ws19 "19"
-set $ws20 "20: Music"
-
 # switch to workspace
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
@@ -145,18 +135,6 @@ bindsym $mod+7 workspace number $ws7
 bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
-
-# Second version with dedicated modifier
-bindsym $mod2+1 workspace number $ws11
-bindsym $mod2+2 workspace number $ws12
-bindsym $mod2+3 workspace number $ws13
-bindsym $mod2+4 workspace number $ws14
-bindsym $mod2+5 workspace number $ws15
-bindsym $mod2+6 workspace number $ws16
-bindsym $mod2+7 workspace number $ws17
-bindsym $mod2+8 workspace number $ws18
-bindsym $mod2+9 workspace number $ws19
-bindsym $mod2+0 workspace number $ws20
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number $ws1
@@ -170,28 +148,15 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-# Second version with dedicated modifier
-bindsym $mod2+Shift+1 move container to workspace number $ws11
-bindsym $mod2+Shift+2 move container to workspace number $ws12
-bindsym $mod2+Shift+3 move container to workspace number $ws13
-bindsym $mod2+Shift+4 move container to workspace number $ws14
-bindsym $mod2+Shift+5 move container to workspace number $ws15
-bindsym $mod2+Shift+6 move container to workspace number $ws16
-bindsym $mod2+Shift+7 move container to workspace number $ws17
-bindsym $mod2+Shift+8 move container to workspace number $ws18
-bindsym $mod2+Shift+9 move container to workspace number $ws19
-bindsym $mod2+Shift+0 move container to workspace number $ws20
-
-# reload the configuration file
+# Reload the configuration file
 bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+# Restart i3 inplace (preserves layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
-# custom powermenu
+# Custom powermenu
 bindsym $mod+Shift+e exec --no-startup-id "bash ~/.dotfiles/.config/i3/powermenu"
 
-bindsym $mod+r mode "resize"
-
 # resize window (you can also use the mouse for that)
+bindsym $mod+r mode "resize"
 mode "resize" {
         # Pressing left will shrink the window’s width.
         # Pressing right will grow the window’s width.
@@ -202,7 +167,7 @@ mode "resize" {
         bindsym k resize shrink height 5 px or 5 ppt
         bindsym l resize grow width 5 px or 5 ppt
 
-        # same bindings, but for the arrow keys
+        # Same bindings, but for the arrow keys - more
         bindsym Left resize shrink width 10 px or 10 ppt
         bindsym Down resize grow height 10 px or 10 ppt
         bindsym Up resize shrink height 10 px or 10 ppt
@@ -214,30 +179,5 @@ mode "resize" {
         bindsym $mod+r mode "default"
 }
 
-# Gaps stuff
-for_window [class=".*"] border pixel 4
-gaps inner 10
-gaps outer 0
-
-# Smart borders
-smart_borders on
-
-# Reset gaps
-bindsym $mod+g gaps outer current set 0; gaps inner current set 0;
-
-# Switch mode
-bindsym $mod+Shift+g mode "$mode_gaps_inner"
-
-# Change gaps size
-mode "$mode_gaps_inner" {
-        bindsym plus  gaps inner current plus 5
-        bindsym minus gaps inner current minus 5
-        bindsym 0     gaps inner current set 0
-
-        bindsym Shift+plus  gaps inner all plus 5
-        bindsym Shift+minus gaps inner all minus 5
-        bindsym Shift+0     gaps inner all set 0
-
-        bindsym Return mode "$mode_gaps"
-        bindsym Escape mode "default"
-}
+# Disable borders
+for_window [class=".*"] border pixel 1

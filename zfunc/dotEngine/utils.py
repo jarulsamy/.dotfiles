@@ -22,7 +22,7 @@ def get_git_username(path=None):
     config.read(path)
 
     try:
-        return config.get("user", "username")
+        return config.get("dotEngine", "username")
     except configparser.NoOptionError:
         return None
 

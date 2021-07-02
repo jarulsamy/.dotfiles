@@ -55,6 +55,7 @@ mkdir -p "$HOME/.config"
 linkDotfile .vimrc
 linkDotfile .zshrc
 linkDotfile .gitconfig
+linkDotfile .gitconfig-work
 linkDotfile .tmux.conf
 linkDotfile .tmux.conf.local
 linkDotfile .p10k.zsh
