@@ -9,82 +9,149 @@ error() {
   exit 1
 }
 
-# Pick a package manager.
-declare -A osInfo
-osInfo["/etc/debian_version"]="apt-get install -y"
-osInfo["/etc/alpine-release"]="apk --update add"
-osInfo["/etc/centos-release"]="yum install -y"
-osInfo["/etc/fedora-release"]="dnf install -y"
-osInfo["/etc/arch-release"]="pacman -S --noconfirm --needed"
+is_command() {
+  # Checks to see if the given command (passed as a string argument) exists on the system.
+  # Returns 0 (success) if the command exists, and 1 if it doesn't.
+  local check_command="$1"
 
-for f in ${!osInfo[@]}; do
-  if [[ -f $f ]]; then
-    pac="${osInfo[$f]}"
-  fi
-done
+  command -v "${check_command}" >/dev/null 2>&1
+}
 
-# Install a package
-install() {
-  which "$1" &>/dev/null
+# Check distro and determine what packages to install, then install.
+install_packages() {
+  # If apt-get is installed, then we know it's part of the Debian family
+  if is_command apt-get; then
+    PKG_MANAGER="apt-get"
+    PKG_INSTALL=("${PKG_MANAGER}" -qq --no-install-recommends install)
 
-  if [ $? -ne 0 ]; then
-    echoerr "Installing: ${1}..."
-    sudo ${pac} ${1}
+    INSTALLER_DEPS=(git gcc make cmake curl zsh)
+    DEPS=(fzf lolcat ripgrep shellcheck shfmt tmux vim wget xclip xdg-utils)
+
+    # If apt-get is not found, check for rpm to see if it's a Red Hat family OS
+  elif is_command rpm; then
+    # Then check if dnf or yum is the package manager
+    if is_command dnf; then
+      PKG_MANAGER="dnf"
+    else
+      PKG_MANAGER="yum"
+    fi
+
+    # These variable names match the ones in the Debian family. See above for an explanation of what they are for.
+    PKG_INSTALL=("${PKG_MANAGER}" install -y)
+    INSTALLER_DEPS=(git gcc make cmake curl zsh)
+    DEPS=(fzf lolcat ripgrep shellcheck shfmt tmux vim wget xclip xdg-utils)
+
+    # If the host OS is Fedora,
+    if grep -qiE 'fedora|fedberry' /etc/redhat-release; then
+      # all required packages should be available by default with the latest fedora release
+      : # continue
+      # or if host OS is CentOS,
+    elif grep -qiE 'centos|scientific' /etc/redhat-release; then
+      # Pi-Hole currently supports CentOS 7+ with PHP7+
+      SUPPORTED_CENTOS_VERSION=7
+      # Check current CentOS major release version
+      CURRENT_CENTOS_VERSION=$(grep -oP '(?<= )[0-9]+(?=\.?)' /etc/redhat-release)
+      # Check if CentOS version is supported
+      if [[ $CURRENT_CENTOS_VERSION -lt $SUPPORTED_CENTOS_VERSION ]]; then
+        printf "  %b CentOS %s is not supported.\\n" "${CROSS}" "${CURRENT_CENTOS_VERSION}"
+        printf "      Please update to CentOS release %s or later.\\n" "${SUPPORTED_CENTOS_VERSION}"
+        # exit the installer
+        exit
+      fi
+      # CentOS requires the EPEL repository to gain access to Fedora packages
+      EPEL_PKG="epel-release"
+      rpm -q ${EPEL_PKG} &>/dev/null || rc=$?
+      if [[ $rc -ne 0 ]]; then
+        printf "  %b Enabling EPEL package repository (https://fedoraproject.org/wiki/EPEL)\\n" "${INFO}"
+        "${PKG_INSTALL[@]}" ${EPEL_PKG} &>/dev/null
+        printf "  %b Installed %s\\n" "${TICK}" "${EPEL_PKG}"
+      fi
+    fi
+
+  elif is_command pacman; then
+    PKG_MANAGER="pacman"
+    PKG_INSTALL=("${PKG_MANAGER}" -S --noconfirm)
+
+    INSTALLER_DEPS=(git gcc make cmake curl zsh)
+    DEPS=(fzf lolcat ripgrep shellcheck shfmt tmux vim wget xclip xdg-utils)
+
+  # If not apt-get, yum/dnf, or pacman, not supported.
   else
-    echoerr "Already installed: ${1}"
+    # it's not an OS we can support,
+    printf "  %b OS distribution not supported\\n" "${CROSS}"
+    # so exit the installer
+    exit
+  fi
+
+  # We've determined that we have a valid package manager, and set the necessary packages for this specific distro.
+  # Go ahead and install everything.
+  for package in "${INSTALLER_DEPS[@]}"; do
+    if ! is_command "${package}"; then
+      sudo "${PKG_INSTALL[@]}" "${package}"
+    fi
+  done
+
+  for package in "${DEPS[@]}"; do
+    if ! is_command "${package}"; then
+      sudo "${PKG_INSTALL[@]}" "${package}"
+    fi
+  done
+}
+
+install_dotEngine() {
+  # TODO: Do a version check here for update
+
+  # Compile and install dotEngine, if it doesn't exist
+  if [ ! -f "$HOME/.local/bin/dotEngine" ]; then
+    local compile_dir
+    local build_dir
+    local install_prefix
+
+    # Prep, clone and setup build dir
+    compile_dir="$(mktemp -d)"
+    build_dir="$compile_dir/build"
+    install_prefix="$HOME/.local"
+
+    cd "$compile_dir" || error "Couldn't install dotEngine"
+    git clone https://github.com/jarulsamy/dotEngine "$compile_dir"
+    mkdir -p "$build_dir" "$install_prefix"
+    cd "$build_dir" || error "Couldn't install dotEngine"
+
+    # Actual compilation and installation
+    cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX="$install_prefix"
+    make
+    make install
+
+    # Fix permission of resulting binary
+    chmod +x "$install_prefix"/bin/dotEngine
+
+    # Add compiled libraries to search path
+    if [ -d "$install_prefix"/lib ]; then
+      sudo ldconfig "$install_prefix"/lib
+    fi
+
+    if [ -d "$install_prefix"/lib64 ]; then
+      sudo ldconfig "$install_prefix"/lib64
+    fi
+
+    # Cleanup
+    rm -rf "$compile_dir"
+  else
+    echoerr "Skipping dotEngine install, $HOME/.local/bin/dotEngine already exists."
   fi
 }
 
-# Install dependencies
-install vim
-install fzf
-install ripgrep
-install tmux
-install wget
-install curl
-install zsh
-install lolcat
-install xclip
-install xdg-utils
-install shfmt
-install shellcheck
-install cmake
-install make
-install gcc
+install_ohmyzsh() {
+  # Install oh-my-zsh, if not already present
+  if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  else
+    echoerr "Skipping oh-my-zsh install, $HOME/.oh-my-zsh already exists."
+  fi
+}
 
-# Install oh-my-zsh, if not already present
-if [ ! -d "$HOME/.oh-my-zsh" ]; then
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-else
-  echoerr "Skipping oh-my-zsh install, $HOME/.oh-my-zsh already exists."
-fi
-
-# Compile and install dotEngine, if it doesn't exist
-if [ ! -f "$HOME/.local/bin/dotEngine" ]; then
-  # Prep, clone and setup build dir
-  compile_dir="$(mktemp -d)"
-  build_dir="$compile_dir/build"
-  install_prefix="$HOME/.local"
-
-  cd "$compile_dir" || error "Couldn't install dotEngine"
-  git clone https://github.com/jarulsamy/dotEngine "$compile_dir"
-  mkdir -p "$build_dir" "$install_prefix"
-  cd "$build_dir" || error "Couldn't install dotEngine"
-
-  # Actual compilation and installation
-  cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX="$install_prefix"
-  make
-  make install
-
-  # Fix permission of resulting binary
-  chmod +x "$install_prefix"/bin/dotEngine
-  # Add compiled libraries to search path
-  sudo ldconfig "$install_prefix"/lib
-
-  # Cleanup
-  rm -rf "$compile_dir"
-else
-  echoerr "Skipping dotEngine install, $HOME/.local/bin/dotEngine already exists."
-fi
+install_packages
+install_dotEngine
+install_ohmyzsh
 
 echo "DONE"
