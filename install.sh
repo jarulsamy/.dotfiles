@@ -24,8 +24,8 @@ install_packages() {
     PKG_MANAGER="apt-get"
     PKG_INSTALL=("${PKG_MANAGER}" -qq --no-install-recommends install)
 
-    INSTALLER_DEPS=(git gcc make cmake curl zsh)
-    DEPS=(fzf lolcat ripgrep shellcheck shfmt tmux vim wget xclip xdg-utils)
+    INSTALLER_DEPS=(cmake curl gcc git libcurl4-openssl-dev make zsh)
+    DEPS=(fzf g++ lolcat ripgrep shellcheck shfmt tmux vim wget xclip xdg-utils)
 
     # If apt-get is not found, check for rpm to see if it's a Red Hat family OS
   elif is_command rpm; then
@@ -38,8 +38,8 @@ install_packages() {
 
     # These variable names match the ones in the Debian family. See above for an explanation of what they are for.
     PKG_INSTALL=("${PKG_MANAGER}" install -y)
-    INSTALLER_DEPS=(git gcc make cmake curl zsh)
-    DEPS=(fzf lolcat ripgrep shellcheck shfmt tmux vim wget xclip xdg-utils)
+    INSTALLER_DEPS=(cmake curl gcc git libcurl libcurl-devel make zsh)
+    DEPS=(ShellCheck fzf g++ lolcat ripgrep shfmt tmux vim wget xclip xdg-utils)
 
     # If the host OS is Fedora,
     if grep -qiE 'fedora|fedberry' /etc/redhat-release; then
@@ -72,7 +72,7 @@ install_packages() {
     PKG_MANAGER="pacman"
     PKG_INSTALL=("${PKG_MANAGER}" -S --noconfirm)
 
-    INSTALLER_DEPS=(git gcc make cmake curl zsh)
+    INSTALLER_DEPS=(cmake curl gcc git make zsh)
     DEPS=(fzf lolcat ripgrep shellcheck shfmt tmux vim wget xclip xdg-utils)
 
   # If not apt-get, yum/dnf, or pacman, not supported.
