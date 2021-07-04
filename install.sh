@@ -101,38 +101,35 @@ install_packages() {
 install_dotEngine() {
   # TODO: Do a version check here for update
 
+  local dest_dir
+  local compile_dir
+  local build_dir
+
+  dest_dir="$HOME/.local/bin"
+
   # Compile and install dotEngine, if it doesn't exist
-  if [ ! -f "$HOME/.local/bin/dotEngine" ]; then
-    local compile_dir
-    local build_dir
-    local install_prefix
+  if [ ! -f "${dest_dir}/dotEngine" ]; then
 
     # Prep, clone and setup build dir
     compile_dir="$(mktemp -d)"
     build_dir="$compile_dir/build"
-    install_prefix="$HOME/.local"
 
     cd "$compile_dir" || error "Couldn't install dotEngine"
     git clone https://github.com/jarulsamy/dotEngine "$compile_dir"
-    mkdir -p "$build_dir" "$install_prefix"
+    mkdir -p "$build_dir" "$dest_dir"
     cd "$build_dir" || error "Couldn't install dotEngine"
 
     # Actual compilation and installation
-    cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_PREFIX="$install_prefix"
+    cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_LIBDIR=lib
     make
-    make install
+    sudo make install
 
     # Fix permission of resulting binary
-    chmod +x "$install_prefix"/bin/dotEngine
+    sudo chown $(id -un):$(id -gn) "${dest_dir}/dotEngine"
+    chmod +x "${dest_dir}/dotEngine"
 
-    # Add compiled libraries to search path
-    if [ -d "$install_prefix"/lib ]; then
-      sudo ldconfig "$install_prefix"/lib
-    fi
-
-    if [ -d "$install_prefix"/lib64 ]; then
-      sudo ldconfig "$install_prefix"/lib64
-    fi
+    # Update shared libraries path
+    sudo ldconfig /usr/local/lib
 
     # Cleanup
     rm -rf "$compile_dir"
