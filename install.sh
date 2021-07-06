@@ -132,6 +132,7 @@ install_dotEngine() {
     sudo ldconfig /usr/local/lib
 
     # Cleanup
+    cd "$HOME" || exit 1
     rm -rf "$compile_dir"
   else
     echoerr "Skipping dotEngine install, $HOME/.local/bin/dotEngine already exists."
