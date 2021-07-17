@@ -1,4 +1,4 @@
-#/usr/bin/env bash
+#!/usr/bin/env bash
 
 # For a full list of active aliases, run `alias`.
 alias zshconfig="vim $HOME/.zshrc"
@@ -24,3 +24,6 @@ alias vi="vim"
 # Reload zsh
 alias zshreload="source $HOME/.zshrc"
 
+# Dump gnome keybinds to file
+alias gnome-keybinds-export="dconf dump / | sed -n '/\[org.gnome.settings-daemon.plugins.media-keys/,/^$/p' >$HOME/.dotfiles/dconf/custom-shortcuts.ini"
+alias gnome-keybinds-import="dconf load / < $HOME/.dotfiles/dconf/custom-shortcuts.ini"
