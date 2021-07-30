@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Try to keep this file as shell-agnostic as possible (at least support bash and zsh)
+
 # For a full list of active aliases, run `alias`.
 alias zshconfig="vim $HOME/.zshrc"
 alias ohmyzsh="vim $HOME/.oh-my-zsh"
@@ -27,3 +29,14 @@ alias zshreload="source $HOME/.zshrc"
 # Dump gnome keybinds to file
 alias gnome-keybinds-export="dconf dump / | sed -n '/\[org.gnome.settings-daemon.plugins.media-keys/,/^$/p' >$HOME/.dotfiles/dconf/custom-shortcuts.ini"
 alias gnome-keybinds-import="dconf load / < $HOME/.dotfiles/dconf/custom-shortcuts.ini"
+
+# Boot into windows
+alias reboot-win="sudo grub2-reboot 'Windows Boot Manager'; sudo reboot"
+
+# cd into last directory alphanumerically in CWD
+# https://unix.stackexchange.com/a/257880/484896
+cdl() {
+  set ./*/
+  shift "$(($# - 1))"
+  cd "$1"
+}
