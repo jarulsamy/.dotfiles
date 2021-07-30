@@ -73,6 +73,11 @@ endif
 " New enough version for YCM
 if version >= 802
     Plug 'ycm-core/YouCompleteMe'
+
+    " Auto change cursor shape (alacritty)
+    let &t_SI = "\<ESC>[6 q"
+    let &t_SR = "\<ESC>[4 q"
+    let &t_EI = "\<ESC>[0 q"
 endif
 
 " All of Plugins must be added before the following line
@@ -300,10 +305,6 @@ cnoremap w!! execute 'silent! write !sudo tee % > /dev/null' <bar> edit!
 
 " ====================== Misc ======================
 
-" Auto change cursor shape (alacritty)
-let &t_SI = "\<ESC>[6 q"
-let &t_SR = "\<ESC>[4 q"
-let &t_EI = "\<ESC>[0 q"
 
 " Supress 'warning changing a readonly file'
 augroup ReadonlyWarning
