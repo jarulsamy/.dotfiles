@@ -16,7 +16,6 @@ set cursorline                 " Highlight line cursor is on
 set background=dark            " Dark background
 set textwidth=0                " Stop auto line breaking on paste
 
-set termguicolors
 set updatetime=100
 set clipboard=unnamedplus
 set hidden
@@ -24,6 +23,10 @@ set hidden
 " Encoding
 set encoding=utf-8
 scriptencoding utf-8
+
+if has('termguicolors')
+    set termguicolors
+endif
 
 " ====================== Vim Plug ======================
 
