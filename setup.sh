@@ -54,8 +54,8 @@ mkdir -p "$HOME/.config"
 
 linkDotfile .vimrc
 linkDotfile .zshrc
+linkDotfile .bashrc
 linkDotfile .gitconfig
-linkDotfile .gitconfig-work
 linkDotfile .tmux.conf
 linkDotfile .tmux.conf.local
 linkDotfile .p10k.zsh
@@ -70,6 +70,9 @@ linkDotfile .config/mpd
 linkDotfile .config/ncmpcpp
 linkDotfile .config/redshift
 linkDotfile .config/dunst
+
+# For some reason, git doesn't support symlink for work
+cp .gitconfig-work ~/.gitconfig-work
 
 # Create mpd required playlist folder
 mkdir -p "$HOME/.config/mpd/playlists"
