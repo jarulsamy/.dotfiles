@@ -148,8 +148,10 @@ install_ohmyzsh() {
   fi
 }
 
+CWD=$(pwd)
+
 install_packages
 install_dotEngine
 install_ohmyzsh
 
-echo "DONE"
+cd "$CWD" || return
