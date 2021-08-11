@@ -26,31 +26,8 @@ linkDotfile() {
   ln -s "${dotfilesDir}/${1}" "${dest}"
 }
 
-authorize_github_keys() {
-  # Grab username from config.ini
-  source <(grep username .gitconfig | sed 's/ *= */=/g')
-
-  if [ -z ${username+x} ]; then
-    echo "Github username unset, skipping..."
-    return
-  fi
-
-  # URL to keys
-  URL="https://github.com/$username.keys"
-  # Save keys to authorized_keys
-
-  mkdir -p ~/.ssh
-
-  curl "$URL" -o "$HOME/.ssh/authorized_keys" 2>/dev/null 1>/dev/null
-  # Ensure permissions are correct
-  chmod 700 ~/.ssh
-  chmod 600 ~/.ssh/authorized_keys
-
-  echo "Grabbed authorized_keys from $URL"
-}
-
 # Ensure config folders exists
-mkdir -p "$HOME/.config"
+mkdir -p "$HOME/.config" "$HOME/.doom.d"
 
 linkDotfile .vimrc
 linkDotfile .zshrc
@@ -71,6 +48,12 @@ linkDotfile .config/ncmpcpp
 linkDotfile .config/redshift
 linkDotfile .config/dunst
 
+# Emacs
+linkDotfile .doom.d/config.el
+linkDotfile .doom.d/custom.el
+linkDotfile .doom.d/init.el
+linkDotfile .doom.d/packages.el
+
 # For some reason, git doesn't support symlink for work
 cp .gitconfig-work ~/.gitconfig-work
 
@@ -87,5 +70,13 @@ git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-
 # Install syntax highlighting plugin
 git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
 
+# Install doom emacs
+if [ ! -f "$HOME/.emacs.d/bin/doom" ]; then
+  rm -rf "$HOME/.emacs.d"
+  git clone --depth 1 https://github.com/hlissner/doom-emacs "$HOME/.emacs.d"
+  "$HOME/.emacs.d/bin/doom" install
+fi
+
 # Grab authorized_keys
+source "$HOME/.dotfiles/zfunc/aliases.sh"
 authorize_github_keys
