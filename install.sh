@@ -25,7 +25,7 @@ install_packages() {
     PKG_INSTALL=("${PKG_MANAGER}" -qq --no-install-recommends install)
 
     INSTALLER_DEPS=(cmake curl gcc git libcurl4-openssl-dev make zsh)
-    DEPS=(fzf g++ lolcat ripgrep shellcheck shfmt tmux vim wget xclip xdg-utils)
+    DEPS=(emacs fzf g++ lolcat ripgrep shellcheck shfmt tmux vim wget xclip xdg-utils)
 
     # If apt-get is not found, check for rpm to see if it's a Red Hat family OS
   elif is_command rpm; then
