@@ -29,24 +29,25 @@ linkDotfile() {
 # Ensure config folders exists
 mkdir -p "$HOME/.config" "$HOME/.doom.d"
 
-linkDotfile .vimrc
-linkDotfile .zshrc
+linkDotfile .alacritty.yml
 linkDotfile .bashrc
+linkDotfile .clang-format
+linkDotfile .flake8
 linkDotfile .gitconfig
+linkDotfile .p10k.zsh
 linkDotfile .tmux.conf
 linkDotfile .tmux.conf.local
-linkDotfile .p10k.zsh
-linkDotfile .alacritty.yml
-linkDotfile .flake8
-linkDotfile .clang-format
+linkDotfile .vimrc
+linkDotfile .zshrc
 
+linkDotfile .config/dunst
 linkDotfile .config/i3
-linkDotfile .config/polybar
-linkDotfile .config/ranger
+linkDotfile .config/kitty
 linkDotfile .config/mpd
 linkDotfile .config/ncmpcpp
+linkDotfile .config/polybar
+linkDotfile .config/ranger
 linkDotfile .config/redshift
-linkDotfile .config/dunst
 
 # Emacs
 linkDotfile .doom.d/config.el
