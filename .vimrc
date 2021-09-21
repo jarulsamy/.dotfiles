@@ -19,6 +19,7 @@ set textwidth=0                " Stop auto line breaking on paste
 set updatetime=100
 set clipboard=unnamedplus
 set hidden
+set novisualbell
 
 " Encoding
 set encoding=utf-8
