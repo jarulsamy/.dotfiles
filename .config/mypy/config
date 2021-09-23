@@ -1,0 +1,5 @@
+[mypy]
+warn_return_any = True
+warn_unused_configs = Tru
+
+ignore_missing_imports = True

@@ -44,6 +44,7 @@ linkDotfile .config/dunst
 linkDotfile .config/i3
 linkDotfile .config/kitty
 linkDotfile .config/mpd
+linkDotfile .config/mypy
 linkDotfile .config/ncmpcpp
 linkDotfile .config/polybar
 linkDotfile .config/ranger
