@@ -33,6 +33,10 @@ alias gnome-keybinds-import="dconf load / < $HOME/.dotfiles/dconf/custom-shortcu
 # Boot into windows
 alias reboot-win="sudo grub2-reboot 'Windows Boot Manager'; sudo reboot"
 
+# Valgrind
+alias memcheck="valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --verbose"
+alias profile="valgrind --tool=callgrind --dump-instr=yes --collect-jumps=yes"
+
 # cd into last directory alphanumerically in CWD
 # https://unix.stackexchange.com/a/257880/484896
 cdl() {
