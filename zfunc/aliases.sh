@@ -67,3 +67,42 @@ authorize_github_keys() {
 
   echo "Grabbed authorized_keys from $URL"
 }
+
+chr() {
+  printf \\$(printf '%03o' $1)
+  echo
+}
+
+ord() {
+  printf "%d\n" "'$1"
+}
+
+dec2hex() {
+  echo "obase=16; ibase=10; $1" | bc
+}
+
+hex2dec() {
+  echo "obase=10; ibase=16; $1" | bc
+}
+
+hex2chr() {
+  dec="$(hex2dec "$1")"
+  chr "${dec}"
+}
+
+hex2blk() {
+  dec="$(hex2dec "$1")"
+  # First 64-bytes:  superblock of disk, partition layout.
+  # Second 64-bytes: Partition 1 bitvector
+  # Third 64-bytes:  Partition 1 root directory.
+
+  blk=$((dec - 64))
+  blk=$((blk / 64))
+  printf "%s\n" "$blk"
+}
+
+blk2hex() {
+  blk=$(($1 * 64))
+  blk=$((blk + 64))
+  printf "%s\n" "$(dec2hex $blk)"
+}
