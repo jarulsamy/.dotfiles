@@ -5,8 +5,6 @@ set backspace=indent,eol,start " Allow backspace in insert mode
 set history=1000               " Store lots of cmd history
 set showcmd                    " Show incomplete cmds down at the bottom
 set showmode                   " Show current mode
-set guicursor=a:blinkon0       " Disable cursor blink
-set visualbell                 " Disable sounds
 set autoread                   " Reload files changed outside of vim
 
 set ruler                      " Show the line and column number of the cursor
@@ -16,7 +14,7 @@ set cursorline                 " Highlight line cursor is on
 set background=dark            " Dark background
 set textwidth=0                " Stop auto line breaking on paste
 
-set updatetime=100
+set updatetime=200
 set clipboard=unnamedplus
 set hidden
 set novisualbell
@@ -49,7 +47,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'dense-analysis/ale'
 Plug 'ervandew/supertab'
 Plug 'godlygeek/tabular'
-Plug 'godlygeek/tabular'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'kshenoy/vim-signature'
@@ -67,10 +64,11 @@ Plug 'vim-scripts/indentpython.vim'
 Plug 'wakatime/vim-wakatime'
 Plug 'yggdroot/indentline'
 
-" Only show preview if DISPLAY is defined
+" Only load markdown preview plugin if $DISPLAY is defined
 if !empty($DISPLAY)
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 endif
+
 " New enough version for YCM
 if version >= 802
     Plug 'ycm-core/YouCompleteMe'
@@ -132,16 +130,14 @@ set expandtab
 
 augroup FileExtIdents
     " File extension specific
-    au BufNewFile,BufRead *.c,*.cpp,*.h,*.hpp,*.lisp,*.vim,*.zsh,*.sh,*.zsh,*.js
+    au BufNewFile,BufRead *.c,*.cpp,*.h,*.hpp,*.lisp,*.vim,*.zsh,*.sh,*.zsh,*.js,*.yaml
                 \ set tabstop=2 |
                 \ set softtabstop=2 |
-                \ set shiftwidth=2
+                \ set shiftwidth=2 |
+                \ set expandtab
 
     " Auto remove trailing whitespace
     au BufWritePre *.* :%s/\s\+$//e
-
-    " YAML
-    autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab
 augroup END
 
 " Auto indent pasted text
@@ -189,11 +185,19 @@ augroup END
 
 " ====================== Airline ======================
 
-let g:airline_powerline_fonts = 1
+let g:airline_detect_modified=1
+let g:airline_detect_paste=1
+let g:airline_inactive_alt_sep=1
+
+let g:airline_powerline_fonts = 0
+let g:airline_symbols_ascii = 1
+
 let g:airline_highlighting_cache = 1
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+
 let g:airline_skip_empty_sections = 1
+let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
 
 " ====================== ALE ======================
 
@@ -263,6 +267,11 @@ hi SpellBad ctermfg=red guifg=red
 
 " ====================== Binds ======================
 
+" Use space for leader
+nnoremap <Space> <Nop>
+let mapleader=" "
+" let mapleader="\\"
+
 " F2 toggle paste mode
 set pastetoggle=<F2>
 " F3 yank entire file to clipboard
@@ -283,17 +292,19 @@ noremap <Up> <Nop>
 noremap <Down> <Nop>
 
 " FZF
-nnoremap <silent> <Leader>b :Buffers<CR>
 nnoremap <silent> <C-p> :Files<CR>
-nnoremap <silent> <Leader>p :Files<CR>
+nnoremap <silent> <Leader>' :Marks<CR>
+nnoremap <silent> <Leader>, :Buffers<CR>
 nnoremap <silent> <Leader>f :Rg<CR>
 nnoremap <silent> <Leader>/ :BLines<CR>
-nnoremap <silent> <Leader>' :Marks<CR>
-nnoremap <silent> <Leader>g :Commits<CR>
+nnoremap <silent> <Leader><Leader> :Files<CR>
 nnoremap <silent> <Leader>H :Helptags<CR>
-nnoremap <silent> <Leader>hh :History<CR>
+nnoremap <silent> <Leader>g :Commits<CR>
+nnoremap <silent> <Leader>gs :GFiles?<CR>
 nnoremap <silent> <Leader>h: :History:<CR>
-nnoremap <silent> <Leader>q/ :History/<CR>
+nnoremap <silent> <Leader>hh :History<CR>
+" Emacs inspired meta-x :D
+nnoremap <silent> <Esc>x :Commands<CR>
 
 " Disable highlighting with return
 nnoremap <CR> :noh<CR><CR>
@@ -310,7 +321,6 @@ no <C-h> <C-w>h|
 cnoremap w!! execute 'silent! write !sudo tee % > /dev/null' <bar> edit!
 
 " ====================== Misc ======================
-
 
 " Supress 'warning changing a readonly file'
 augroup ReadonlyWarning
