@@ -8,6 +8,10 @@
 [diff]
     tool = vimdiff
 
+[delta]
+    features = side-by-side line-numbers decorations
+    syntax-theme = gruvbox-dark
+
 [color]
     diff = auto
     status = auto
@@ -26,6 +30,12 @@
 [core]
     editor = vim
     mergeoptions =
+
+[pager]
+    diff = delta
+    show = delta
+    log = delta
+    reflog = delta
 
 [push]
     default = current
