@@ -3,20 +3,27 @@
 # A simple script to automatically generate an ssh key and add it to the ssh-agent.
 source <(grep email "$HOME/.dotfiles/.gitconfig" | sed 's/ *= */=/g')
 if [ -z ${email+x} ]; then
-    exit -1
+    exit 1
 fi
 
-PRIV_KEY="$HOME/.ssh/id_rsa"
-PUB_KEY="$HOME/.ssh/id_rsa.pub"
+OLD_PRIV_KEY="$HOME/.ssh/id_rsa"
+OLD_PUB_KEY="$HOME/.ssh/id_rsa.pub"
 
-if ! [ -f "$PRIV_KEY" ]; then
+PRIV_KEY="$HOME/.ssh/id_ed25519"
+PUB_KEY="$HOME/.ssh/id_ed25519.pub"
+
+if ! [ -f "$PRIV_KEY" ] && ! [ -f "$OLD_PRIV_KEY" ]; then
     ssh-keygen -t ed25519 -f "$PRIV_KEY" -C "$email"
     eval "$(ssh-agent -s)"
-    ssh-add "$HOME/.ssh/id_rsa"
+    ssh-add "$PRIV_KEY"
+elif [ -f "$OLD_PRIV_KEY" ]; then
+    echo "SSH key already exists."
+    echo "[WARNING]: Using deprecated RSA key."
+    PUB_KEY="$OLD_PUB_KEY"
 else
     echo "SSH key already exists."
 fi
 
 # Copy to clipboard
-cat $PUB_KEY | xclip -selection c
+xclip -selection c -i "$PUB_KEY"
 echo "Public key copied to clipboard."
