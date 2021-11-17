@@ -38,7 +38,7 @@ install_packages() {
 
     # These variable names match the ones in the Debian family. See above for an explanation of what they are for.
     PKG_INSTALL=("${PKG_MANAGER}" install -y)
-    INSTALLER_DEPS=(cmake curl gcc git libcurl libcurl-devel make zsh)
+    INSTALLER_DEPS=(cmake curl gcc git libcurl libcurl-devel make zsh jq)
     DEPS=(ShellCheck fzf g++ lolcat ripgrep shfmt tmux vim wget xclip xdg-utils)
 
     # If the host OS is Fedora,
@@ -72,7 +72,7 @@ install_packages() {
     PKG_MANAGER="pacman"
     PKG_INSTALL=("${PKG_MANAGER}" -S --noconfirm)
 
-    INSTALLER_DEPS=(cmake curl gcc git make zsh)
+    INSTALLER_DEPS=(cmake curl gcc git make zsh jq)
     DEPS=(fzf lolcat ripgrep shellcheck shfmt tmux vim wget xclip xdg-utils)
 
   # If not apt-get, yum/dnf, or pacman, not supported.
