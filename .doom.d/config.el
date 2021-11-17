@@ -224,7 +224,7 @@
     (let ((default-directory (file-name-directory calctex-dvichop-bin)))
       (call-process "make" nil nil nil))))
 
-;; Enable wakatime everywhere
 (global-wakatime-mode)
+(setq-default wakatime-cli-path "/home/joshua/.wakatime/wakatime-cli-linux-amd64")
 
 ;;; config.el ends here

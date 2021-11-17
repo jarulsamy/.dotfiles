@@ -5,6 +5,10 @@
 [dotEngine]
     username = jarulsamy
 
+[delta]
+    side-by-side = true
+    syntax-theme = gruvbox-dark
+
 [diff]
     tool = vimdiff
 
@@ -33,9 +37,9 @@
 
 [pager]
     diff = delta
-    show = delta
     log = delta
     reflog = delta
+    show = delta
 
 [push]
     default = current
