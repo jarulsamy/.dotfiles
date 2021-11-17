@@ -24,7 +24,7 @@ install_packages() {
     PKG_MANAGER="apt-get"
     PKG_INSTALL=("${PKG_MANAGER}" -qq --no-install-recommends install)
 
-    INSTALLER_DEPS=(cmake curl gcc git libcurl4-openssl-dev make zsh)
+    INSTALLER_DEPS=(cmake curl gcc git libcurl4-openssl-dev make zsh jq)
     DEPS=(emacs fzf g++ lolcat ripgrep shellcheck shfmt tmux vim wget xclip xdg-utils)
 
     # If apt-get is not found, check for rpm to see if it's a Red Hat family OS
@@ -99,44 +99,17 @@ install_packages() {
 }
 
 install_dotEngine() {
-  # TODO: Do a version check here for update
-
+  local api_endpoint
   local dest_dir
-  local compile_dir
-  local build_dir
+  local download_link
 
+  api_endpoint="https://api.github.com/repos/jarulsamy/dotEngine/releases/latest"
   dest_dir="$HOME/.local/bin"
 
-  # Compile and install dotEngine, if it doesn't exist
-  if [ ! -f "${dest_dir}/dotEngine" ]; then
+  download_link=$(curl --silent "$api_endpoint" | jq -r ".assets[0].browser_download_url")
+  curl -L "$download_link" -o "$dest_dir"/dotEngine
 
-    # Prep, clone and setup build dir
-    compile_dir="$(mktemp -d)"
-    build_dir="$compile_dir/build"
-
-    cd "$compile_dir" || error "Couldn't install dotEngine"
-    git clone https://github.com/jarulsamy/dotEngine "$compile_dir"
-    mkdir -p "$build_dir" "$dest_dir"
-    cd "$build_dir" || error "Couldn't install dotEngine"
-
-    # Actual compilation and installation
-    cmake .. -DCMAKE_BUILD_TYPE=RELEASE -DCMAKE_INSTALL_LIBDIR=lib
-    make
-    sudo make install
-
-    # Fix permission of resulting binary
-    sudo chown $(id -un):$(id -gn) "${dest_dir}/dotEngine"
-    chmod +x "${dest_dir}/dotEngine"
-
-    # Update shared libraries path
-    sudo ldconfig /usr/local/lib
-
-    # Cleanup
-    cd "$HOME" || exit 1
-    rm -rf "$compile_dir"
-  else
-    echoerr "Skipping dotEngine install, $HOME/.local/bin/dotEngine already exists."
-  fi
+  chmod +x "$dest_dir"/dotEngine
 }
 
 install_ohmyzsh() {

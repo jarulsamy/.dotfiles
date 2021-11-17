@@ -8,6 +8,10 @@
 [diff]
     tool = vimdiff
 
+[delta]
+    features = side-by-side line-numbers decorations
+    syntax-theme = gruvbox-dark
+
 [color]
     diff = auto
     status = auto
@@ -27,6 +31,12 @@
     editor = vim
     mergeoptions =
 
+[pager]
+    diff = delta
+    show = delta
+    log = delta
+    reflog = delta
+
 [push]
     default = current
 
@@ -44,6 +54,8 @@
     lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
     lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
     lg = !"git lg1"
+    fixme = grep -n --heading --break --ignore-case -e 'FIX: *' -e 'FIXME: *'
+    todo  = grep -n --heading --break --ignore-case -e 'TODO: *'
 
 [includeIf "gitdir:workRepos/"]
     path = .gitconfig-work
