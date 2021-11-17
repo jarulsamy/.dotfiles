@@ -108,6 +108,8 @@ install_dotEngine() {
 
   download_link=$(curl --silent "$api_endpoint" | jq -r ".assets[0].browser_download_url")
   curl -L "$download_link" -o "$dest_dir"/dotEngine
+
+  chmod +x "$dest_dir"/dotEngine
 }
 
 install_ohmyzsh() {
