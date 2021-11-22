@@ -11,6 +11,7 @@
 (package! python-black)
 (package! lsp-haskell)
 (package! wakatime-mode)
+(package! gruvbox-theme)
 
 (package! xkcd :pin "66e928706fd660cfdab204c98a347b49c4267bdf")
 

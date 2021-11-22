@@ -174,7 +174,7 @@ set nomodeline
 " ====================== Theme ======================
 
 augroup Theme
-    let g:gruvbox_contrast_dark='medium'
+    let g:gruvbox_contrast_dark='hard'
     let g:gruvbox_contrast_light='soft'
     let g:gruvbox_bold=1
     let g:gruvbox_italic=1
