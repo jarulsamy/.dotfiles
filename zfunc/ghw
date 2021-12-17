@@ -24,10 +24,10 @@ from pathlib import Path
 
 from docopt import docopt
 
-DOTFILES_DIR = Path(Path.home(), ".dotfiles", "zfunc", "dotEngine")
+DOTFILES_DIR = Path(Path.home(), ".dotfiles", "zfunc")
 sys.path.insert(0, str(DOTFILES_DIR))
 
-from dotEngine import get_git_username
+from gitUtils import get_git_username
 
 VERSION = "0.0.4"
 GITHUB_USERNAME = get_git_username()
