@@ -1,6 +1,20 @@
 #!/usr/bin/env bash
 
-declare -a packages=("autopep8" "bandit" "black" "docopt" "flake8" "isort" "mypy" "pydocstyle" "pre-commit")
+declare -a packages=(
+    "autopep8"
+    "bandit"
+    "black"
+    "docopt"
+    "flake8"
+    "isort"
+    "mypy"
+    "pre-commit"
+    "pydocstyle"
+    "pylsp-isort"
+    "pylsp-rope"
+    "python-lsp-black"
+    "python-lsp-server"
+)
 
 install() {
     for i in "${packages[@]}"; do
@@ -10,18 +24,18 @@ install() {
 
 while test $# -gt 0; do
     case "$1" in
-    -h | --help)
-        echo "$package - Lists and optionally install frequently used python packages"
-        echo "Options:"
-        echo "-h, --help        show brief help"
-        echo "-i, --install     Install packages"
-        break
-        ;;
-    -i | --install)
-        shift
-        install
-        break
-        ;;
+        -h | --help)
+            echo "$package - Lists and optionally install frequently used python packages"
+            echo "Options:"
+            echo "-h, --help        show brief help"
+            echo "-i, --install     Install packages"
+            break
+            ;;
+        -i | --install)
+            shift
+            install
+            break
+            ;;
     esac
 done
 
