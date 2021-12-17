@@ -13,7 +13,6 @@ is_command() {
   # Checks to see if the given command (passed as a string argument) exists on the system.
   # Returns 0 (success) if the command exists, and 1 if it doesn't.
   local check_command="$1"
-
   command -v "${check_command}" >/dev/null 2>&1
 }
 
@@ -70,7 +69,7 @@ install_packages() {
 
   elif is_command pacman; then
     PKG_MANAGER="pacman"
-    PKG_INSTALL=("${PKG_MANAGER}" -S --noconfirm)
+    PKG_INSTALL=("${PKG_MANAGER}" -S --noconfirm --needed)
 
     INSTALLER_DEPS=(cmake curl gcc git make zsh jq)
     DEPS=(fzf lolcat ripgrep shellcheck shfmt tmux vim wget xclip xdg-utils)
@@ -80,7 +79,7 @@ install_packages() {
     # it's not an OS we can support,
     printf "  %b OS distribution not supported\\n" "${CROSS}"
     # so exit the installer
-    exit
+    exit 2
   fi
 
   # We've determined that we have a valid package manager, and set the necessary packages for this specific distro.
@@ -105,11 +104,23 @@ install_dotEngine() {
 
   api_endpoint="https://api.github.com/repos/jarulsamy/dotEngine/releases/latest"
   dest_dir="$HOME/.local/bin"
-
   download_link=$(curl --silent "$api_endpoint" | jq -r ".assets[0].browser_download_url")
+  if [ ! "$?" -eq 0 ]; then
+    echoerr "Failed to find latest dotEngine release."
+    return
+  fi
+
+  mkdir -pv "$dest_dir"
+  printf "Downloading dotEngine...\n"
   curl -L "$download_link" -o "$dest_dir"/dotEngine
 
+  if [ ! "$?" -eq 0 ]; then
+    echoerr "Failed to download dotEngine."
+    return
+  fi
+
   chmod +x "$dest_dir"/dotEngine
+  printf "Installed dotEngine to %s\n" "$dest_dir"
 }
 
 install_ohmyzsh() {
@@ -121,10 +132,10 @@ install_ohmyzsh() {
   fi
 }
 
-CWD=$(pwd)
+CWD="$(pwd)"
 
 install_packages
 install_dotEngine
 install_ohmyzsh
 
-cd "$CWD" || return
+cd "$CWD" || exit 0
