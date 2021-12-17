@@ -2,7 +2,7 @@
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+    source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 # If not running interactively, don't do anything
@@ -38,7 +38,7 @@ HYPHEN_INSENSITIVE="true"
 DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-# export UPDATE_ZSH_DAYS=13
+export UPDATE_ZSH_DAYS=31
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS=true
@@ -86,7 +86,7 @@ plugins=(
     zsh-syntax-highlighting
 )
 
-source $ZSH/oh-my-zsh.sh
+source "$ZSH/oh-my-zsh.sh"
 
 # User configuration
 # You may need to manually set your language environment
@@ -94,12 +94,14 @@ export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 export EDITOR="vim"
+export VISUAL="$EDITOR"
+export SUDO_EDITOR="$EDITOR"
 export GIT_EDITOR="vim -c'startinsert|norm! ggA'"
 
 # Compilation flags
 export ARCHFLAGS="-march=native"
-export MAKEOPTS="-j4"
-export MAKEFLAGS="-j4"
+export MAKEOPTS="-j$(nproc)"
+export MAKEFLAGS="$MAKEOPTS"
 
 # Include custom scripts
 export PATH="$HOME/.dotfiles/zfunc:$PATH"
@@ -107,12 +109,12 @@ export PATH="$HOME/.dotfiles/zfunc:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
 # Ensure dir exists before sourcing.
-if [ -d "$HOME/.dotfiles" ] ; then
-    # Load custom keybinds
+if [ -d "$HOME/.dotfiles" ]; then
+    # Keybinds
     source "$HOME/.dotfiles/zfunc/keybinds.sh"
-    # Load aliases
+    # Aliases
     source "$HOME/.dotfiles/zfunc/aliases.sh"
-    # Load custom autocompletion
+    # Autocompletion
     source "$HOME/.dotfiles/zfunc/autocompletion.sh"
 fi
 
@@ -123,9 +125,11 @@ chpwd() ls
 unsetopt AUTO_CD
 
 # FZF
-if type rg &> /dev/null; then
-  export FZF_DEFAULT_COMMAND="rg --files"
-  export FZF_DEFAULT_OPTS="-m --height 50% --border"
+if
+    type rg &>/dev/null
+then
+    export FZF_DEFAULT_COMMAND="rg --files"
+    export FZF_DEFAULT_OPTS="-m --height 50% --border"
 fi
 
 # Virtualenv
@@ -135,9 +139,9 @@ export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3"
 export VIRTUALENVWRAPPER_SCRIPT="$HOME/.local/bin/virtualenvwrapper.sh"
 [[ ! -f "$VIRTUALENVWRAPPER_SCRIPT" ]] || source "$VIRTUALENVWRAPPER_SCRIPT"
 
-# Auto activate base
+# Auto activate base virtualenv
 envs=$(workon)
-if [[ $envs == *"base"* ]] then;
+if [[ $envs == *"base"* ]]; then
     workon base
 fi
 
