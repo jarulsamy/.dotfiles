@@ -5,8 +5,8 @@ _clone() {
     '--help[Show help]' \
     '--dry-run[Do not actually clone, just echo the remote url of the repo]' \
     '--http[Use HTTP instead of SSH]' \
-    '--version[Show version]' \
+    '--version[Show version]'
 
-  _describe 'command' "($(dotEngine -z))"
+  _describe 'command' "($($HOME/.local/bin/dotEngine -z))"
 }
 compdef _clone clone

@@ -42,7 +42,7 @@ alias profile="valgrind --tool=callgrind --dump-instr=yes --collect-jumps=yes"
 cdl() {
   set ./*/
   shift "$(($# - 1))"
-  cd "$1"
+  cd "$1" || exit
 }
 
 authorize_github_keys() {
