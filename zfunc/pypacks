@@ -10,7 +10,7 @@ declare -a packages=(
     "mypy"
     "pre-commit"
     "pydocstyle"
-    "pylsp-isort"
+    "pyls-isort"
     "pylsp-rope"
     "python-lsp-black"
     "python-lsp-server"
