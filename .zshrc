@@ -1,12 +1,12 @@
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
     source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -81,7 +81,6 @@ plugins=(
     docker-compose
     fzf
     git
-    taskwarrior
     zsh-autosuggestions
     zsh-syntax-highlighting
 )
@@ -89,7 +88,6 @@ plugins=(
 source "$ZSH/oh-my-zsh.sh"
 
 # User configuration
-# You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
@@ -102,6 +100,14 @@ export GIT_EDITOR="vim -c'startinsert|norm! ggA'"
 export ARCHFLAGS="-march=native"
 export MAKEOPTS="-j$(nproc)"
 export MAKEFLAGS="$MAKEOPTS"
+
+# Use clang if possible
+if
+    type clang &>/dev/null
+then
+    export CC=clang
+    export CXX=clang++
+fi
 
 # Include custom scripts
 export PATH="$HOME/.dotfiles/zfunc:$PATH"
@@ -129,21 +135,22 @@ if
     type rg &>/dev/null
 then
     export FZF_DEFAULT_COMMAND="rg --files"
-    export FZF_DEFAULT_OPTS="-m --height 50% --border"
 fi
+export FZF_DEFAULT_OPTS="-m --height 50% --border"
 
 # Virtualenv
 export WORKON_HOME="$HOME/.virtualenvs"
 export PROJECT_HOME="$HOME/repos"
 export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3"
 export VIRTUALENVWRAPPER_SCRIPT="$HOME/.local/bin/virtualenvwrapper.sh"
-[[ ! -f "$VIRTUALENVWRAPPER_SCRIPT" ]] || source "$VIRTUALENVWRAPPER_SCRIPT"
-
-# Auto activate base virtualenv
-envs=$(workon)
-if [[ $envs == *"base"* ]]; then
-    workon base
+if [[ -f "$VIRTUALENVWRAPPER_SCRIPT" ]] then;
+    source "$VIRTUALENVWRAPPER_SCRIPT"
+    # Auto activate base virtualenv
+    envs=$(workon)
+    if [[ $envs == *"base"* ]]; then
+        workon base
+    fi
 fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ ! -f "$HOME/.p10k.zsh" ]] || source "$HOME/.p10k.zsh"
