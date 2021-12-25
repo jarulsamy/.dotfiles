@@ -109,4 +109,7 @@
                                 "--pch-storage=memory"))
 (after! lsp-clangd (set-lsp-priority! 'clangd 2))
 
+;; Org-roam
+(setq org-roam-directory "~/repos/brain")
+
 ;;; config.el ends here
