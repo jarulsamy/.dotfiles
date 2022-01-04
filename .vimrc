@@ -65,13 +65,16 @@ Plug 'wakatime/vim-wakatime'
 Plug 'yggdroot/indentline'
 
 " Only load markdown preview plugin if $DISPLAY is defined
+" Fixes hanging on headless systems.
 if !empty($DISPLAY)
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 endif
 
-" New enough version for YCM
 if version >= 802
-    Plug 'ycm-core/YouCompleteMe'
+    " YCM requires vim to be compiled with python3 support.
+    if has('python3')
+        Plug 'ycm-core/YouCompleteMe'
+    endif
 
     " Auto change cursor shape (alacritty)
     let &t_SI = "\<ESC>[6 q"
@@ -90,7 +93,6 @@ set nowritebackup
 
 " ====================== Persistent Undo ======================
 
-" Put plugins and dictionaries in this dir (also on Windows)
 let vimDir = '$HOME/.vim'
 
 " Keep undo history across sessions by storing it in a file
@@ -130,7 +132,7 @@ set expandtab
 
 augroup FileExtIdents
     " File extension specific
-    au BufNewFile,BufRead *.c,*.cpp,*.h,*.hpp,*.lisp,*.vim,*.zsh,*.sh,*.zsh,*.js,*.yaml
+    autocmd BufNewFile,BufRead *.{c,cpp,h,hpp,lisp,vim,zsh,sh,js,yaml}
                 \ set tabstop=2 |
                 \ set softtabstop=2 |
                 \ set shiftwidth=2 |
