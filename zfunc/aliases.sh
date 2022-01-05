@@ -27,7 +27,10 @@ alias vi="vim"
 alias zshreload="source $HOME/.zshrc"
 
 # Dump gnome keybinds to file
-alias gnome-keybinds-export="dconf dump / | sed -n '/\[org.gnome.settings-daemon.plugins.media-keys/,/^$/p' >$HOME/.dotfiles/dconf/custom-shortcuts.ini"
+gnome-keybinds-export() {
+  dconf dump / | sed -n '/\[org.gnome.settings-daemon.plugins.media-keys/,/^$/p' >"$HOME/.dotfiles/dconf/custom-shortcuts.ini"
+  dconf dump / | sed -n '/\[org.gnome.shell.keybindings/,/^$/p' >>"$HOME/.dotfiles/dconf/custom-shortcuts.ini"
+}
 alias gnome-keybinds-import="dconf load / < $HOME/.dotfiles/dconf/custom-shortcuts.ini"
 
 # Boot into windows
