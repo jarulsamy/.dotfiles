@@ -133,10 +133,10 @@ set expandtab
 augroup FileExtIdents
     " File extension specific
     autocmd BufNewFile,BufRead *.{c,cpp,h,hpp,lisp,vim,zsh,sh,js,yaml}
-                \ set tabstop=2 |
-                \ set softtabstop=2 |
-                \ set shiftwidth=2 |
-                \ set expandtab
+                \ setlocal tabstop=2 |
+                \ setlocal softtabstop=2 |
+                \ setlocal shiftwidth=2 |
+                \ setlocal expandtab
 
     " Auto remove trailing whitespace
     au BufWritePre *.* :%s/\s\+$//e
@@ -253,16 +253,19 @@ let g:mkdp_auto_close = 1
 
 " 80 char line limit
 autocmd BufNewFile,BufRead *.md,*.txt
-            \ set textwidth=80 |
-            \ set colorcolumn=+1
+            \ setlocal textwidth=80 |
+            \ setlocal colorcolumn=+1
 
 " Spellcheck
-autocmd FileType markdown setlocal spell
-autocmd FileType gitcommit setlocal spell
+autocmd FileType markdown
+            \ setlocal spell |
+            \ setlocal complete+=kspell
 
-" Dictionary auto-complete
-autocmd FileType markdown setlocal complete+=kspell
-autocmd FileType gitcommit setlocal complete+=kspell
+autocmd FileType gitcommit
+            \ setlocal textwidth=72 |
+            \ setlocal colorcolumn=72 |
+            \ setlocal spell |
+            \ setlocal complete+=kspell
 
 " Highlight misspelled words
 hi SpellBad ctermfg=red guifg=red
