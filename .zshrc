@@ -141,7 +141,7 @@ export FZF_DEFAULT_OPTS="-m --height 50% --border"
 # Virtualenv
 export WORKON_HOME="$HOME/.virtualenvs"
 export PROJECT_HOME="$HOME/repos"
-export VIRTUALENVWRAPPER_PYTHON="/usr/bin/python3"
+export VIRTUALENVWRAPPER_HOOK_DIR="$HOME/.dotfiles/virtualenv_hooks"
 export VIRTUALENVWRAPPER_SCRIPT="$HOME/.local/bin/virtualenvwrapper.sh"
 if [[ -f "$VIRTUALENVWRAPPER_SCRIPT" ]] then;
     source "$VIRTUALENVWRAPPER_SCRIPT"
