@@ -18,8 +18,7 @@
 
 (setq-default delete-by-moving-to-trash t)
 
-(setq undo-limit 80000000
-      evil-want-fine-undo t)
+(setq undo-limit 80000000 )
 
 (display-time-mode 1)
 
@@ -67,10 +66,6 @@
       doom-modeline-minor-modes nil
       doom-modeline-enable-word-count nil)
 
-;; Keybinds
-;; Quickly switch between corresponding files
-(global-set-key (kbd "C-x C-o") 'ff-find-other-file)
-
 ;;; Modules
 ;;; :editor evil
 ;; Focus new window after splitting
@@ -96,8 +91,8 @@
   (add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
 
 ;; Wakatime
+(setq-default wakatime-cli-path (expand-file-name "~/.wakatime/wakatime-cli-linux-amd64"))
 (global-wakatime-mode)
-(setq-default wakatime-cli-path "/home/joshua/.wakatime/wakatime-cli-linux-amd64")
 
 ;; Clangd LSP
 (setq lsp-clients-clangd-args '("--background-index"
@@ -110,7 +105,7 @@
 (after! lsp-clangd (set-lsp-priority! 'clangd 2))
 
 ;; Org-roam
-(setq org-roam-directory "~/repos/brain")
+(setq org-roam-directory "~/org/brain")
 (use-package! websocket
     :after org-roam)
 
@@ -119,7 +114,7 @@
 ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
 ;;         a hookable mode anymore, you're advised to pick something yourself
 ;;         if you don't care about startup time, use
-;;  :hook (after-init . org-roam-ui-mode)
+    :hook (after-init . org-roam-ui-mode)
     :config
     (setq org-roam-ui-sync-theme t
           org-roam-ui-follow t
@@ -131,4 +126,17 @@
 (setq twittering-icon-mode t)
 (setq twittering-use-icon-storage t)
 
-;; config.el ends here
+;; Default python environment
+(after! pyvenv
+  (pyvenv-workon "base"))
+
+;; == Magit ==
+(after! magit
+  (setq magit-diff-refine-hunk 'all))
+
+;; == Evil Mode ==
+(setq evil-move-cursor-back nil
+      evil-want-fine-undo t)
+
+;; Bring back s/S
+(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
