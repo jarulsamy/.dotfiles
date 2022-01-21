@@ -34,6 +34,7 @@ linkDotfile .bashrc
 linkDotfile .clang-format
 linkDotfile .flake8
 linkDotfile .gitconfig
+linkDotfile .mbsyncrc
 linkDotfile .p10k.zsh
 linkDotfile .tmux.conf
 linkDotfile .tmux.conf.local

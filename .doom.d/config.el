@@ -107,19 +107,19 @@
 ;; Org-roam
 (setq org-roam-directory "~/org/brain")
 (use-package! websocket
-    :after org-roam)
+  :after org-roam)
 
 (use-package! org-roam-ui
-    :after org-roam ;; or :after org
-;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-;;         a hookable mode anymore, you're advised to pick something yourself
-;;         if you don't care about startup time, use
-    :hook (after-init . org-roam-ui-mode)
-    :config
-    (setq org-roam-ui-sync-theme t
-          org-roam-ui-follow t
-          org-roam-ui-update-on-save t
-          org-roam-ui-open-on-start t))
+  :after org-roam ;; or :after org
+  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
+  ;;         a hookable mode anymore, you're advised to pick something yourself
+  ;;         if you don't care about startup time, use
+  :hook (after-init . org-roam-ui-mode)
+  :config
+  (setq org-roam-ui-sync-theme t
+        org-roam-ui-follow t
+        org-roam-ui-update-on-save t
+        org-roam-ui-open-on-start t))
 
 ;; Twitter
 (setq twittering-allow-insecure-server-cert t)
@@ -137,6 +137,33 @@
 ;; == Evil Mode ==
 (setq evil-move-cursor-back nil
       evil-want-fine-undo t)
-
 ;; Bring back s/S
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+
+;; Email
+(after! mu4e
+  (setq! mu4e-use-fancy-chars t
+         mu4e-view-show-addresses t
+         mu4e-view-show-images t
+         mu4e-maildir-shortcuts
+         '( ("/Inbox" . ?i)
+            ("/Archive" . ?a)
+            ("/Drafts" . ?d)
+            ("/Deleted Items" . ?t))
+         ))
+
+(set-email-account! "UW"
+                    '((mu4e-sent-folder       . "/Sent Items")
+                      (mu4e-drafts-folder     . "/Drafts")
+                      (mu4e-trash-folder      . "/Deleted Items")
+                      (mu4e-refile-folder     . "/Archive")
+                      (mu4e-compose-signature . "")
+                      (mu4e-update-inverval   . 1800)
+                      (mu4e-get-mail-command  . "mbsync work")
+                      (smtpmail-stream-type   . starttls)
+                      (user-mail-address      . "jarulsam@uwyo.edu")
+                      (smtpmail-smtp-user     . "jarulsam@uwyo.edu")
+                      (smtpmail-smtp-server   . "smtp.office365.com")
+                      (smtpmail-smtp-service  . 587)
+                      )
+                    t)
