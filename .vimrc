@@ -4,7 +4,7 @@ syntax on                      " Enable sytax highlighting
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=1000               " Store lots of cmd history
 set showcmd                    " Show incomplete cmds down at the bottom
-set showmode                   " Show current mode
+set noshowmode                 " Show current mode
 set autoread                   " Reload files changed outside of vim
 
 set ruler                      " Show the line and column number of the cursor
@@ -14,7 +14,6 @@ set cursorline                 " Highlight line cursor is on
 set background=dark            " Dark background
 set textwidth=0                " Stop auto line breaking on paste
 
-set updatetime=200
 set clipboard=unnamedplus
 set hidden
 set novisualbell
@@ -30,16 +29,18 @@ endif
 " ====================== Vim Plug ======================
 
 " Install vim-plug if not found
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
-endif
+augroup VimPlugged
+    if empty(glob('~/.vim/autoload/plug.vim'))
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+                    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+    endif
 
-" Run PlugInstall if there are missing plugins
-autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
-            \| PlugInstall --sync | source $MYVIMRC
-            \| endif
+    " Run PlugInstall if there are missing plugins
+    autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+                \| PlugInstall --sync | source $MYVIMRC
+                \| endif
+augroup END
 
 call plug#begin('~/.vim/plugged')
 
@@ -70,7 +71,7 @@ if !empty($DISPLAY)
     Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() }, 'for': ['markdown', 'vim-plug']}
 endif
 
-if version >= 802
+if v:version >= 802
     " YCM requires vim to be compiled with python3 support.
     if has('python3')
         Plug 'ycm-core/YouCompleteMe'
@@ -99,8 +100,12 @@ let vimDir = '$HOME/.vim'
 if has('persistent_undo')
     let myUndoDir = expand(vimDir . '/undodir')
     " Create dirs
-    call system('mkdir ' . vimDir)
-    call system('mkdir ' . myUndoDir)
+    if !isdirectory(vimDir)
+        call system('mkdir ' . vimDir)
+    endif
+    if !isdirectory(myUndoDir)
+        call system('mkdir ' . myUndoDir)
+    endif
     let &undodir = myUndoDir
     set undofile
 endif
@@ -157,7 +162,7 @@ set linebreak    "Wrap lines at convenient points
 
 " ====================== Scrolling ======================
 
-set scrolloff=8         "Start scrolling when we're 8 lines away from margins
+set scrolloff=8         " Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 
@@ -176,20 +181,20 @@ set nomodeline
 " ====================== Theme ======================
 
 augroup Theme
-    let g:gruvbox_contrast_dark='hard'
-    let g:gruvbox_contrast_light='soft'
-    let g:gruvbox_bold=1
-    let g:gruvbox_italic=1
-    let g:gruvbox_undercurl=1
-    let g:gruvbox_termcolors=256
+    let g:gruvbox_contrast_dark = 'hard'
+    let g:gruvbox_contrast_light = 'soft'
+    let g:gruvbox_bold = 1
+    let g:gruvbox_italic = 1
+    let g:gruvbox_undercurl = 1
+    let g:gruvbox_termcolors = 256
     colorscheme gruvbox
 augroup END
 
 " ====================== Airline ======================
 
-let g:airline_detect_modified=1
-let g:airline_detect_paste=1
-let g:airline_inactive_alt_sep=1
+let g:airline_detect_modified = 1
+let g:airline_detect_paste = 1
+let g:airline_inactive_alt_sep = 1
 
 let g:airline_powerline_fonts = 0
 let g:airline_symbols_ascii = 1
@@ -199,7 +204,7 @@ let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 
 let g:airline_skip_empty_sections = 1
-let g:airline#parts#ffenc#skip_expected_string='utf-8[unix]'
+let g:airline#parts#ffenc#skip_expected_string = 'utf-8[unix]'
 
 " ====================== ALE ======================
 
@@ -208,7 +213,8 @@ let g:ale_linters = {
             \ 'cpp': ['cc','cpplint'],
             \ 'markdown': ['markdownlint'],
             \ 'python': ['flake8', 'pydocstyle', 'bandit', 'mypy'],
-            \ 'sh': ['shellcheck']
+            \ 'sh': ['shellcheck'],
+            \ 'vim': ['vimls', 'vint']
             \}
 
 let g:ale_fixers = {
@@ -218,7 +224,7 @@ let g:ale_fixers = {
             \ 'markdown': ['prettier'],
             \ 'html': ['prettier'],
             \ 'python': ['black', 'isort'],
-            \ 'sh': ['shfmt']
+            \ 'sh': ['shfmt'],
             \}
 
 let g:ale_lint_on_insert_leave = 1
@@ -238,7 +244,7 @@ endfunction
 
 let g:vim_markdown_folding_disabled = 1
 let g:vim_markdown_conceal = 0
-let g:tex_conceal = ""
+let g:tex_conceal = ''
 let g:vim_markdown_math = 1
 let g:vim_markdown_conceal_code_blocks = 0
 
@@ -252,20 +258,22 @@ let g:mkdp_auto_start = 1
 let g:mkdp_auto_close = 1
 
 " 80 char line limit
-autocmd BufNewFile,BufRead *.md,*.txt
-            \ setlocal textwidth=80 |
-            \ setlocal colorcolumn=+1
+augroup FileExtIdents
+    autocmd BufNewFile,BufRead *.md,*.txt
+                \ setlocal textwidth=80 |
+                \ setlocal colorcolumn=+1
 
-" Spellcheck
-autocmd FileType markdown
-            \ setlocal spell |
-            \ setlocal complete+=kspell
+    " Spellcheck
+    autocmd FileType markdown
+                \ setlocal spell |
+                \ setlocal complete+=kspell
 
-autocmd FileType gitcommit
-            \ setlocal textwidth=72 |
-            \ setlocal colorcolumn=72 |
-            \ setlocal spell |
-            \ setlocal complete+=kspell
+    autocmd FileType gitcommit
+                \ setlocal textwidth=72 |
+                \ setlocal colorcolumn=72 |
+                \ setlocal spell |
+                \ setlocal complete+=kspell
+augroup END
 
 " Highlight misspelled words
 hi SpellBad ctermfg=red guifg=red
@@ -274,8 +282,7 @@ hi SpellBad ctermfg=red guifg=red
 
 " Use space for leader
 nnoremap <Space> <Nop>
-let mapleader=" "
-" let mapleader="\\"
+let mapleader = ' '
 
 " F2 toggle paste mode
 set pastetoggle=<F2>
