@@ -16,20 +16,40 @@
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
 
+;; Use system trash bin.
 (setq-default delete-by-moving-to-trash t)
-
 (setq undo-limit 80000000 )
-
 (display-time-mode 1)
 
-;; Ascii Banner
-(defun doom-dashboard-draw-ascii-emacs-banner-fn ()
-  (let* ((banner
-          '("     _           _"
-            "    | | ___  ___| |__"
-            " _  | |/ _ \\/ __| '_ \\"
-            "| |_| | (_) \\__ | | | |"
-            " \\___/ \\___/|___|_| |_|"))
+;; Source: https://stackoverflow.com/a/94277/8846676
+(defun set-frame-size-according-to-resolution ()
+  (interactive)
+  (if window-system
+      (progn
+        ;; use 120 char wide window for largeish displays
+        ;; and smaller 80 column windows for smaller displays
+        ;; pick whatever numbers make sense for you
+        (if (> (x-display-pixel-width) 1280)
+            (add-to-list 'default-frame-alist (cons 'width 120))
+          (add-to-list 'default-frame-alist (cons 'width 80)))
+        ;; for the height, subtract a couple hundred pixels
+        ;; from the screen height (for panels, menubars and
+        ;; whatnot), then divide by the height of a char to
+        ;; get the height we want
+        (add-to-list 'default-frame-alist
+                     (cons 'height (/ (- (x-display-pixel-height) 400)
+                                      (frame-char-height)))))))
+(set-frame-size-according-to-resolution)
+
+;; Source: First elisp function I ever wrote entirely by myself! :D
+(defun file-contents-to-list (filename)
+  (let ((contents (with-temp-buffer
+                    (insert-file-contents filename)
+                    (buffer-substring-no-properties (point-min) (point-max)))))
+    (split-string contents "\n")))
+
+(defun doom-dashboard-banner ()
+  (let* ((banner (file-contents-to-list "~/.doom.d/banners/7.txt"))
          (longest-line (apply #'max (mapcar #'length banner))))
     (put-text-property
      (point)
@@ -41,7 +61,7 @@
                                    32)))
                "\n"))
      'face 'doom-dashboard-banner)))
-(setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-draw-ascii-emacs-banner-fn)
+(setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-banner)
 
 ;; Doom-Modeline
 (setq doom-modeline-project-detection 'auto
@@ -137,33 +157,36 @@
 ;; == Evil Mode ==
 (setq evil-move-cursor-back nil
       evil-want-fine-undo t)
+
 ;; Bring back s/S
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 
 ;; Email
 (after! mu4e
-  (setq! mu4e-use-fancy-chars t
-         mu4e-view-show-addresses t
-         mu4e-view-show-images t
-         mu4e-maildir-shortcuts
-         '( ("/Inbox" . ?i)
-            ("/Archive" . ?a)
-            ("/Drafts" . ?d)
-            ("/Deleted Items" . ?t))
-         ))
+  (setq!
+   mu4e-update-inverval 1800
+   mu4e-headers-leave-behavior 'apply
+   mu4e-use-fancy-chars t
+   mu4e-view-show-addresses t
+   mu4e-view-show-images t
+   mu4e-maildir-shortcuts
+   '( ("/Inbox" . ?i)
+      ("/Archive" . ?a)
+      ("/Drafts" . ?d)
+      ("/Deleted Items" . ?t))
+   ))
 
 (set-email-account! "UW"
-                    '((mu4e-sent-folder       . "/Sent Items")
-                      (mu4e-drafts-folder     . "/Drafts")
-                      (mu4e-trash-folder      . "/Deleted Items")
-                      (mu4e-refile-folder     . "/Archive")
-                      (mu4e-compose-signature . "")
-                      (mu4e-update-inverval   . 1800)
-                      (mu4e-get-mail-command  . "mbsync work")
-                      (smtpmail-stream-type   . starttls)
-                      (user-mail-address      . "jarulsam@uwyo.edu")
-                      (smtpmail-smtp-user     . "jarulsam@uwyo.edu")
-                      (smtpmail-smtp-server   . "smtp.office365.com")
-                      (smtpmail-smtp-service  . 587)
+                    '((mu4e-sent-folder              . "/Sent Items")
+                      (mu4e-drafts-folder            . "/Drafts")
+                      (mu4e-trash-folder             . "/Deleted Items")
+                      (mu4e-refile-folder            . "/Archive")
+                      (mu4e-compose-signature        . "")
+                      (mu4e-get-mail-command         . "mbsync work")
+                      (smtpmail-stream-type          . 'starttls)
+                      (user-mail-address             . "jarulsam@uwyo.edu")
+                      (smtpmail-smtp-user            . "jarulsam@uwyo.edu")
+                      (smtpmail-smtp-server          . "smtp.office365.com")
+                      (smtpmail-smtp-service         . 587)
                       )
                     t)
