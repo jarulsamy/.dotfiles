@@ -24,7 +24,7 @@
 ;; Source: https://stackoverflow.com/a/94277/8846676
 (defun set-frame-size-according-to-resolution ()
   (interactive)
-  (if window-system
+  (if (display-graphic-p)
       (progn
         ;; use 120 char wide window for largeish displays
         ;; and smaller 80 column windows for smaller displays
@@ -48,8 +48,23 @@
                     (buffer-substring-no-properties (point-min) (point-max)))))
     (split-string contents "\n")))
 
-(defun doom-dashboard-banner ()
-  (let* ((banner (file-contents-to-list "~/.doom.d/banners/7.txt"))
+;; Pick a random item from a list
+(defun random-choice (items)
+  (let* ((size (length items))
+         (index (random size)))
+    (nth index items)))
+
+;; Pick a random file from `directory'.
+(defun random-txt-file (directory)
+  (random-choice (directory-files (expand-file-name directory) 'full
+                                  (rx ".txt" eos))))
+
+;; Location for banners.
+(defcustom banner-directory "~/.doom.d/banners/"
+  "Directory to search for .txt files for doom dashboard banner.")
+
+(defun doom-dashboard-banner-fn ()
+  (let* ((banner (file-contents-to-list (random-txt-file banner-directory)))
          (longest-line (apply #'max (mapcar #'length banner))))
     (put-text-property
      (point)
@@ -61,7 +76,7 @@
                                    32)))
                "\n"))
      'face 'doom-dashboard-banner)))
-(setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-banner)
+(setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-banner-fn)
 
 ;; Doom-Modeline
 (setq doom-modeline-project-detection 'auto
@@ -141,7 +156,7 @@
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
-;; Twitter
+;; Twittering
 (setq twittering-allow-insecure-server-cert t)
 (setq twittering-icon-mode t)
 (setq twittering-use-icon-storage t)
@@ -150,12 +165,12 @@
 (after! pyvenv
   (pyvenv-workon "base"))
 
-;; == Magit ==
+;; Magit
 (after! magit
   (setq magit-diff-refine-hunk 'all))
 
-;; == Evil Mode ==
-(setq evil-move-cursor-back nil
+;; Evil Mode
+(setq evil-move-cursor-back t
       evil-want-fine-undo t)
 
 ;; Bring back s/S
