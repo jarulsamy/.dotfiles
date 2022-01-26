@@ -49,7 +49,7 @@
        vi-tilde-fringe                          ; fringe tildes to mark beyond EOB
        window-select                            ; visually switch windows
        workspaces                               ; tab emulation, persistence & separate workspaces
-       ;;zen                                    ; distraction-free coding or writing
+       zen                                      ; distraction-free coding or writing
 
        :editor
        (evil +everywhere)                       ; come to the dark side, we have cookies
@@ -66,7 +66,7 @@
        word-wrap                                ; soft wrapping with language-aware indent
 
        :emacs
-       (dired +icons +ranger)                   ; making dired pretty [functional]
+       (dired +icons)                           ; making dired pretty [functional]
        electric                                 ; smarter, keyword-based electric-indent
        ;;ibuffer                                ; interactive buffer management
        (undo +tree)                             ; persistent, smarter undo for your inevitable mistakes
