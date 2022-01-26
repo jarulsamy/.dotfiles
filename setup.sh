@@ -27,7 +27,7 @@ linkDotfile() {
 }
 
 # Ensure config folders exists
-mkdir -p "$HOME/.config" "$HOME/.doom.d"
+mkdir -p "$HOME/.config"
 
 linkDotfile .alacritty.yml
 linkDotfile .bashrc
@@ -52,10 +52,11 @@ linkDotfile .config/ranger
 linkDotfile .config/redshift
 
 # Emacs
-linkDotfile .doom.d/config.el
-linkDotfile .doom.d/custom.el
-linkDotfile .doom.d/init.el
-linkDotfile .doom.d/packages.el
+linkDotfile .doom.d
+# linkDotfile .doom.d/config.el
+# linkDotfile .doom.d/custom.el
+# linkDotfile .doom.d/init.el
+# linkDotfile .doom.d/packages.el
 
 # For some reason, git doesn't support symlink for work
 cp .gitconfig-work ~/.gitconfig-work
