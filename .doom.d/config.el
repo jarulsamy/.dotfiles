@@ -205,3 +205,19 @@
                       (smtpmail-smtp-service         . 587)
                       )
                     t)
+
+
+;; Compiling
+(defun notify-compilation-result(buffer msg)
+  "Notify that the compilation is finished,
+close the *compilation* buffer if the compilation is successful,
+and set the focus back to Emacs frame"
+  (if (string-match "^finished" msg)
+      (progn (delete-windows-on buffer)))
+  (setq current-frame (car (car (cdr (current-frame-configuration)))))
+  (select-frame-set-input-focus current-frame)
+  )
+
+;; Bury the compilation buffer when compilation is done/successful.
+(add-to-list 'compilation-finish-functions
+             'notify-compilation-result)
