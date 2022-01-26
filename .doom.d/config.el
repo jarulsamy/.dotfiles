@@ -1,19 +1,16 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; Some functionality uses this to identify you, e.g. GPG configuration, email
-;; clients, file templates and snippets.
+;;; General
 (setq user-full-name "Joshua Arulsamy"
       user-mail-address "joshua.gf.arul@gmail.com")
 
 ;; Cascadia Code no longer has poor scrolling performance issues!
 (setq doom-font (font-spec :family "Cascadia Code" :size 16 :weight 'normal)
       doom-variable-pitch-font (font-spec :family "Cascadia Code" :size 16))
-
 (setq doom-theme 'doom-gruvbox)
-(setq org-directory "~/org/")
 
-;; This determines the style of line numbers in effect. If set to `nil', line
-;; numbers are disabled. For relative line numbers, set this to `relative'.
+;; If set to `nil', line numbers are disabled.
+;; For relative line numbers, set this to `relative'.
 (setq display-line-numbers-type 'relative)
 
 ;; Use system trash bin.
@@ -23,6 +20,7 @@
 
 ;; Source: https://stackoverflow.com/a/94277/8846676
 (defun set-frame-size-according-to-resolution ()
+  "Automatically adjust the default frame size accoring to display resolution."
   (interactive)
   (if (display-graphic-p)
       (progn
@@ -41,6 +39,10 @@
                                       (frame-char-height)))))))
 (set-frame-size-according-to-resolution)
 
+;;; Custom Banners
+(defcustom banner-directory "~/.doom.d/banners/"
+  "Directory to search for .txt files for doom dashboard banner.")
+
 ;; Source: First elisp function I ever wrote entirely by myself! :D
 (defun file-contents-to-list (filename)
   (let ((contents (with-temp-buffer
@@ -48,20 +50,16 @@
                     (buffer-substring-no-properties (point-min) (point-max)))))
     (split-string contents "\n")))
 
-;; Pick a random item from a list
 (defun random-choice (items)
+  "Pick a random item from a list."
   (let* ((size (length items))
          (index (random size)))
     (nth index items)))
 
-;; Pick a random file from `directory'.
 (defun random-txt-file (directory)
+  "Pick a random file from `directory'."
   (random-choice (directory-files (expand-file-name directory) 'full
                                   (rx ".txt" eos))))
-
-;; Location for banners.
-(defcustom banner-directory "~/.doom.d/banners/"
-  "Directory to search for .txt files for doom dashboard banner.")
 
 (defun doom-dashboard-banner-fn ()
   (let* ((banner (file-contents-to-list (random-txt-file banner-directory)))
@@ -78,7 +76,7 @@
      'face 'doom-dashboard-banner)))
 (setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-banner-fn)
 
-;; Doom-Modeline
+;;; Doom-Modeline
 (setq doom-modeline-project-detection 'auto
       doom-modeline-buffer-file-name-style 'auto
       doom-modeline-icon (display-graphic-p)
@@ -101,14 +99,21 @@
       doom-modeline-minor-modes nil
       doom-modeline-enable-word-count nil)
 
-;;; Modules
-;;; :editor evil
-;; Focus new window after splitting
-(setq evil-split-below t
-      evil-vsplit-window-right t)
+;; Fix oversized icons being cutoff on the right side.
+(after! doom-modeline
+  (doom-modeline-def-modeline 'main
+    '(bar matches buffer-info remote-host buffer-position parrot selection-info)
+    '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs "  ")))
 
-;; Shamelessly stolen from: https://tecosaur.github.io/emacs-config/config.html
-(setq which-key-idle-delay 0.5) ;; I need the help, I really do
+;;; Evil
+(setq evil-split-below t
+      evil-vsplit-window-right t
+      evil-move-cursor-back t
+      evil-want-fine-undo t)
+;; Bring back s/S
+(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
+
+(setq which-key-idle-delay 0.2)
 
 ;; Having evil everywhere is a little verbose:
 (setq which-key-allow-multiple-replacements t)
@@ -119,17 +124,19 @@
    '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
    ))
 
+;;; Company
 (after! company
-  (setq company-idle-delay 0.5
+  (setq company-idle-delay 0.2
         company-minimum-prefix-length 2)
-  (setq company-show-numbers t)
-  (add-hook 'evil-normal-state-entry-hook #'company-abort)) ;; make aborting less annoying.
+  (setq company-show-quick-access t)
+  ;; make aborting less annoying.
+  (add-hook 'evil-normal-state-entry-hook #'company-abort))
 
-;; Wakatime
+;;; Wakatime
 (setq-default wakatime-cli-path (expand-file-name "~/.wakatime/wakatime-cli-linux-amd64"))
 (global-wakatime-mode)
 
-;; Clangd LSP
+;;; Clangd LSP
 (setq lsp-clients-clangd-args '("--background-index"
                                 "--clang-tidy"
                                 "--completion-style=detailed"
@@ -139,16 +146,15 @@
                                 "--pch-storage=memory"))
 (after! lsp-clangd (set-lsp-priority! 'clangd 2))
 
-;; Org-roam
+;;; Org(-roam)
+(setq org-directory "~/org/")
 (setq org-roam-directory "~/org/brain")
+
+;;; Org-roam-ui
 (use-package! websocket
   :after org-roam)
-
 (use-package! org-roam-ui
-  :after org-roam ;; or :after org
-  ;;         normally we'd recommend hooking orui after org-roam, but since org-roam does not have
-  ;;         a hookable mode anymore, you're advised to pick something yourself
-  ;;         if you don't care about startup time, use
+  :after org-roam
   :hook (after-init . org-roam-ui-mode)
   :config
   (setq org-roam-ui-sync-theme t
@@ -156,27 +162,20 @@
         org-roam-ui-update-on-save t
         org-roam-ui-open-on-start t))
 
-;; Twittering
+;;; Twittering
 (setq twittering-allow-insecure-server-cert t)
 (setq twittering-icon-mode t)
 (setq twittering-use-icon-storage t)
 
-;; Default python environment
+;;; Pyvenv
 (after! pyvenv
   (pyvenv-workon "base"))
 
-;; Magit
+;;; Magit
 (after! magit
   (setq magit-diff-refine-hunk 'all))
 
-;; Evil Mode
-(setq evil-move-cursor-back t
-      evil-want-fine-undo t)
-
-;; Bring back s/S
-(remove-hook 'doom-first-input-hook #'evil-snipe-mode)
-
-;; Email
+;;; Email
 (after! mu4e
   (setq!
    mu4e-update-inverval 1800
@@ -206,18 +205,13 @@
                       )
                     t)
 
-
-;; Compiling
+;;; Compiling
 (defun notify-compilation-result(buffer msg)
-  "Notify that the compilation is finished,
-close the *compilation* buffer if the compilation is successful,
-and set the focus back to Emacs frame"
+  "Notify that the compilation is finished,close the *compilation* buffer
+   if the compilation is successful,and set the focus back to Emacs frame"
   (if (string-match "^finished" msg)
       (progn (delete-windows-on buffer)))
   (setq current-frame (car (car (cdr (current-frame-configuration)))))
-  (select-frame-set-input-focus current-frame)
-  )
-
-;; Bury the compilation buffer when compilation is done/successful.
+  (select-frame-set-input-focus current-frame))
 (add-to-list 'compilation-finish-functions
              'notify-compilation-result)
