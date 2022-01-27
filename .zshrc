@@ -109,6 +109,8 @@ then
     export CXX=clang++
 fi
 
+# Cargo bin
+export PATH="$HOME/.cargo/bin:$PATH"
 # Include custom scripts
 export PATH="$HOME/.dotfiles/zfunc:$PATH"
 # Home bin dir
