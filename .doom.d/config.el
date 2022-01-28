@@ -150,6 +150,13 @@
 (setq org-directory "~/org/")
 (setq org-roam-directory "~/org/brain")
 
+;; Org Agenda
+(custom-set-variables
+ '(org-agenda-custom-commands
+   '(("c" "Custom agenda, ignore ARCHIVE tag"
+      ((agenda ""))
+      ((org-agenda-tag-filter-preset '("-ARCHIVE")))))))
+
 ;;; Org-roam-ui
 (use-package! websocket
   :after org-roam)
