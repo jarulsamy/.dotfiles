@@ -4,14 +4,18 @@
 (setq user-full-name "Joshua Arulsamy"
       user-mail-address "joshua.gf.arul@gmail.com")
 
+;;; Themeing
 ;; Cascadia Code no longer has poor scrolling performance issues!
-(setq doom-font (font-spec :family "Cascadia Code" :size 16 :weight 'normal)
-      doom-variable-pitch-font (font-spec :family "Cascadia Code" :size 16))
-(setq doom-theme 'doom-gruvbox)
-
-;; If set to `nil', line numbers are disabled.
-;; For relative line numbers, set this to `relative'.
-(setq display-line-numbers-type 'relative)
+(setq doom-font (font-spec
+                 :family "Cascadia Code"
+                 :size 16
+                 :weight 'normal)
+      doom-variable-pitch-font (font-spec
+                                :family "Cascadia Code"
+                                :size 16
+                                :weight 'normal)
+      doom-theme 'doom-gruvbox
+      display-line-numbers-type 'relative)
 
 ;; Use system trash bin.
 (setq-default delete-by-moving-to-trash t)
@@ -87,15 +91,15 @@
       doom-modeline-indent-info nil
       doom-modeline-checker-simple-format t
       doom-modeline-number-limit 99
-      doom-modeline-vcs-max-length 20
+      doom-modeline-vcs-max-length 32
       doom-modeline-workspace-name t
       doom-modeline-persp-name t
       doom-modeline-display-default-persp-name nil
       doom-modeline-persp-icon t
       doom-modeline-lsp t
-      doom-modeline-modal-icon t
-      doom-modeline-buffer-modification-icon t
-      doom-modeline-unicode-fallback nil
+      doom-modeline-modal-icon nil
+      doom-modeline-buffer-modification-icon nil
+      doom-modeline-unicode-fallback t
       doom-modeline-minor-modes nil
       doom-modeline-enable-word-count nil)
 
@@ -127,9 +131,9 @@
 ;;; Company
 (after! company
   (setq company-idle-delay 0.2
-        company-minimum-prefix-length 2)
-  (setq company-show-quick-access t)
-  ;; make aborting less annoying.
+        company-minimum-prefix-length 2
+        company-show-quick-access t)
+  ;; Make aborting less annoying.
   (add-hook 'evil-normal-state-entry-hook #'company-abort))
 
 ;;; Wakatime
@@ -226,3 +230,7 @@ If the compilation is successful,and set the focus back to Emacs frame"
 
 ;; Use pdflatex for tex
 (setq smart-compile-alist (add-to-list 'smart-compile-alist '("\\.tex\\'" . "pdflatex %f")))
+
+;;; Projectile
+(setq projectile-project-search-path '(("~/repos"     . 1)
+                                       ("~/workRepos" . 1)))
