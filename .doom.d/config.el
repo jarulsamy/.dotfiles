@@ -117,7 +117,7 @@
 ;; Bring back s/S
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 
-(setq which-key-idle-delay 0.2)
+(setq which-key-idle-delay 0.5)
 
 ;; Having evil everywhere is a little verbose:
 (setq which-key-allow-multiple-replacements t)
@@ -130,7 +130,7 @@
 
 ;;; Company
 (after! company
-  (setq company-idle-delay 0.2
+  (setq company-idle-delay 0.5
         company-minimum-prefix-length 2
         company-show-quick-access t)
   ;; Make aborting less annoying.
