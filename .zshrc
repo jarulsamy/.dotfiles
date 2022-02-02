@@ -60,17 +60,6 @@ COMPLETION_WAITING_DOTS="true"
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
-
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
 # Which plugins would you like to load?
 # Standard plugins can be found in ~/.oh-my-zsh/plugins/*
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
@@ -109,12 +98,13 @@ then
     export CXX=clang++
 fi
 
-# Cargo bin
-export PATH="$HOME/.cargo/bin:$PATH"
-# Include custom scripts
-export PATH="$HOME/.dotfiles/zfunc:$PATH"
-# Home bin dir
-export PATH="$HOME/.local/bin:$PATH"
+# Add "$HOME/.../bin" directories to PATH.
+export PATH="$HOME/.local/bin:\
+$HOME/.local/bin:\
+$HOME/.dotfiles/zfunc:\
+$HOME/.emacs.d/bin:\
+$HOME/.cargo/bin:\
+$PATH"
 
 # Ensure dir exists before sourcing.
 if [ -d "$HOME/.dotfiles" ]; then
