@@ -44,6 +44,7 @@ augroup END
 
 call plug#begin('~/.vim/plugged')
 
+
 Plug 'airblade/vim-gitgutter'
 Plug 'dense-analysis/ale'
 Plug 'ervandew/supertab'
@@ -56,6 +57,7 @@ Plug 'mhinz/vim-startify'
 Plug 'morhetz/gruvbox'
 Plug 'mzlogin/vim-markdown-toc'
 Plug 'plasticboy/vim-markdown'
+Plug 'rbberger/vim-singularity-syntax'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'

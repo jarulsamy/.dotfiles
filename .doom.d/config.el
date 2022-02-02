@@ -14,12 +14,18 @@
                                 :family "Cascadia Code"
                                 :size 16
                                 :weight 'normal)
-      doom-theme 'doom-gruvbox
+      doom-theme 'doom-one
       display-line-numbers-type 'relative)
 
 ;; Use system trash bin.
 (setq-default delete-by-moving-to-trash t)
 (setq undo-limit 80000000 )
+
+;; Time Formatting
+(setenv "TZ" "America/Denver")
+(setq display-time-format "%l:%m:%S %p"
+      display-time-interval 1
+      display-time-default-load-average nil)
 (display-time-mode 1)
 
 ;; Source: https://stackoverflow.com/a/94277/8846676
@@ -80,34 +86,49 @@
      'face 'doom-dashboard-banner)))
 (setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-banner-fn)
 
-;;; Doom-Modeline
-(setq doom-modeline-project-detection 'auto
-      doom-modeline-buffer-file-name-style 'auto
-      doom-modeline-icon (display-graphic-p)
-      doom-modeline-major-mode-color-icon t
-      doom-modeline-buffer-state-icon t
-      doom-modeline-continuous-word-count-modes '(markdown-mode gfm-mode org-mode)
-      doom-modeline-buffer-encoding t
-      doom-modeline-indent-info nil
-      doom-modeline-checker-simple-format t
-      doom-modeline-number-limit 99
-      doom-modeline-vcs-max-length 32
-      doom-modeline-workspace-name t
-      doom-modeline-persp-name t
-      doom-modeline-display-default-persp-name nil
-      doom-modeline-persp-icon t
-      doom-modeline-lsp t
-      doom-modeline-modal-icon nil
-      doom-modeline-buffer-modification-icon nil
-      doom-modeline-unicode-fallback t
-      doom-modeline-minor-modes nil
-      doom-modeline-enable-word-count nil)
+;;; Battery
+(use-package! battery
+  :config
+  ;; Only show battery symbol if we can successfully read the status.
+  (let ((battery-status (battery-format "%B" (funcall battery-status-function))))
+    (setq display-battery-mode
+          (not
+           (or (string-match-p "N/A" battery-status)
+               (string-match-p "unknown" battery-status))))))
 
-;; Fix oversized icons being cutoff on the right side.
+;;; Modeline
 (after! doom-modeline
+  ;; Time segment
+  (doom-modeline-def-segment time-segment
+    "Mode line construct for current time."
+    (when (and (doom-modeline--active)
+               (not doom-modeline--limited-width-p))
+      '("" display-time-string)))
+
+  ;; Set modeline segments and fix oversized icons being cutoff on the right
+  ;; side.
   (doom-modeline-def-modeline 'main
-    '(bar matches buffer-info remote-host buffer-position parrot selection-info)
-    '(misc-info minor-modes checker input-method buffer-encoding major-mode process vcs "  ")))
+    '(hud bar matches input-method buffer-info-simple remote-host buffer-position)
+    '(minor-modes persp-name lsp checker vcs time-segment battery "  "))
+
+  ;; Misc customization
+  (setq doom-modeline-hud t
+        doom-modeline-buffer-modification-icon t
+        doom-modeline-project-detection 'auto
+        doom-modeline-buffer-file-name-style 'auto
+        doom-modeline-env-version t
+        doom-modeline-icon (display-graphic-p)
+        doom-modeline-lsp t
+        doom-modeline-checker-simple-format t
+        doom-modeline-vcs-max-length 32
+        doom-modeline-workspace-name t
+        doom-modeline-persp-name t
+        doom-modeline-persp-icon t
+        doom-modeline-mu4e t
+        doom-modeline-unicode-fallback nil
+        doom-modeline-display-default-persp-name nil
+        doom-modeline-major-mode-icon t
+        doom-modeline-major-mode-color-icon t))
 
 ;;; Evil
 (setq evil-split-below t
@@ -117,8 +138,7 @@
 ;; Bring back s/S
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 
-(setq which-key-idle-delay 0.5)
-
+;;; Which-key
 ;; Having evil everywhere is a little verbose:
 (setq which-key-allow-multiple-replacements t)
 (after! which-key
@@ -127,6 +147,7 @@
    '(("" . "\\`+?evil[-:]?\\(?:a-\\)?\\(.*\\)") . (nil . "◂\\1"))
    '(("\\`g s" . "\\`evilem--?motion-\\(.*\\)") . (nil . "◃\\1"))
    ))
+(setq which-key-idle-delay 0.5)
 
 ;;; Company
 (after! company
@@ -138,7 +159,9 @@
 
 ;;; Wakatime
 (setq-default wakatime-cli-path (expand-file-name "~/.wakatime/wakatime-cli-linux-amd64"))
-(global-wakatime-mode)
+(if (file-executable-p wakatime-cli-path)
+    (global-wakatime-mode 1)
+  (error "Wakatime CLI not found here (%s)" wakatime-cli-path))
 
 ;;; Clangd LSP
 (setq lsp-clients-clangd-args '("--background-index"
