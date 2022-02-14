@@ -20,6 +20,11 @@
  '(jdee-db-requested-breakpoint-face-colors (cons "#1B2229" "#98be65"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#3f444a"))
  '(objed-cursor-color "#ff6c6b")
+ '(org-agenda-custom-commands
+   '(("c" "Custom agenda, ignore ARCHIVE tag"
+      ((agenda ""))
+      ((org-agenda-tag-filter-preset
+        '("-ARCHIVE"))))))
  '(package-selected-packages '(lsp-haskell haskell-mode virtualenvwrapper python-black))
  '(pdf-view-midnight-colors (cons "#bbc2cf" "#282c34"))
  '(rustic-ansi-faces
@@ -50,7 +55,7 @@
     (cons 360 "#5B6268")))
  '(vc-annotate-very-old-color nil)
  '(warning-suppress-log-types '((message-sent-hook)))
- '(warning-suppress-types '((message-sent-hook))))
+ '(warning-suppress-types '((lsp-mode) (message-sent-hook))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
