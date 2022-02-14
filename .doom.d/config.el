@@ -1,18 +1,56 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
-
 ;;; General
 (setq user-full-name "Joshua Arulsamy"
       user-mail-address "joshua.gf.arul@gmail.com")
 
+(defun primary-display-height ()
+  "Get the height of the current display this frame is on."
+  (interactive)
+  (nth 4 (assoc 'geometry (car (display-monitor-attributes-list)))))
+
+(defun primary-display-width ()
+  "Get the width of the current display this frame is on."
+  (interactive)
+  (nth 3 (assoc 'geometry (car (display-monitor-attributes-list)))))
+
+;; Source: https://stackoverflow.com/a/94277/8846676
+(defun set-frame-size-according-to-resolution ()
+  "Automatically adjust the default frame size accoring to display resolution."
+  (interactive)
+  (if (display-graphic-p)
+      (progn
+        ;; use 120 char wide window for largeish displays
+        ;; and smaller 80 column windows for smaller displays
+        ;; pick whatever numbers make sense for you
+        (if (> (primary-display-width) 1280)
+            (add-to-list 'default-frame-alist (cons 'width 120))
+          (add-to-list 'default-frame-alist (cons 'width 80)))
+        ;; for the height, subtract a couple hundred pixels
+        ;; from the screen height (for panels, menubars and
+        ;; whatnot), then divide by the height of a char to
+        ;; get the height we want
+        (add-to-list 'default-frame-alist
+                     (cons 'height (/ (- (x-display-pixel-height) 400)
+                                      (frame-char-height)))))))
+(set-frame-size-according-to-resolution)
+
 ;;; Themeing
-;; Cascadia Code no longer has poor scrolling performance issues!
+;; Larger font for higher res display.
+;; New 4K XPS 15 :D
+(setq font-size 16)
+(if (display-graphic-p)
+    (progn
+      (when (> (primary-display-width) 3400)
+          (setq font-size 24))))
+
+;; Cascadia Code no longer has poor scrolling performance issues.
 (setq doom-font (font-spec
                  :family "Cascadia Code"
-                 :size 16
+                 :size font-size
                  :weight 'normal)
       doom-variable-pitch-font (font-spec
                                 :family "Cascadia Code"
-                                :size 16
+                                :size font-size
                                 :weight 'normal)
       doom-theme 'doom-one
       display-line-numbers-type 'relative)
@@ -26,28 +64,9 @@
 (setq display-time-format "%l:%m:%S %p"
       display-time-interval 1
       display-time-default-load-average nil)
-(display-time-mode 1)
+;; TODO: This is almost always the incorrect time...Investigate.
+(display-time-mode 0)
 
-;; Source: https://stackoverflow.com/a/94277/8846676
-(defun set-frame-size-according-to-resolution ()
-  "Automatically adjust the default frame size accoring to display resolution."
-  (interactive)
-  (if (display-graphic-p)
-      (progn
-        ;; use 120 char wide window for largeish displays
-        ;; and smaller 80 column windows for smaller displays
-        ;; pick whatever numbers make sense for you
-        (if (> (x-display-pixel-width) 1280)
-            (add-to-list 'default-frame-alist (cons 'width 120))
-          (add-to-list 'default-frame-alist (cons 'width 80)))
-        ;; for the height, subtract a couple hundred pixels
-        ;; from the screen height (for panels, menubars and
-        ;; whatnot), then divide by the height of a char to
-        ;; get the height we want
-        (add-to-list 'default-frame-alist
-                     (cons 'height (/ (- (x-display-pixel-height) 400)
-                                      (frame-char-height)))))))
-(set-frame-size-according-to-resolution)
 
 ;;; Custom Banners
 (defcustom banner-directory "~/.doom.d/banners/"
@@ -86,7 +105,7 @@
      'face 'doom-dashboard-banner)))
 (setq +doom-dashboard-ascii-banner-fn #'doom-dashboard-banner-fn)
 
-;;; Battery
+;;; Battery TODO: This doesn't ever update...
 (use-package! battery
   :config
   ;; Only show battery symbol if we can successfully read the status.
@@ -257,3 +276,6 @@ If the compilation is successful,and set the focus back to Emacs frame"
 ;;; Projectile
 (setq projectile-project-search-path '(("~/repos"     . 1)
                                        ("~/workRepos" . 1)))
+
+;;; Latex
+(setq +latex-viewers '(pdf-tools))
