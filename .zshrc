@@ -86,9 +86,13 @@ export SUDO_EDITOR="$EDITOR"
 export GIT_EDITOR="vim -c'startinsert|norm! ggA'"
 
 # Compilation flags
+export NUM_THREADS="$(nproc)"
 export ARCHFLAGS="-march=native"
-export MAKEOPTS="-j$(nproc)"
+export MAKEOPTS="-j${NUM_THREADS}"
 export MAKEFLAGS="$MAKEOPTS"
+
+# Number of threads for zstd to use by default
+export ZSTD_NBTHREADS="${NUM_THREADS}"
 
 # Use clang if possible
 if
