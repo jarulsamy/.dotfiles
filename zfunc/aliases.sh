@@ -71,6 +71,14 @@ authorize_github_keys() {
   echo "Grabbed authorized_keys from $URL"
 }
 
+# Use doas instead of sudo if it is available.
+if
+  type doas &>/dev/null
+then
+  alias sudo=doas
+  alias sudoedit=doas vim
+fi
+
 chr() {
   printf \\$(printf '%03o' $1)
   echo
