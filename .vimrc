@@ -139,7 +139,7 @@ set expandtab
 
 augroup FileExtIdents
     " File extension specific
-    autocmd BufNewFile,BufRead *.{c,cpp,h,hpp,lisp,vim,zsh,sh,js,yaml}
+    autocmd BufNewFile,BufRead *.{c,cpp,h,hpp,lisp,vim,zsh,sh,js,yaml,v}
                 \ setlocal tabstop=2 |
                 \ setlocal softtabstop=2 |
                 \ setlocal shiftwidth=2 |
