@@ -199,9 +199,9 @@
 ;; Org Agenda
 (custom-set-variables
  '(org-agenda-custom-commands
-   '(("c" "Custom agenda, ignore ARCHIVE tag"
+   '(("t" "TODO Agenda"
       ((agenda ""))
-      ((org-agenda-tag-filter-preset '("-ARCHIVE")))))))
+      ((org-agenda-tag-filter-preset '("-SCHEDULE")))))))
 
 ;;; Org-roam-ui
 (use-package! websocket

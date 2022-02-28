@@ -20,11 +20,6 @@
  '(jdee-db-requested-breakpoint-face-colors (cons "#1B2229" "#98be65"))
  '(jdee-db-spec-breakpoint-face-colors (cons "#1B2229" "#3f444a"))
  '(objed-cursor-color "#ff6c6b")
- '(org-agenda-custom-commands
-   '(("c" "Custom agenda, ignore ARCHIVE tag"
-      ((agenda ""))
-      ((org-agenda-tag-filter-preset
-        '("-ARCHIVE"))))))
  '(package-selected-packages '(lsp-haskell haskell-mode virtualenvwrapper python-black))
  '(pdf-view-midnight-colors (cons "#bbc2cf" "#282c34"))
  '(rustic-ansi-faces
