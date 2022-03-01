@@ -75,8 +75,8 @@ authorize_github_keys() {
 if
   type doas &>/dev/null
 then
-  alias sudo=doas
-  alias sudoedit=doas vim
+  alias sudo="doas"
+  alias sudoedit="doas vim"
 fi
 
 alias doomclone="git clone --depth 1 https://github.com/hlissner/doom-emacs $HOME/.emacs.d"
