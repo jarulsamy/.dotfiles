@@ -2,7 +2,7 @@
 
 dotfilesDir=$(pwd)
 
-linkDotfile() {
+linkDot() {
   dest="${HOME}/${1}"
   dateStr=$(date +%Y-%m-%d-%H%M)
 
@@ -29,34 +29,31 @@ linkDotfile() {
 # Ensure config folders exists
 mkdir -p "$HOME/.config"
 
-linkDotfile .alacritty.yml
-linkDotfile .bashrc
-linkDotfile .clang-format
-linkDotfile .flake8
-linkDotfile .gitconfig
-linkDotfile .mbsyncrc
-linkDotfile .p10k.zsh
-linkDotfile .tmux.conf
-linkDotfile .tmux.conf.local
-linkDotfile .vimrc
-linkDotfile .zshrc
+linkDot .alacritty.yml
+linkDot .bashrc
+linkDot .clang-format
+linkDot .flake8
+linkDot .gitconfig
+linkDot .mbsyncrc
+linkDot .p10k.zsh
+linkDot .tmux.conf
+linkDot .tmux.conf.local
+linkDot .vimrc
+linkDot .zshrc
 
-linkDotfile .config/dunst
-linkDotfile .config/i3
-linkDotfile .config/kitty
-linkDotfile .config/mpd
-linkDotfile .config/mypy
-linkDotfile .config/ncmpcpp
-linkDotfile .config/polybar
-linkDotfile .config/ranger
-linkDotfile .config/redshift
+linkDot .config/dunst
+linkDot .config/i3
+linkDot .config/kitty
+linkDot .config/mpd
+linkDot .config/mypy
+linkDot .config/ncmpcpp
+linkDot .config/polybar
+linkDot .config/ranger
+linkDot .config/redshift
+linkDot .config/yay
 
 # Emacs
-linkDotfile .doom.d
-# linkDotfile .doom.d/config.el
-# linkDotfile .doom.d/custom.el
-# linkDotfile .doom.d/init.el
-# linkDotfile .doom.d/packages.el
+linkDot .doom.d
 
 # For some reason, git doesn't support symlink for work
 cp .gitconfig-work ~/.gitconfig-work
