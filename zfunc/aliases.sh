@@ -79,6 +79,9 @@ then
   alias sudoedit=doas vim
 fi
 
+alias doomclone="git clone --depth 1 https://github.com/hlissner/doom-emacs $HOME/.emacs.d"
+
+# General purpose functions
 chr() {
   printf \\$(printf '%03o' $1)
   echo
