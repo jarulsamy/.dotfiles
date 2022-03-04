@@ -63,7 +63,6 @@ Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'vim-scripts/indentpython.vim'
 Plug 'wakatime/vim-wakatime'
 Plug 'yggdroot/indentline'
 
@@ -279,6 +278,11 @@ augroup END
 
 " Highlight misspelled words
 hi SpellBad ctermfg=red guifg=red
+
+" ====================== Indentline ======================
+"
+let g:indentLine_setConceal = 0
+let g:indentLine_conceallevel = 0
 
 " ====================== Binds ======================
 
