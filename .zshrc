@@ -15,7 +15,6 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
@@ -137,6 +136,7 @@ export FZF_DEFAULT_OPTS="-m --height 50% --border"
 # Virtualenv
 export WORKON_HOME="$HOME/.virtualenvs"
 export PROJECT_HOME="$HOME/repos"
+export VIRTUALENVWRAPPER_PYTHON="$(command -v python3)"
 export VIRTUALENVWRAPPER_HOOK_DIR="$HOME/.dotfiles/virtualenv_hooks"
 export VIRTUALENVWRAPPER_SCRIPT="$HOME/.local/bin/virtualenvwrapper.sh"
 if [[ -f "$VIRTUALENVWRAPPER_SCRIPT" ]] then;
