@@ -1,6 +1,7 @@
 " ====================== General Config ======================
 
 syntax on                      " Enable sytax highlighting
+set nocompatible               " Vi is outdated anyway <:)
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=1000               " Store lots of cmd history
 set showcmd                    " Show incomplete cmds down at the bottom
@@ -280,7 +281,7 @@ augroup END
 hi SpellBad ctermfg=red guifg=red
 
 " ====================== Indentline ======================
-"
+
 let g:indentLine_setConceal = 0
 let g:indentLine_conceallevel = 0
 

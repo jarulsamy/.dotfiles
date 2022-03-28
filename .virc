@@ -1,0 +1,83 @@
+" ====================== General Config ======================
+
+syntax on                      " Enable sytax highlighting
+set nocompatible               " Vi is outdated anyway <:)
+set backspace=indent,eol,start " Allow backspace in insert mode
+set history=1000               " Store lots of cmd history
+set showcmd                    " Show incomplete cmds down at the bottom
+set noshowmode                 " Show current mode
+set autoread                   " Reload files changed outside of vim
+
+set ruler                      " Show the line and column number of the cursor
+set number                     " Show line number
+set relativenumber             " Show relative line numbers
+set background=dark            " Dark background
+set textwidth=0                " Stop auto line breaking on paste
+
+set clipboard=unnamedplus
+set hidden
+set novisualbell
+
+" Encoding
+set encoding=utf-8
+scriptencoding utf-8
+
+if has('termguicolors')
+    set termguicolors
+endif
+
+" ====================== Swap Files ======================
+
+set noswapfile
+set nobackup
+set nowritebackup
+
+" ====================== Indentation ======================
+
+set autoindent
+set smartindent
+set smarttab
+set shiftwidth=4
+set softtabstop=4
+set tabstop=4
+set expandtab
+
+augroup FileExtIdents
+    " File extension specific
+    autocmd BufNewFile,BufRead *.{c,cpp,h,hpp,lisp,vim,zsh,sh,js,yaml,v}
+                \ setlocal tabstop=2 |
+                \ setlocal softtabstop=2 |
+                \ setlocal shiftwidth=2 |
+                \ setlocal expandtab
+
+    " Auto remove trailing whitespace
+    au BufWritePre *.* :%s/\s\+$//e
+augroup END
+
+" Auto indent pasted text
+nnoremap p p=`]<C-o>
+nnoremap P P=`]<C-o>
+
+filetype plugin on
+filetype indent on
+
+set nowrap              " Don't wrap lines
+set linebreak           " Wrap lines at convenient points
+
+" ====================== Scrolling ======================
+
+set scrolloff=8         " Start scrolling when we're 8 lines away from margins
+set sidescrolloff=15
+set sidescroll=1
+
+" ====================== Search ======================
+
+set incsearch       " Find the next match as we type the search
+set hlsearch        " Highlight searches by default
+set ignorecase      " Ignore case when searching...
+set smartcase       " ...unless we type a capital
+
+" ====================== Security ======================
+
+set modelines=0
+set nomodeline

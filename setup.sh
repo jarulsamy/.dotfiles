@@ -38,6 +38,7 @@ linkDot .mbsyncrc
 linkDot .p10k.zsh
 linkDot .tmux.conf
 linkDot .tmux.conf.local
+linkDot .virc
 linkDot .vimrc
 linkDot .zshrc
 
