@@ -1,0 +1,31 @@
+#!/usr/bin/env sh
+
+# Heavily adapted from here: https://stackoverflow.com/a/5188364/8846676
+recent() {
+    count=20
+    if git branch -a | grep -q "remotes/origin/main"; then
+        refname="main"
+    elif git branch -a | grep -q "remotes/origin/master"; then
+        refname="master"
+    else
+        # This is _really_ slow as it queries the remote, so avoid it if possible.
+        refname="$(git remote show origin | grep 'Head branch' | cut -d ' ' -f5)"
+    fi
+    refbranch="origin/$refname"
+
+    if [ "$1" = "-a" ] || [ "$1" = "--all" ]; then
+        refs="refs/"
+    else
+        refs="refs/heads"
+    fi
+
+    git for-each-ref --sort=-committerdate $refs --format='%(refname:short)|%(HEAD)%(color:yellow)%(refname:short)|%(color:bold green)%(committerdate:relative)|%(color:blue)%(subject)|%(color:magenta)%(authorname)%(color:reset)' --color=always --count=${count} | while read -r line; do
+        branch=$(echo "$line" | awk 'BEGIN { FS = "|" }; { print $1 }' | tr -d '*')
+        ahead=$(git rev-list --count "${refbranch}..${branch}")
+        behind=$(git rev-list --count "${branch}..${refbranch}")
+        colorline=$(echo "$line" | sed 's/^[^|]*|//')
+        echo "$ahead|$behind|$colorline" | awk -F '|' -vOFS='|' '{$5=substr($5,1,70)}1'
+    done | (printf "%s\n" "Ahead|Behind|Branch|Last Commit|Message|Author" && cat) | column -ts'|'
+}
+
+recent "$1"
