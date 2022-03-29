@@ -5,12 +5,12 @@ set nocompatible               " Vi is outdated anyway <:)
 set backspace=indent,eol,start " Allow backspace in insert mode
 set history=1000               " Store lots of cmd history
 set showcmd                    " Show incomplete cmds down at the bottom
-set noshowmode                 " Show current mode
+set showmode                   " Show current mode
 set autoread                   " Reload files changed outside of vim
 
 set ruler                      " Show the line and column number of the cursor
-set number                     " Show line number
-set relativenumber             " Show relative line numbers
+set nonumber                   " Don't show line number
+set norelativenumber           " Don't show relative line numbers
 set background=dark            " Dark background
 set textwidth=0                " Stop auto line breaking on paste
 
@@ -18,13 +18,11 @@ set clipboard=unnamedplus
 set hidden
 set novisualbell
 
+colorscheme default
+
 " Encoding
 set encoding=utf-8
 scriptencoding utf-8
-
-if has('termguicolors')
-    set termguicolors
-endif
 
 " ====================== Swap Files ======================
 
@@ -81,3 +79,7 @@ set smartcase       " ...unless we type a capital
 
 set modelines=0
 set nomodeline
+
+" ====================== Status Line ======================
+set laststatus=2
+set statusline=%<%f\ %h%m%r%=%-14.(%l,%c%V%)\ %P
