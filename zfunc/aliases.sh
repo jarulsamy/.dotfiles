@@ -10,8 +10,13 @@ alias i3config="vim $HOME/.config/i3/config"
 alias polyconfig="vim $HOME/.config/polybar/"
 
 # Aliases for quick adding to clipboard.
-alias setclip="xclip -selection c"
-alias getclip="xclip -selection c -o"
+if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+  alias setclip="wl-copy -n"
+  alias getclip="wl-paste -n"
+else
+  alias setclip="xclip -selection c"
+  alias getclip="xclip -selection c -o"
+fi
 
 # Pretty docker commands
 alias dcls="docker container ls --format 'table {{.Names}}\t{{.ID}}\t{{.Image}}\t{{.Ports}}\t{{.Status}}'"
