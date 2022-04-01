@@ -279,3 +279,6 @@ If the compilation is successful,and set the focus back to Emacs frame"
 
 ;;; Latex
 (setq +latex-viewers '(pdf-tools))
+
+;; Disable exit confirmation
+(setq confirm-kill-emacs nil)
