@@ -45,11 +45,11 @@
 
 ;; Cascadia Code no longer has poor scrolling performance issues.
 (setq doom-font (font-spec
-                 :family "Cascadia Code"
+                 :family "Jetbrains Mono"
                  :size font-size
                  :weight 'normal)
       doom-variable-pitch-font (font-spec
-                                :family "Cascadia Code"
+                                :family "Jetbrains Mono"
                                 :size font-size
                                 :weight 'normal)
       doom-theme 'doom-one
