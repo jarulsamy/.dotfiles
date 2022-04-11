@@ -42,6 +42,7 @@ linkDot .virc
 linkDot .vimrc
 linkDot .zshrc
 
+linkDot .config/bat
 linkDot .config/dunst
 linkDot .config/i3
 linkDot .config/kitty
