@@ -18,6 +18,7 @@ set textwidth=0                " Stop auto line breaking on paste
 set clipboard=unnamedplus
 set hidden
 set novisualbell
+set updatetime=500
 
 " Encoding
 set encoding=utf-8
@@ -145,8 +146,17 @@ augroup FileExtIdents
                 \ setlocal shiftwidth=2 |
                 \ setlocal expandtab
 
+
+    function! <SID>StripTrailingWhitespaces()
+      if !&binary && &filetype != 'diff'
+        let l:save = winsaveview()
+        keeppatterns %s/\s\+$//e
+        call winrestview(l:save)
+      endif
+    endfun
+
     " Auto remove trailing whitespace
-    au BufWritePre *.* :%s/\s\+$//e
+    au BufWritePre *.* :call <SID>StripTrailingWhitespaces()
 augroup END
 
 " Auto indent pasted text
