@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-ops=("Screen Saver" "Lock" "Logout" "Suspend" "Reboot" "Poweroff")
+ops=("Screen Saver" "Lock" "Logout" "Suspend" "Hibernate" "Reboot" "Poweroff")
 options="$(printf "%s\n" "${ops[@]}")"
 
 chosen="$(echo -e "$options" | rofi -lines 6 -dmenu -p "Power" -width 15 -hide-scrollbar -line-padding 4 -padding 20 -i)"
@@ -22,9 +22,12 @@ case $chosen in
         systemctl suspend
         ;;
     "${ops[4]}")
-        systemctl reboot
+        systemctl hibernate
         ;;
     "${ops[5]}")
+        systemctl reboot
+        ;;
+    "${ops[6]}")
         systemctl poweroff
         ;;
     *) ;;
