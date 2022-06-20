@@ -20,6 +20,9 @@ set hidden
 set novisualbell
 set updatetime=500
 
+
+set mouse=a                    " Enable mouse support
+
 " Encoding
 set encoding=utf-8
 scriptencoding utf-8
@@ -46,7 +49,6 @@ augroup END
 
 call plug#begin('~/.vim/plugged')
 
-
 Plug 'airblade/vim-gitgutter'
 Plug 'dense-analysis/ale'
 Plug 'ervandew/supertab'
@@ -63,6 +65,7 @@ Plug 'rbberger/vim-singularity-syntax'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'wakatime/vim-wakatime'
@@ -174,16 +177,16 @@ set linebreak    "Wrap lines at convenient points
 
 " ====================== Scrolling ======================
 
-set scrolloff=8         " Start scrolling when we're 8 lines away from margins
+set scrolloff=8      " Start scrolling when we're 8 lines away from margins
 set sidescrolloff=15
 set sidescroll=1
 
 " ====================== Search ======================
 
-set incsearch       " Find the next match as we type the search
-set hlsearch        " Highlight searches by default
-set ignorecase      " Ignore case when searching...
-set smartcase       " ...unless we type a capital
+set incsearch        " Find the next match as we type the search
+set hlsearch         " Highlight searches by default
+set ignorecase       " Ignore case when searching...
+set smartcase        " ...unless we type a capital
 
 " ====================== Security ======================
 
