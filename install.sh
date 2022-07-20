@@ -101,6 +101,8 @@ install_dotEngine() {
   local api_endpoint
   local dest_dir
   local download_link
+  local dotEngine_path
+  local dotEngine_vers
 
   api_endpoint="https://api.github.com/repos/jarulsamy/dotEngine/releases/latest"
   dest_dir="$HOME/.local/bin"
@@ -111,16 +113,20 @@ install_dotEngine() {
   fi
 
   mkdir -pv "$dest_dir"
+  dotEngine_path="${dest_dir}/dotEngine"
+
   printf "Downloading dotEngine...\n"
-  curl -L "$download_link" -o "$dest_dir"/dotEngine
+  curl -L "$download_link" -o "${dotEngine_path}"
 
   if [ ! "$?" -eq 0 ]; then
     echoerr "Failed to download dotEngine."
     return
   fi
 
+  dotEngine_vers="$(${dotEngine_path} --version)"
+
   chmod +x "$dest_dir"/dotEngine
-  printf "Installed dotEngine to %s\n" "$dest_dir"
+  printf "Installed dotEngine v%s to %s\n" "$dotEngine_vers" "$dest_dir"
 }
 
 install_ohmyzsh() {
