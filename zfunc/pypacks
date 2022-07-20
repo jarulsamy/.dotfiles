@@ -25,21 +25,23 @@ install() {
 
 while test $# -gt 0; do
     case "$1" in
-    -h | --help)
-        echo "$package - Lists and optionally install frequently used python packages"
-        echo "Options:"
-        echo "-h, --help        show brief help"
-        echo "-i, --install     Install packages"
-        break
-        ;;
-    -i | --install)
-        shift
-        install
-        break
-        ;;
+        -h | --help)
+            printf "Lists and optionally install frequently used python packages\n"
+            printf "\n"
+            printf "Options:"
+            printf "-h, --help        show brief help\n"
+            printf "-i, --install     Install packages\n"
+            break
+            ;;
+        -i | --install)
+            pip install --upgrade pip
+            shift
+            install
+            break
+            ;;
     esac
 done
 
 for i in "${packages[@]}"; do
-    echo "$i"
+    printf "%s\n" "$i"
 done
