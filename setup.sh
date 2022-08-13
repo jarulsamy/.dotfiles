@@ -3,27 +3,27 @@
 dotfilesDir=$(pwd)
 
 linkDot() {
-  dest="${HOME}/${1}"
-  dateStr=$(date +%Y-%m-%d-%H%M)
+	dest="${HOME}/${1}"
+	dateStr=$(date +%Y-%m-%d-%H%M)
 
-  if [ -h "${HOME}/${1}" ]; then
-    # Existing symlink
-    echo "Removing existing symlink: ${dest}"
-    rm "${dest}"
+	if [ -h "${HOME}/${1}" ]; then
+		# Existing symlink
+		echo "Removing existing symlink: ${dest}"
+		rm "${dest}"
 
-  elif [ -f "${dest}" ]; then
-    # Existing file
-    echo "Backing up existing file: ${dest}"
-    mv ${dest}{,.${dateStr}}
+	elif [ -f "${dest}" ]; then
+		# Existing file
+		echo "Backing up existing file: ${dest}"
+		mv ${dest}{,.${dateStr}}
 
-  elif [ -d "${dest}" ]; then
-    # Existing dir
-    echo "Backing up existing dir: ${dest}"
-    mv ${dest}{,.${dateStr}}
-  fi
+	elif [ -d "${dest}" ]; then
+		# Existing dir
+		echo "Backing up existing dir: ${dest}"
+		mv ${dest}{,.${dateStr}}
+	fi
 
-  echo "Creating new symlink: ${dest}"
-  ln -s "${dotfilesDir}/${1}" "${dest}"
+	echo "Creating new symlink: ${dest}"
+	ln -s "${dotfilesDir}/${1}" "${dest}"
 }
 
 # Ensure config folders exists
@@ -56,7 +56,7 @@ linkDot .config/yay
 # Emacs
 linkDot .doom.d
 
-# For some reason, git doesn't support symlink for work
+# For some reason, git doesn't support symlink for included files
 cp .gitconfig-work ~/.gitconfig-work
 
 # Create mpd required playlist folder
@@ -65,18 +65,26 @@ mkdir -p "$HOME/.config/mpd/playlists"
 # Delete .mpd folder
 rm -rf "$HOME/.mpd"
 
-# Install zsh theme
-git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$HOME/.oh-my-zsh/custom/themes/powerlevel10k"
-# Install autosuggestions plugin
-git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
-# Install syntax highlighting plugin
-git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+POWERLEVEL_10K_DIR="$HOME/.oh-my-zsh/custom/themes/powerlevel10k"
+AUTO_SUGGESTION_DIR="$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+ZSH_SYNTAX_PLUG_DIR="$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+
+# Install various plugins
+if [ ! -d "$POWERLEVEL_10K_DIR" ]; then
+	git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$POWERLEVEL_10K_DIR"
+fi
+if [ ! -d "$AUTO_SUGGESTION_DIR" ]; then
+	git clone --depth=1 https://github.com/zsh-users/zsh-autosuggestions "$AUTO_SUGGESTION_DIR"
+fi
+if [ ! -d "$ZSH_SYNTAX_PLUG_DIR" ]; then
+	git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_SYNTAX_PLUG_DIR"
+fi
 
 # Install doom emacs
 if [ ! -f "$HOME/.emacs.d/bin/doom" ]; then
-  rm -rf "$HOME/.emacs.d"
-  git clone --depth 1 https://github.com/hlissner/doom-emacs "$HOME/.emacs.d"
-  "$HOME/.emacs.d/bin/doom" install
+	rm -rf "$HOME/.emacs.d"
+	git clone --depth 1 https://github.com/hlissner/doom-emacs "$HOME/.emacs.d"
+	"$HOME/.emacs.d/bin/doom" install
 fi
 
 # Grab authorized_keys
