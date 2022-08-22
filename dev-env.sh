@@ -16,6 +16,7 @@ MAIN_DEPS=(
 	jre-openjdk-headless
 	nodejs
 	npm
+	pgformatter
 	rust
 	rust-analyzer
 	texlive-bin

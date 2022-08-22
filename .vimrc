@@ -239,6 +239,7 @@ let g:ale_fixers = {
             \ 'markdown': ['prettier'],
             \ 'html': ['prettier'],
             \ 'python': ['black', 'isort'],
+            \ 'sql': ['pgformatter'],
             \ 'sh': ['shfmt'],
             \}
 
