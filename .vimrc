@@ -353,6 +353,9 @@ no <C-h> <C-w>h|
 " Write as sudo with :w!!
 cnoremap w!! execute 'silent! write !sudo tee % > /dev/null' <bar> edit!
 
+" Make Y consistent with other binds
+nnoremap Y y$
+
 " ====================== Misc ======================
 
 " Supress 'warning changing a readonly file'
