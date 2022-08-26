@@ -25,13 +25,32 @@ MAIN_DEPS=(
 	vim
 )
 
+PACMAN_FONTS=(
+	noto-fonts
+	noto-fonts-emoji
+	ttf-cascadia-code
+	ttf-fantasque-sans-mono
+	ttf-fira-code
+	ttf-iosevka-nerd
+	ttf-jetbrains-mono
+	ttf-nerd-fonts-symbols
+)
+
 AUR_DEPS=(
+	discord
 	google-chrome
 	onedrive-abraunegg
 	slack-desktop
 	spotify
 	texlive-latexindent-meta
+	ttf-all-the-icons
 	visual-studio-code-bin
+)
+
+AUR_FONTS=(
+	siji-ng
+	ttf-icomoon-feather
+	ttf-typicons
 )
 
 is_command() {
@@ -55,6 +74,14 @@ fi
 for package in "${MAIN_DEPS[@]}"; do
 	sudo pacman -S --noconfirm --needed "$package"
 done
+
+# Doas config, set this before yay.
+# since yay uses doas internally.
+DOAS_CONFIG="/etc/doas.conf"
+if [ ! -f "$DOAS_CONFIG" ]; then
+	printf "%s\n" "Setting doas config"
+	printf "permit :wheel\npermit nopass %s as root\n" "$USER" | /bin/sudo tee "$DOAS_CONFIG"
+fi
 
 # Install all AUR packages
 for package in "${AUR_DEPS[@]}"; do
@@ -89,8 +116,25 @@ if is_command gsettings; then
 	printf "Loaded custom Gnome settings\n"
 fi
 
-# Doas config
-DOAS_CONFIG="/etc/doas.conf"
-if [ ! -f "$DOAS_CONFIG" ]; then
-	printf "permit :wheel\npermit nopass %s as root\n" "$USER" | /bin/sudo tee "$DOAS_CONFIG"
+# Fonts
+for package in "${PACMAN_FONTS[@]}"; do
+	sudo pacman -S --noconfirm --needed "$package"
+done
+
+for package in "${AUR_FONTS[@]}"; do
+	yay -S --noconfirm --needed "$package"
+done
+
+# Assume the fonts directory is where it should be.
+fonts="$HOME/.dotfiles/fonts"
+fontsDest="$HOME/.local/share/fonts"
+# Ensure the fonts directory is where it should be.
+if [ -d "$fonts" ]; then
+	# Ensure dest exists
+	mkdir -p "${fontsDest}"
+	# Copy font files over
+	find "${fonts}/" -mindepth 1 -maxdepth 1 -exec cp -r {} "${fontsDest}/" ';'
+	fc-cache 2>/dev/null 1>&2 -f -v
+else
+	printf "Can't find source fonts directory. Was .dotfiles cloned to \$HOME?\n"
 fi
