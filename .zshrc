@@ -77,6 +77,8 @@ source "$ZSH/oh-my-zsh.sh"
 
 # User configuration
 export LANG=en_US.UTF-8
+# https://superuser.com/a/1309966
+setopt ignore_eof
 
 # Preferred editor for local and remote sessions
 export EDITOR="vim"
