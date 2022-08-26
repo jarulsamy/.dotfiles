@@ -1,63 +1,107 @@
 #!/usr/bin/env python3
-"""Clone GitHub repos really fast!
+"""
+Usage: clone [-h] [-v] [-d] [-p PROTOCOL] repo_name [dest]
 
-A simple command line interface to clone personal GitHub
-repositories without having to use the web interface.
+Clone GitHub repos really fast!
 
-Usage:
-    clone [-d] [-H] <repo_name> [<dest>]
-    clone (-h | --help | --version)
+positional arguments:
+  repo_name             Name of repository to clone.
+  dest                  Destination to clone repository.
 
-Options:
-    -d --dry-run    Don't actually clone, just echo the remote url of the repo.
-    -H --http       Use HTTP instead of SSH
-    -h --help       Show this help
-    -v --version    Show version
+options:
+  -h, --help            show this help message and exit
+  -v, --version         show program's version number and exit
+  -d, --dry-run         Don't actually clone, just echo the remote url of the repo.
+  -p PROTOCOL, --protocol PROTOCOL
+                        Use a different protocol to clone. Options: git, http, ssh
 """
 
+import argparse
 import subprocess
 import sys
 from pathlib import Path
-
-from docopt import docopt
+from typing import Optional
 
 DOTFILES_DIR = Path(Path.home(), ".dotfiles", "zfunc")
 sys.path.insert(0, str(DOTFILES_DIR))
 
 from gitUtils import get_git_username
 
-VERSION = "0.0.2"
+VERSION = "0.1.0"
 USERNAME = get_git_username()
 
 
-def clone(url, dest=None):
+def clone(url: str, dest: Optional[Path] = None) -> None:
+    """Clone a git repository by calling git as a subprocess."""
     if dest is None:
         subprocess.run(["git", "clone", url])
     else:
         subprocess.run(["git", "clone", url, dest])
 
 
-def http_url(stub):
+def git_url(stub: str) -> str:
+    return f"git://github.com/{stub}"
+
+
+def http_url(stub: str) -> str:
     return f"https://github.com/{stub}"
 
 
-def ssh_url(stub):
+def ssh_url(stub: str) -> str:
     return f"git@github.com:{stub}"
 
 
-def process_args(args):
-    name = args.get("<repo_name>")
+if __name__ == "__main__":
+    protocols = {"git": git_url, "http": http_url, "ssh": ssh_url}
+
+    parser = argparse.ArgumentParser(
+        prog="clone",
+        description="Clone GitHub repos really fast!",
+    )
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=f"%(prog)s {VERSION}",
+    )
+    parser.add_argument(
+        "-d",
+        "--dry-run",
+        action="store_true",
+        help="Don't actually clone, just echo the remote url of the repo.",
+    )
+    parser.add_argument(
+        "-p",
+        "--protocol",
+        action="store",
+        default="ssh",
+        help="Use a different protocol to clone. Options: git, http, ssh",
+    )
+    parser.add_argument(
+        "repo_name",
+        action="store",
+        help="Name of repository to clone.",
+    )
+    parser.add_argument(
+        "dest",
+        action="store",
+        type=Path,
+        nargs="?",
+        help="Destination to clone repository.",
+    )
+    args = vars(parser.parse_args())
+
+    if args["protocol"].lower() not in protocols.keys():
+        raise ValueError(
+            f"Protocol '{args['protocol']}' not supported, try one of these {', '.join(protocols.keys())}."
+        )
+
+    name = args["repo_name"]
     if "/" not in name:
-        name = f"{USERNAME}/" + name
-    if args.get("--http"):
-        url = http_url(name)
-    else:
-        url = ssh_url(name)
-    if args.get("--dry-run"):
+        name = f"{USERNAME}/{name}"
+
+    url = protocols[args["protocol"]](name)
+    if args["dry_run"]:
         print(url)
     else:
-        clone(url, args.get("<dest>"))
-
-
-args = docopt(__doc__, version=VERSION)
-process_args(args)
+        clone(url, args["dest"])

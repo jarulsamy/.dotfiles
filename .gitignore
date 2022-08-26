@@ -9,3 +9,4 @@ mpdstate
 log
 database
 .ropeproject/
+*.mypy_cache

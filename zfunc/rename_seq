@@ -1,17 +1,20 @@
 #!/usr/bin/env python3
 """
+Usage: rename_seq [-h] [-v] [-d] [DIR]
+
 Rename many files sequentially easily.
 
-Usage:
-    rename_seq [DIR] [options]
+positional arguments:
+  DIR            Directory to rename files in.
 
-Options:
-    -h, --help               Show this help.
-    -V, --version            Show version info.
+options:
+  -h, --help     show this help message and exit
+  -v, --version  show program's version number and exit
+  -d, --dry-run  Print rename actions instead of actually renaming files.
 """
-from pathlib import Path
 
-from docopt import docopt
+import argparse
+from pathlib import Path
 
 EXTENSIONS = (
     "jpg",
@@ -25,37 +28,74 @@ EXTENSIONS = (
     "gif",
 )
 
+VERSION = "0.1.0"
 
-def lowercase_files(base_dir: Path):
+
+def lowercase_files(base_dir: Path, dry_run: bool = False) -> None:
     """Lowercase all filenames in base_dir."""
     for i in base_dir.glob("*"):
         if i.is_file():
-            i.rename(Path(i.parent, str(i.name).lower()))
+            new_name = Path(i.parent, str(i.name).lower())
+            if dry_run:
+                print(f"{i} -> {new_name}")
+            else:
+                i.rename(new_name)
 
 
-def clean_jpgs(base_dir: Path):
+def clean_jpgs(base_dir: Path, dry_run: bool = False) -> None:
     """Ensure all JPG files are .JPG."""
     for i in base_dir.glob("*.jpeg"):
-        i.rename(Path(i.parent, f"{i.stem}.jpg"))
+        new_name = Path(i.parent, f"{i.stem}.jpg")
+        if dry_run:
+            print(f"{i} -> {new_name}")
+        else:
+            i.rename(new_name)
 
 
-def rename(base_dir: Path):
+def rename(base_dir: Path, dry_run: bool = False) -> None:
     """Rename files numerically, from 0 - N, by file extension."""
     index = 0
     for ext in EXTENSIONS:
         for i in base_dir.glob(f"*.{ext}"):
-            new = Path(i.parent, f"{index}.{ext}")
-            i.rename(new)
+            new_name = Path(i.parent, f"{index}.{ext}")
             index += 1
+            if dry_run:
+                print(new_name)
+            else:
+                i.rename(new_name)
 
 
 if __name__ == "__main__":
-    args = docopt(__doc__)
-    if args["DIR"] is None:
-        args["DIR"] = Path(".")
+    parser = argparse.ArgumentParser(
+        prog="rename_seq",
+        description="Rename many files sequentially easily.",
+    )
+    parser.add_argument(
+        "-v",
+        "--version",
+        action="version",
+        version=f"%(prog)s {VERSION}",
+    )
+    parser.add_argument(
+        "-d",
+        "--dry-run",
+        action="store_true",
+        help="Print rename actions instead of actually renaming files.",
+    )
+    parser.add_argument(
+        "DIR",
+        action="store",
+        nargs="?",
+        type=Path,
+        default=Path("."),
+        help="Directory to rename files in.",
+    )
 
-    base_dir = Path(args["DIR"])
+    args = vars(parser.parse_args())
 
-    lowercase_files(base_dir)
-    clean_jpgs(base_dir)
-    rename(base_dir)
+    base_dir = args["DIR"]
+    dry_run = args["dry_run"]
+
+    lowercase_files(base_dir, dry_run)
+    clean_jpgs(base_dir, dry_run)
+    rename(base_dir, dry_run)
