@@ -80,13 +80,6 @@ if [ ! -d "$ZSH_SYNTAX_PLUG_DIR" ]; then
 	git clone --depth=1 https://github.com/zsh-users/zsh-syntax-highlighting "$ZSH_SYNTAX_PLUG_DIR"
 fi
 
-# Install doom emacs
-if [ ! -f "$HOME/.emacs.d/bin/doom" ]; then
-	rm -rf "$HOME/.emacs.d"
-	git clone --depth 1 https://github.com/hlissner/doom-emacs "$HOME/.emacs.d"
-	"$HOME/.emacs.d/bin/doom" install
-fi
-
 # Grab authorized_keys
 source "$HOME/.dotfiles/zfunc/aliases.sh"
 authorize_github_keys
