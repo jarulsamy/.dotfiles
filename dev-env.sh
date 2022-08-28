@@ -12,6 +12,7 @@ MAIN_DEPS=(
 	docker-compose
 	emacs-nativecomp
 	gcc
+	git-delta
 	go
 	jre-openjdk-headless
 	nodejs
@@ -19,10 +20,9 @@ MAIN_DEPS=(
 	pgformatter
 	rust
 	rust-analyzer
-	texlive-bin
-	texlive-core
-	texlive-science
+	texlive-most
 	vim
+	python
 )
 
 PACMAN_FONTS=(
@@ -72,7 +72,7 @@ fi
 
 # Install all mainline packages
 for package in "${MAIN_DEPS[@]}"; do
-	sudo pacman -S --noconfirm --needed "$package"
+	sudo pacman -S --noconfirm --needed "${package}"
 done
 
 # Doas config, set this before yay.
@@ -85,7 +85,7 @@ fi
 
 # Install all AUR packages
 for package in "${AUR_DEPS[@]}"; do
-	yay -S --noconfirm --needed "$package"
+	pacman -Qm "${package}" || yay -S --noconfirm --needed "${package}"
 done
 
 # Install all the vim goodness (sweet, sweet coconut oil).
@@ -122,7 +122,7 @@ for package in "${PACMAN_FONTS[@]}"; do
 done
 
 for package in "${AUR_FONTS[@]}"; do
-	yay -S --noconfirm --needed "$package"
+	pacman -Qm "${package}" || yay -S --noconfirm --needed "${package}"
 done
 
 # Assume the fonts directory is where it should be.
