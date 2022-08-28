@@ -95,14 +95,6 @@ export MAKEFLAGS="$MAKEOPTS"
 # Number of threads for zstd to use by default
 export ZSTD_NBTHREADS="${NUM_THREADS}"
 
-# Use clang if possible
-if
-    type clang &>/dev/null
-then
-    export CC=clang
-    export CXX=clang++
-fi
-
 # Add "$HOME/.../bin" directories to PATH.
 export PATH="$HOME/.local/bin:\
 $HOME/.local/bin:\
