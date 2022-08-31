@@ -18,11 +18,12 @@ MAIN_DEPS=(
 	nodejs
 	npm
 	pgformatter
+	python
 	rust
 	rust-analyzer
 	texlive-most
 	vim
-	python
+	wl-clipboard
 )
 
 PACMAN_FONTS=(
