@@ -11,6 +11,7 @@ MAIN_DEPS=(
 	docker
 	docker-compose
 	emacs-nativecomp
+	fd
 	gcc
 	git-delta
 	go
@@ -24,6 +25,7 @@ MAIN_DEPS=(
 	texlive-most
 	vim
 	wl-clipboard
+	wmctrl
 )
 
 PACMAN_FONTS=(
@@ -34,7 +36,7 @@ PACMAN_FONTS=(
 	ttf-fira-code
 	ttf-iosevka-nerd
 	ttf-jetbrains-mono
-	ttf-nerd-fonts-symbols
+	ttf-nerd-fonts-symbols-2048-em
 )
 
 AUR_DEPS=(
