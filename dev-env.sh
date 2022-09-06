@@ -26,6 +26,7 @@ MAIN_DEPS=(
 	vim
 	wl-clipboard
 	wmctrl
+	ripgrep
 )
 
 PACMAN_FONTS=(
