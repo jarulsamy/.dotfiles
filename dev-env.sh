@@ -7,6 +7,7 @@ set -e
 
 MAIN_DEPS=(
 	clang
+	discord
 	doas
 	docker
 	docker-compose
@@ -20,13 +21,13 @@ MAIN_DEPS=(
 	npm
 	pgformatter
 	python
+	ripgrep
 	rust
 	rust-analyzer
 	texlive-most
 	vim
 	wl-clipboard
 	wmctrl
-	ripgrep
 )
 
 PACMAN_FONTS=(
@@ -41,7 +42,6 @@ PACMAN_FONTS=(
 )
 
 AUR_DEPS=(
-	discord
 	google-chrome
 	onedrive-abraunegg
 	slack-desktop
