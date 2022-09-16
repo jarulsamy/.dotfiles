@@ -6,6 +6,7 @@
 set -e
 
 MAIN_DEPS=(
+	aspell-en
 	clang
 	discord
 	doas
@@ -16,6 +17,7 @@ MAIN_DEPS=(
 	gcc
 	git-delta
 	go
+	hunspell-en_us
 	jre-openjdk-headless
 	nodejs
 	npm
