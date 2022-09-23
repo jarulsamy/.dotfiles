@@ -131,8 +131,11 @@ install_dotEngine() {
 
 install_ohmyzsh() {
   # Install oh-my-zsh, if not already present
+  # https://github.com/ohmyzsh/ohmyzsh/blob/master/tools/install.sh
   if [ ! -d "$HOME/.oh-my-zsh" ]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+    export RUNZSH="no"
+    export CHSH="yes"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   else
     echoerr "Skipping oh-my-zsh install, $HOME/.oh-my-zsh already exists."
   fi
