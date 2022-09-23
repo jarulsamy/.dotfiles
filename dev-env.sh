@@ -60,8 +60,8 @@ AUR_FONTS=(
 )
 
 is_command() {
-	# Checks to see if the given command (passed as a string argument) exists on the system.
-	# Returns 0 (success) if the command exists, and 1 if it doesn't.
+	# Checks to see if the given command (passed as a string argument) exists on
+	# the system. Returns 0 (success) if the command exists, and 1 if it doesn't.
 	local check_command="$1"
 	command -v "${check_command}" >/dev/null 2>&1
 }
@@ -76,9 +76,17 @@ if ! is_command yay; then
 	exit 1
 fi
 
+# Ensure we are in the right place
+EXPECTED_DIR="$HOME/.dotfiles"
+if [ ! "${PWD}" == "$EXPECTED_DIR" ]; then
+	printf "Ensure .dotfiles is cloned to '%s'\n" "$EXPECTED_DIR"
+	printf "Also ensure your CWD is '%s'\n" "$EXPECTED_DIR"
+	exit 1
+fi
+
 # Install all mainline packages
 for package in "${MAIN_DEPS[@]}"; do
-	sudo pacman -S --noconfirm --needed "${package}"
+	pacman -Qm "${package}" 2>/dev/null || sudo pacman -S --noconfirm --needed "${package}"
 done
 
 # Doas config, set this before yay.
@@ -91,7 +99,7 @@ fi
 
 # Install all AUR packages
 for package in "${AUR_DEPS[@]}"; do
-	pacman -Qm "${package}" || yay -S --noconfirm --needed "${package}"
+	pacman -Qm "${package}" 2>/dev/null || yay -S --noconfirm --needed "${package}"
 done
 
 # Install all the vim goodness (sweet, sweet coconut oil).
@@ -142,5 +150,8 @@ if [ -d "$fonts" ]; then
 	find "${fonts}/" -mindepth 1 -maxdepth 1 -exec cp -r {} "${fontsDest}/" ';'
 	fc-cache 2>/dev/null 1>&2 -f -v
 else
-	printf "Can't find source fonts directory. Was .dotfiles cloned to \$HOME?\n"
+	printf "Can't find source fonts directory.\n"
 fi
+
+# Ignore changes to yay's config file. It refuses to keep envvars for the paths.
+git update-index --skip-worktree .config/yay/config.json
