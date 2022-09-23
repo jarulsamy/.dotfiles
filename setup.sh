@@ -4,7 +4,7 @@ dotfilesDir=$(pwd)
 
 linkDot() {
 	dest="${HOME}/${1}"
-	dateStr=$(date +%Y-%m-%d-%H%M)
+	dateStr="$(date +%Y-%m-%d-%H%M).pre-dotfiles-install"
 
 	if [ -h "${HOME}/${1}" ]; then
 		# Existing symlink
