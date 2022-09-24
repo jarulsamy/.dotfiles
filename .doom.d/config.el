@@ -202,3 +202,11 @@
 ;;     (setq mode-line-format (delete (assoc 'which-func-mode
 ;;                                           mode-line-format) mode-line-format)
 ;;           header-line-format which-func-header-line-format)))
+
+;; Bring back ctrl-a/x
+(after! evil
+  (define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
+  (define-key evil-normal-state-map (kbd "C-x") 'evil-numbers/dec-at-pt)
+
+  (define-key evil-normal-state-map (kbd "g C-a") 'evil-numbers/inc-at-pt-incremental)
+  (define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental))
