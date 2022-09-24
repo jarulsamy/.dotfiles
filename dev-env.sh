@@ -116,6 +116,14 @@ if [ ! -f "$HOME/.emacs.d/bin/doom" ]; then
 	rm -rf "$HOME/.emacs.d"
 	git clone --depth 1 https://github.com/hlissner/doom-emacs "$HOME/.emacs.d"
 	"$HOME/.emacs.d/bin/doom" install --no-config --env --install --fonts --force
+
+	# Fix missing personal dictionary directory.
+	ispell_dir="$HOME/.emacs.d/.local/etc/ispell"
+	if [ ! -d "$ispell_dir" ]; then
+		mkdir -p "$ispell_dir"
+		printf "personal_ws-1.1 en 0\n" >"${ispell_dir}/.pws"
+	fi
+
 	printf "Installed Doom Emacs"
 fi
 

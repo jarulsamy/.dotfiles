@@ -191,3 +191,14 @@
 ;; Dired
 (after! dired
   (setq-default dired-listing-switches "-ABDgGlX --group-directories-first"))
+
+;; Equivalent of nvim-treesitter-context
+;; (which-function-mode 1)
+;; (setq idle-update-delay 0.25)
+
+;; (setq which-func-header-line-format '(which-func-mode ("" which-func-format)))
+;; (defadvice which-func-ff-hook (after header-line activate)
+;;   (when which-func-mode
+;;     (setq mode-line-format (delete (assoc 'which-func-mode
+;;                                           mode-line-format) mode-line-format)
+;;           header-line-format which-func-header-line-format)))
