@@ -128,6 +128,8 @@ setup_emacs() {
 		fi
 
 		printf "Installed Doom Emacs"
+	else
+		"$HOME/.emacs.d/bin/doom" sync
 	fi
 }
 
