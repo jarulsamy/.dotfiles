@@ -210,3 +210,15 @@
 
   (define-key evil-normal-state-map (kbd "g C-a") 'evil-numbers/inc-at-pt-incremental)
   (define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental))
+
+(defun xdg-open (url)
+  "Open a URL with the default application."
+  (print url)
+  (call-process "xdg-open" nil 0 nil url))
+
+(defun open-project-root ()
+  "Open a doom project with xdg-open."
+  (interactive)
+  (xdg-open (expand-file-name (expand-file-name (doom-project-root) (expand-file-name "~")))))
+
+(define-key evil-normal-state-map (kbd "g C-o") 'open-project-root)
