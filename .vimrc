@@ -70,8 +70,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'wakatime/vim-wakatime'
 Plug 'yggdroot/indentline'
-Plug 'justinmk/vim-sneak'
-
 
 " Only load markdown preview plugin if $DISPLAY is defined
 " Fixes hanging on headless systems.
@@ -300,10 +298,6 @@ hi SpellBad ctermfg=red guifg=red
 
 let g:indentLine_setConceal = 0
 let g:indentLine_conceallevel = 0
-
-" ====================== Sneak ======================
-" Yeah I like it now that I know that 's' can be replaced with 'cl'
-let g:sneak#label = 1
 
 " ====================== Binds ======================
 
