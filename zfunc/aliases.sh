@@ -126,3 +126,47 @@ blk2hex() {
 	blk=$((blk + 64))
 	printf "%s\n" "$(dec2hex $blk)"
 }
+
+backup_home() {
+	local backup_dst
+
+	if (($# != 1)); then
+		backup_dst="/mnt/backup"
+	else
+		backup_dst="$1"
+	fi
+
+	declare -r source_dir="$HOME"
+	declare -r datetime="$(date '+%Y-%m-%d_%H-%M-%S')"
+	declare -r hostname="$(hostname)"
+	declare -r dst="${backup_dst}/${hostname}_${datetime}"
+
+	rsync -ahv --progress --delete \
+		"$source_dir" \
+		--exclude ".android" \
+		--exclude ".cache" \
+		--exclude ".cargo" \
+		--exclude ".config/Code" \
+		--exclude ".config/Prospect Mail" \
+		--exclude ".config/Slack" \
+		--exclude ".config/discord" \
+		--exclude ".config/google-chrome" \
+		--exclude ".config/spotify" \
+		--exclude ".cpan" \
+		--exclude ".emacs.d" \
+		--exclude ".gradle" \
+		--exclude ".java" \
+		--exclude ".mozilla" \
+		--exclude ".mypy_cache" \
+		--exclude ".npm" \
+		--exclude ".texlive" \
+		--exclude ".themes" \
+		--exclude ".vim" \
+		--exclude ".virtualenvs" \
+		--exclude ".vscode" \
+		--exclude ".vscode-server" \
+		--exclude ".oh-my-zsh" \
+		--exclude "Android" \
+		--exclude "AndroidStudioProjects" \
+		"${dst}"
+}
