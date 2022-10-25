@@ -31,6 +31,9 @@ alias vi="vim"
 # Reload zsh
 alias zshreload="source $HOME/.zshrc"
 
+alias to_pdf="libreoffice --headless --convert-to pdf"
+alias ports="ss -Olt4"
+
 # Dump gnome keybinds to file
 gnome-keybinds-export() {
 	dconf dump / | sed -n '/\[org.gnome.desktop.wm.keybindings/,/^$/p' >"$HOME/.dotfiles/dconf/custom-shortcuts.ini"
