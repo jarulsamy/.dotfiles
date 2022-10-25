@@ -34,7 +34,8 @@ install_mainline_packages() {
 		nodejs
 		npm
 		pgformatter
-		python
+		python-pip
+		python3
 		reflector
 		ripgrep
 		rust
@@ -51,6 +52,7 @@ install_mainline_packages() {
 		ttf-cascadia-code
 		ttf-fantasque-sans-mono
 		ttf-fira-code
+		ttf-hack
 		ttf-iosevka-nerd
 		ttf-jetbrains-mono
 		ttf-nerd-fonts-symbols-2048-em
@@ -92,6 +94,10 @@ install_aur_packages() {
 	done
 }
 
+install_cargo_packages() {
+	cargo install --locked --git https://github.com/latex-lsp/texlab.git
+}
+
 setup_doas() {
 	# Doas config, set this before yay.
 	# since yay uses doas internally.
@@ -127,7 +133,7 @@ setup_emacs() {
 			printf "personal_ws-1.1 en 0\n" >"${ispell_dir}/.pws"
 		fi
 
-		printf "Installed Doom Emacs"
+		printf "Installed Doom Emacs\n"
 	else
 		"$HOME/.emacs.d/bin/doom" sync
 	fi
@@ -197,6 +203,7 @@ setup_doas
 
 install_mainline_packages
 install_aur_packages
+install_cargo_packages
 
 setup_vim
 setup_emacs
