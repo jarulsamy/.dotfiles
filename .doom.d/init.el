@@ -17,7 +17,7 @@
 (doom! :input
        ;;chinese
        ;;japanese
-       ;;layout            ; auie,ctsrnm is the superior home row
+       ;;layout                                 ; auie,ctsrnm is the superior home row
 
        :completion
        company                                  ; the ultimate code completion backend
@@ -31,7 +31,7 @@
        doom                                     ; what makes DOOM look the way it does
        doom-dashboard                           ; a nifty splash screen for Emacs
        doom-quit                                ; DOOM quit-message prompts when you quit Emacs
-       ;; (emoji +unicode +ascii +github)       ; 🙂
+       ;;(emoji +unicode +ascii +github)        ; 🙂
        hl-todo                                  ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
        ;;hydra
        indent-guides                            ; highlighted indent columns
@@ -85,7 +85,7 @@
 
        :tools
        ;;ansible
-       debugger                                 ; FIXME stepping through code, to help you add bugs
+       (debugger +lsp)                          ; FIXME stepping through code, to help you add bugs
        direnv
        (docker +lsp)
        editorconfig                             ; let someone else argue about tabs vs spaces
@@ -104,6 +104,7 @@
        ;;terraform                              ; infrastructure as code
        ;;tmux                                   ; an API for interacting with tmux
        ;;upload                                 ; map local to remote projects via ssh/ftp
+       tree-sitter                              ; syntax and parsing, sitting in a tree...
 
        :os
        ;;(:if IS-MAC macos)                     ; improve compatibility with macOS
@@ -112,7 +113,7 @@
        :lang
        ;;ada                                    ; types of types of types of types...
        ;;beancount                              ; mind the GAAP
-       (cc +lsp)                                ; C > C++ == 1
+       (cc +lsp +tree-sitter)                   ; C > C++ == 1
        ;;clojure                                ; java with a lisp
        ;;common-lisp                            ; if you've seen one lisp, you've seen them all
        ;;coq                                    ; proofs-as-programs
@@ -131,16 +132,16 @@
        ;;fsharp                                 ; ML stands for Microsoft's Language
        ;;fstar                                  ; (dependent) types and (monadic) effects and Z3
        ;;gdscript                               ; the language you waited for
-       (go +lsp)                                ; the hipster dialect
+       (go +lsp +tree-sitter)                   ; the hipster dialect
        (haskell +lsp +dante)                    ; a language that's lazier than I am
        ;;hy                                     ; readability of scheme w/ speed of python
        ;;idris                                  ; a language you can depend on
-       (json +lsp)                              ; At least it ain't XML
+       (json +lsp +tree-sitter)                 ; At least it ain't XML
        ;;(java +meghanada)                      ; the poster child for carpal tunnel syndrome
-       (javascript +lsp)                        ; all(hope(abandon(ye(who(enter(here))))))
-       julia                                    ; a better, faster MATLAB
+       (javascript +lsp +tree-sitter)           ; all(hope(abandon(ye(who(enter(here))))))
+       ;;julia                                  ; a better, faster MATLAB
        ;;kotlin                                 ; a better, slicker Java(Script)
-       (latex +lsp)                             ; writing papers in Emacs has never been so fun
+       (latex +lsp +cdlatex)                    ; writing papers in Emacs has never been so fun
        ;;lean                                   ; for folks with too much to prove
        ;;ledger                                 ; be audit you can be
        ;;lua                                    ; one-based indices? one-based indices
@@ -152,7 +153,7 @@
        ;;php                                    ; perl's insecure younger brother
        ;;plantuml                               ; diagrams for confusing people more
        ;;purescript                             ; javascript, but functional
-       (python +cython +lsp)                    ; beautiful is better than ugly
+       (python +cython +lsp +tree-sitter)       ; beautiful is better than ugly
        ;;qt                                     ; the 'cutest' gui framework ever
        ;;racket                                 ; a DSL for DSLs
        ;;raku                                   ; the artist formerly known as perl6
@@ -162,7 +163,7 @@
        (rust +lsp)                              ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
        ;;scala                                  ; java, but good
        ;;(scheme +guile)                        ; a fully conniving family of lisps
-       (sh +lsp)                                ; she sells {ba,z,fi}sh shells on the C xor
+       (sh +lsp +tree-sitter)                   ; she sells {ba,z,fi}sh shells on the C xor
        ;;sml
        ;;solidity                               ; do you need a blockchain? No.
        ;;swift                                  ; who asked for emoji variables?
@@ -172,7 +173,7 @@
        ;;zig                                    ; C, but simpler
 
        :email
-       (mu4e +org +gmail)
+       ;;(mu4e +org +gmail)
        ;;notmuch
        ;;(wanderlust +gmail)
 
@@ -182,7 +183,7 @@
        everywhere                               ; *leave* Emacs!? You must be joking
        ;;irc                                    ; how neckbeards socialize
        ;;(rss +org)                             ; emacs as an RSS reader
-       twitter                                  ; twitter client https://twitter.com/vnought
+       ;;twitter                                ; twitter client https://twitter.com/vnought
 
        :config
        ;;literate

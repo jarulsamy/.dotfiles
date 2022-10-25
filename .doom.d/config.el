@@ -38,34 +38,18 @@
 
 ;;; Font/Theme
 (setq doom-font (font-spec
-                 :family "Jetbrains Mono"
+                 :family "Hack"
                  :size font-size
                  :weight 'normal)
       doom-variable-pitch-font (font-spec
-                                :family "Jetbrains Mono"
+                                :family "Hack"
                                 :size font-size
                                 :weight 'normal)
-      doom-theme 'doom-one
+      doom-theme 'doom-dark+
       display-line-numbers-type 'relative)
 
 ;;; Dashboard
 (setq +doom-dashboard-ascii-banner-fn #'dashboard-random-ascii-banner)
-
-;;; Time Formatting
-(setq display-time-format "%I:%M:%S %p"
-      display-time-interval 1
-      display-time-default-load-average nil)
-(display-time-mode 1)
-
-;;; Battery TODO: This doesn't ever update...
-(use-package! battery
-  :config
-  ;; Only show battery symbol if we can successfully read the status.
-  (let ((battery-status (battery-format "%B" (funcall battery-status-function))))
-    (setq display-battery-mode
-          (not
-           (or (string-match-p "N/A" battery-status)
-               (string-match-p "unknown" battery-status))))))
 
 ;;; Modeline
 (after! doom-modeline
@@ -104,7 +88,7 @@
 (setq evil-split-below t
       evil-vsplit-window-right t
       evil-move-cursor-back t
-      evil-want-fine-undo t)
+      evil-want-fine-undo nil)
 ;; Bring back s/S
 (remove-hook 'doom-first-input-hook #'evil-snipe-mode)
 
@@ -139,7 +123,7 @@
                                 "--completion-style=detailed"
                                 "--header-insertion=never"
                                 "--header-insertion-decorators=0"
-                                "-j=4"
+                                "-j=6"
                                 "--pch-storage=memory"))
 (after! lsp-clangd (set-lsp-priority! 'clangd 2))
 
@@ -174,7 +158,9 @@
 
 ;;; Magit
 (after! magit
-  (setq magit-diff-refine-hunk 'all))
+  (setq magit-diff-refine-hunk 'all)
+  (setq magit-repository-directories '(("~/repos"     . 1)
+                                       ("~/workRepos" . 1))))
 
 ;;; Misc Compiling
 (use-package! smart-compile)
@@ -192,17 +178,6 @@
 (after! dired
   (setq-default dired-listing-switches "-ABDgGlX --group-directories-first"))
 
-;; Equivalent of nvim-treesitter-context
-;; (which-function-mode 1)
-;; (setq idle-update-delay 0.25)
-
-;; (setq which-func-header-line-format '(which-func-mode ("" which-func-format)))
-;; (defadvice which-func-ff-hook (after header-line activate)
-;;   (when which-func-mode
-;;     (setq mode-line-format (delete (assoc 'which-func-mode
-;;                                           mode-line-format) mode-line-format)
-;;           header-line-format which-func-header-line-format)))
-
 ;; Bring back ctrl-a/x
 (after! evil
   (define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
@@ -211,14 +186,4 @@
   (define-key evil-normal-state-map (kbd "g C-a") 'evil-numbers/inc-at-pt-incremental)
   (define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental))
 
-(defun xdg-open (url)
-  "Open a URL with the default application."
-  (print url)
-  (call-process "xdg-open" nil 0 nil url))
-
-(defun open-project-root ()
-  "Open a doom project with xdg-open."
-  (interactive)
-  (xdg-open (expand-file-name (expand-file-name (doom-project-root) (expand-file-name "~")))))
-
-(define-key evil-normal-state-map (kbd "g C-o") 'open-project-root)
+;; josh x lona slow burn 150k words angst/fluff/enemies to lovers/smut/lemon/lighthearted/code AU/incomplete
