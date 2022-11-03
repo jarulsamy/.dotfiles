@@ -56,7 +56,7 @@
     lg = !"git lg1"
 
     fixme = grep -n --heading --break --ignore-case -e 'FIX: *' -e 'FIXME: *'
-    todo = grep -n --heading --break --ignore-case -e 'TODO: *'
+    todo = grep -n --heading --break --ignore-case -e 'TODO[\\w:.\\s] *'
 
     fixmec = fixme -C 5
     todoc = todo -C 5
@@ -65,4 +65,4 @@
     path = .gitconfig-work
 
 [init]
-	defaultBranch = main
+    defaultBranch = main
