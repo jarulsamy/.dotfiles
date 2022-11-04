@@ -136,6 +136,10 @@
       ((agenda ""))
       ((org-agenda-tag-filter-preset '("-SCHEDULE")))))))
 
+(setq org-agenda-start-with-follow-mode t
+      org-agenda-restore-windows-after-quit t
+      org-agenda-timegrid-use-ampm t)
+
 ;; Roam
 (setq org-directory "~/org/")
 (setq org-roam-directory "~/org/brain")
@@ -177,6 +181,10 @@
 ;; Dired
 (after! dired
   (setq-default dired-listing-switches "-ABDgGlX --group-directories-first"))
+(map! :leader
+      :mode :n
+      :after dired
+      (:desc "Dired Split" "o _" #'dired-jump-other-window))
 
 ;; Bring back ctrl-a/x
 (after! evil
