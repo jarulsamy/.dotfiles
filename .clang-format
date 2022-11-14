@@ -2,6 +2,7 @@
 Language:        Cpp
 AccessModifierOffset: -2
 AlignAfterOpenBracket: Align
+AlignArrayOfStructures: Left
 AlignConsecutiveMacros: false
 AlignConsecutiveAssignments: false
 AlignConsecutiveDeclarations: false
@@ -10,7 +11,7 @@ AlignOperands:   true
 AlignTrailingComments: true
 AllowAllArgumentsOnNextLine: true
 AllowAllConstructorInitializersOnNextLine: true
-AllowAllParametersOfDeclarationOnNextLine: true
+AllowAllParametersOfDeclarationOnNextLine: false
 AllowShortBlocksOnASingleLine: Never
 AllowShortCaseLabelsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: None
