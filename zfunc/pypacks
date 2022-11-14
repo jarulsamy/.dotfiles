@@ -1,47 +1,49 @@
 #!/usr/bin/env bash
 
 declare -a packages=(
-    "autopep8"
-    "bandit"
-    "black"
-    "docopt"
-    "flake8"
-    "isort"
-    "mypy"
-    "pre-commit"
-    "pydocstyle"
-    "pyls-isort"
-    "pylsp-rope"
-    "python-lsp-black"
-    "python-lsp-server[all]"
-    "virtualenvwrapper"
+	"autopep8"
+	"bandit"
+	"black"
+	"debugpy"
+	"docopt"
+	"flake8"
+	"isort"
+	"mypy"
+	"pre-commit"
+	"ptvsd"
+	"pydocstyle"
+	"pyls-isort"
+	"pylsp-rope"
+	"python-lsp-black"
+	"python-lsp-server[all]"
+	"virtualenvwrapper"
 )
 
 install() {
-    for i in "${packages[@]}"; do
-        pip install "$i"
-    done
+	for i in "${packages[@]}"; do
+		pip install "$i"
+	done
 }
 
 while test $# -gt 0; do
-    case "$1" in
-        -h | --help)
-            printf "Lists and optionally install frequently used python packages\n"
-            printf "\n"
-            printf "Options:"
-            printf "-h, --help        show brief help\n"
-            printf "-i, --install     Install packages\n"
-            break
-            ;;
-        -i | --install)
-            pip install --upgrade pip
-            shift
-            install
-            break
-            ;;
-    esac
+	case "$1" in
+		-h | --help)
+			printf "Lists and optionally install frequently used python packages\n"
+			printf "\n"
+			printf "Options:"
+			printf "-h, --help        show brief help\n"
+			printf "-i, --install     Install packages\n"
+			break
+			;;
+		-i | --install)
+			pip install --upgrade pip
+			shift
+			install
+			break
+			;;
+	esac
 done
 
 for i in "${packages[@]}"; do
-    printf "%s\n" "$i"
+	printf "%s\n" "$i"
 done

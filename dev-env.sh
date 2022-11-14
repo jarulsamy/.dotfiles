@@ -27,10 +27,13 @@ install_mainline_packages() {
 		emacs-nativecomp
 		fd
 		gcc
+		gdb
 		git-delta
 		go
 		hunspell-en_us
 		jre-openjdk-headless
+		lldb
+		llvm
 		nodejs
 		npm
 		pgformatter
