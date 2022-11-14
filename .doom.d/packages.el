@@ -8,7 +8,6 @@
 ;; To install SOME-PACKAGE from MELPA, ELPA or emacsmirror:
 ;(package! some-package)
 (package! python-black)
-(package! lsp-haskell)
 (package! wakatime-mode)
 (package! org-roam-ui)
 (package! smart-compile)

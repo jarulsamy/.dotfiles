@@ -12,7 +12,6 @@
 ;; Load custom libraries
 (load-library "display")
 (load-library "dashboard")
-(load-library "compUtils")
 
 ;;; General
 (setq user-full-name "Joshua Arulsamy"
@@ -140,6 +139,92 @@
       org-agenda-restore-windows-after-quit t
       org-agenda-timegrid-use-ampm t)
 
+;; Hydra for org agenda (graciously taken from Spacemacs)
+(defhydra hydra-org-agenda (:pre (setq which-key-inhibit t)
+                            :post (setq which-key-inhibit nil)
+                            :hint none)
+  "
+Org agenda (_q_uit)
+
+^Clock^      ^Visit entry^              ^Date^             ^Other^
+^-----^----  ^-----------^------------  ^----^-----------  ^-----^---------
+_ci_ in      _SPC_ in other window      _ds_ schedule      _gr_ reload
+_co_ out     _TAB_ & go to location     _dd_ set deadline  _._  go to today
+_cq_ cancel  _RET_ & del other windows  _dt_ timestamp     _gd_ go to date
+_cj_ jump    _o_   link                 _+_  do later      ^^
+^^           ^^                         _-_  do earlier    ^^
+^^           ^^                         ^^                 ^^
+^View^          ^Filter^                 ^Headline^         ^Toggle mode^
+^----^--------  ^------^---------------  ^--------^-------  ^-----------^----
+_vd_ day        _ft_ by tag              _ht_ set status    _tf_ follow
+_vw_ week       _fr_ refine by tag       _hk_ kill          _tl_ log
+_vt_ fortnight  _fc_ by category         _hr_ refile        _ta_ archive trees
+_vm_ month      _fh_ by top headline     _hA_ archive       _tA_ archive files
+_vy_ year       _fx_ by regexp           _h:_ set tags      _tr_ clock report
+_vn_ next span  _fd_ delete all filters  _hp_ set priority  _td_ diaries
+_vp_ prev span  ^^                       ^^                 ^^
+_vr_ reset      ^^                       ^^                 ^^
+^^              ^^                       ^^                 ^^
+"
+  ;; Entry
+  ("hA" org-agenda-archive-default)
+  ("hk" org-agenda-kill)
+  ("hp" org-agenda-priority)
+  ("hr" org-agenda-refile)
+  ("h:" org-agenda-set-tags)
+  ("ht" org-agenda-todo)
+  ;; Visit entry
+  ("o"   link-hint-open-link :exit t)
+  ("<tab>" org-agenda-goto :exit t)
+  ("TAB" org-agenda-goto :exit t)
+  ("SPC" org-agenda-show-and-scroll-up)
+  ("RET" org-agenda-switch-to :exit t)
+  ;; Date
+  ("dt" org-agenda-date-prompt)
+  ("dd" org-agenda-deadline)
+  ("+" org-agenda-do-date-later)
+  ("-" org-agenda-do-date-earlier)
+  ("ds" org-agenda-schedule)
+  ;; View
+  ("vd" org-agenda-day-view)
+  ("vw" org-agenda-week-view)
+  ("vt" org-agenda-fortnight-view)
+  ("vm" org-agenda-month-view)
+  ("vy" org-agenda-year-view)
+  ("vn" org-agenda-later)
+  ("vp" org-agenda-earlier)
+  ("vr" org-agenda-reset-view)
+  ;; Toggle mode
+  ("ta" org-agenda-archives-mode)
+  ("tA" (org-agenda-archives-mode 'files))
+  ("tr" org-agenda-clockreport-mode)
+  ("tf" org-agenda-follow-mode)
+  ("tl" org-agenda-log-mode)
+  ("td" org-agenda-toggle-diary)
+  ;; Filter
+  ("fc" org-agenda-filter-by-category)
+  ("fx" org-agenda-filter-by-regexp)
+  ("ft" org-agenda-filter-by-tag)
+  ("fr" org-agenda-filter-by-tag-refine)
+  ("fh" org-agenda-filter-by-top-headline)
+  ("fd" org-agenda-filter-remove-all)
+  ;; Clock
+  ("cq" org-agenda-clock-cancel)
+  ("cj" org-agenda-clock-goto :exit t)
+  ("ci" org-agenda-clock-in :exit t)
+  ("co" org-agenda-clock-out)
+  ;; Other
+  ("q" nil :exit t)
+  ("gd" org-agenda-goto-date)
+  ("." org-agenda-goto-today)
+  ("gr" org-agenda-redo))
+
+(map! :after org-agenda
+      :map evil-normal-state-map
+      "<f9>" #'hydra-org-agenda/body)
+
+(use-package! smart-compile)
+
 ;; Roam
 (setq org-directory "~/org/")
 (setq org-roam-directory "~/org/brain")
@@ -166,13 +251,16 @@
   (setq magit-repository-directories '(("~/repos"     . 1)
                                        ("~/workRepos" . 1))))
 
-;;; Misc Compiling
-(use-package! smart-compile)
-(add-to-list 'compilation-finish-functions 'notify-compilation-result)
-
 ;;; Projectile
-(setq projectile-project-search-path '(("~/repos"     . 1)
-                                       ("~/workRepos" . 1)))
+(setq projectile-files-cache-expire 30
+      projectile-sort-order 'recentf
+      projectile-project-search-path '(("~/repos"     . 1)
+                                       ("~/workRepos" . 1))
+      projectile-per-project-compilation-buffer t)
+
+;;; Workspaces
+(setq perp-autokill-buffer-on-remove t)
+
 ;;; Latex
 (setq +latex-viewers '(pdf-tools))
 ;; Use pdflatex for tex
@@ -194,4 +282,19 @@
   (define-key evil-normal-state-map (kbd "g C-a") 'evil-numbers/inc-at-pt-incremental)
   (define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental))
 
-;; josh x lona slow burn 150k words angst/fluff/enemies to lovers/smut/lemon/lighthearted/code AU/incomplete
+;; Debugging
+(after! dap-mode
+  (require 'dap-cpptools)
+  (require 'dap-gdb-lldb)
+  (require 'dap-lldb)
+  (require 'dap-python)
+  (setq dap-python-debugger 'debugpy)
+  (dap-ui-mode nil)
+  ;; enables mouse hover support
+  (dap-tooltip-mode 1)
+  ;; use tooltips for mouse hover
+  ;; if it is not enabled `dap-mode' will use the minibuffer.
+  (tooltip-mode 1)
+  ;; displays floating panel with debug buttons
+  ;; requies emacs 26+
+  (dap-ui-controls-mode nil))
