@@ -74,6 +74,7 @@ install_aur_packages() {
 	local AUR_DEPS=(
 		google-chrome
 		onedrive-abraunegg
+		shellcheck-bin
 		slack-desktop
 		spotify
 		texlive-latexindent-meta
