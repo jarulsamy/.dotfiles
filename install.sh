@@ -72,7 +72,7 @@ install_packages() {
     PKG_INSTALL=("${PKG_MANAGER}" -S --noconfirm --needed)
 
     INSTALLER_DEPS=(cmake curl gcc git make zsh jq)
-    DEPS=(fzf lolcat ripgrep shellcheck shfmt tmux vim wget xclip xdg-utils)
+    DEPS=(fzf ripgrep vim wget xclip xdg-utils)
 
   # If not apt-get, yum/dnf, or pacman, not supported.
   else
