@@ -298,3 +298,17 @@ _vr_ reset      ^^                       ^^                 ^^
   ;; displays floating panel with debug buttons
   ;; requies emacs 26+
   (dap-ui-controls-mode nil))
+
+;; Spotify
+(map! :leader
+     :after spotify
+     :prefix "S"
+     "SPC" #'spotify-playpause)
+(map! :leader
+     :after spotify
+     :prefix "S"
+     "n" #'spotify-next)
+(map! :leader
+     :after spotify
+     :prefix "S"
+     "p" #'spotify-previous)
