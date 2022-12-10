@@ -300,15 +300,16 @@ _vr_ reset      ^^                       ^^                 ^^
   (dap-ui-controls-mode nil))
 
 ;; Spotify
+(use-package! spotify)
 (map! :leader
-     :after spotify
-     :prefix "S"
-     "SPC" #'spotify-playpause)
+      :after spotify
+      :prefix "S"
+      "SPC" #'spotify-playpause)
 (map! :leader
-     :after spotify
-     :prefix "S"
-     "n" #'spotify-next)
+      :after spotify
+      :prefix "S"
+      "n" #'spotify-next)
 (map! :leader
-     :after spotify
-     :prefix "S"
-     "p" #'spotify-previous)
+      :after spotify
+      :prefix "S"
+      "p" #'spotify-previous)
