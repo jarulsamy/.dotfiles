@@ -275,12 +275,12 @@ _vr_ reset      ^^                       ^^                 ^^
       (:desc "Dired Split" "o _" #'dired-jump-other-window))
 
 ;; Bring back ctrl-a/x
-(after! evil
-  (define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
-  (define-key evil-normal-state-map (kbd "C-x") 'evil-numbers/dec-at-pt)
+;; (after! evil
+;;   (define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
+;;   (define-key evil-normal-state-map (kbd "C-x") 'evil-numbers/dec-at-pt)
 
-  (define-key evil-normal-state-map (kbd "g C-a") 'evil-numbers/inc-at-pt-incremental)
-  (define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental))
+;;   (define-key evil-normal-state-map (kbd "g C-a") 'evil-numbers/inc-at-pt-incremental)
+;;   (define-key evil-normal-state-map (kbd "g C-x") 'evil-numbers/dec-at-pt-incremental))
 
 ;; Debugging
 (after! dap-mode
@@ -313,3 +313,7 @@ _vr_ reset      ^^                       ^^                 ^^
       :after spotify
       :prefix "S"
       "p" #'spotify-previous)
+
+;; Proced
+(setq-default proced-auto-update-interval 1)
+(setq-default proced-auto-update-flag 1)
