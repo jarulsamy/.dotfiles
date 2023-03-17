@@ -44,7 +44,7 @@ install_mainline_packages() {
 		rust
 		rust-analyzer
 		texlive-most
-		vim
+		gvim
 		wl-clipboard
 		wmctrl
 	)
