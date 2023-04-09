@@ -30,6 +30,7 @@ install_mainline_packages() {
 		gdb
 		git-delta
 		go
+		gvim
 		hunspell-en_us
 		jre-openjdk-headless
 		lldb
@@ -43,8 +44,8 @@ install_mainline_packages() {
 		ripgrep
 		rust
 		rust-analyzer
+		texlab
 		texlive-most
-		gvim
 		wl-clipboard
 		wmctrl
 	)
@@ -99,7 +100,7 @@ install_aur_packages() {
 }
 
 install_cargo_packages() {
-	cargo install --locked --git https://github.com/latex-lsp/texlab.git
+	cargo install --locked --git https://github.com/jarulsamy/dotEngine --profile release
 }
 
 setup_doas() {
