@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from pathlib import Path
 import configparser
+from pathlib import Path
 
 
 def get_git_username(path=None):
@@ -13,6 +13,6 @@ def get_git_username(path=None):
     config.read(path)
 
     try:
-        return config.get("dotEngine", "username")
+        return config.get("dot-engine", "github-username")
     except configparser.NoOptionError:
         return None

@@ -2,8 +2,9 @@
     name = Joshua Arulsamy
     email = joshua.gf.arul@gmail.com
 
-[dotEngine]
-    username = jarulsamy
+[dot-engine]
+    github-username = jarulsamy
+    github-token =
 
 [delta]
     side-by-side = true
@@ -60,6 +61,7 @@
 
     fixmec = fixme -C 5
     todoc = todo -C 5
+    prune-branches = !git remote prune origin && git branch -vv | grep ': gone]' | awk '{print $1}' | xargs -r git branch -D
 
 [includeIf "gitdir:workRepos/"]
     path = .gitconfig-work

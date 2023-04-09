@@ -7,6 +7,6 @@ _clone() {
     '--http[Use HTTP instead of SSH]' \
     '--version[Show version]'
 
-  _describe 'command' "($($HOME/.local/bin/dotEngine -z))"
+  _describe 'command' "($($HOME/.cargo/bin/dot-engine -z 2>/dev/null))"
 }
 compdef _clone clone
