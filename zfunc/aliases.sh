@@ -141,7 +141,7 @@ backup_home() {
 
 	declare -r source_dir="$HOME"
 	declare -r datetime="$(date '+%Y-%m-%d_%H-%M-%S')"
-	declare -r hostname="$(hostname)"
+	declare -r hostname="$(hostnamectl hostname)"
 	declare -r dst="${backup_dst}/${hostname}_${datetime}"
 
 	rsync -ahv --progress --delete \
