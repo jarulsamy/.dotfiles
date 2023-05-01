@@ -45,6 +45,7 @@ linkDot .config/bat
 linkDot .config/dunst
 linkDot .config/i3
 linkDot .config/kitty
+linkDot .config/mimeapps.list
 linkDot .config/mpd
 linkDot .config/mypy
 linkDot .config/ncmpcpp
