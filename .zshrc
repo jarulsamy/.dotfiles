@@ -142,5 +142,9 @@ if [[ -f "$VIRTUALENVWRAPPER_SCRIPT" ]] then;
     fi
 fi
 
+# Add some custom ls colors
+# Highlight .pdf in red
+export LS_COLORS="${LS_COLORS}:*.pdf=00;31:"
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f "$HOME/.p10k.zsh" ]] || source "$HOME/.p10k.zsh"
