@@ -317,3 +317,19 @@ _vr_ reset      ^^                       ^^                 ^^
 ;; Proced
 (setq-default proced-auto-update-interval 1)
 (setq-default proced-auto-update-flag 1)
+
+;; Ruff
+(defcustom lsp-ruff-executable "ruff-lsp"
+  "Command to start the Ruff language server."
+  :group 'lsp-python
+  :risky t
+  :type 'file)
+
+;; Register ruff-lsp with the LSP client.
+(after! lsp-mode
+  (lsp-register-client
+   (make-lsp-client
+    :new-connection (lsp-stdio-connection (lambda () (list lsp-ruff-executable)))
+    :activation-fn (lsp-activate-on "python")
+    :add-on? t
+    :server-id 'ruff)))
