@@ -151,6 +151,9 @@ setup_gnome() {
 		dconf load / <"$HOME/.dotfiles/dconf/custom-shortcuts.ini"
 		printf "Loaded custom Gnome settings\n"
 	fi
+
+  # Set capslock to escape
+	gsettings set org.gnome.desktop.input-sources xkb-options ['caps:escape']
 }
 
 setup_fonts() {
