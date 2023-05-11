@@ -333,3 +333,5 @@ _vr_ reset      ^^                       ^^                 ^^
     :activation-fn (lsp-activate-on "python")
     :add-on? t
     :server-id 'ruff)))
+
+(setq frame-title-format "Emacs")
