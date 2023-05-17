@@ -59,7 +59,6 @@ install_mainline_packages() {
 		ttf-hack
 		ttf-iosevka-nerd
 		ttf-jetbrains-mono
-		ttf-nerd-fonts-symbols-2048-em
 	)
 
 	for package in "${MAIN_DEPS[@]}"; do
@@ -153,7 +152,7 @@ setup_gnome() {
 	fi
 
   # Set capslock to escape
-	gsettings set org.gnome.desktop.input-sources xkb-options ['caps:escape']
+	gsettings set org.gnome.desktop.input-sources xkb-options "['caps:escape']"
 }
 
 setup_fonts() {
