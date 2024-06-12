@@ -36,6 +36,7 @@ linkDot .flake8
 linkDot .gitconfig
 linkDot .mbsyncrc
 linkDot .p10k.zsh
+linkDot .pydocstyle
 linkDot .tmux.conf
 linkDot .tmux.conf.local
 linkDot .vimrc
