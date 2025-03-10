@@ -25,5 +25,16 @@ else
 fi
 
 # Copy to clipboard
-xclip -selection c -i "$PUB_KEY"
-echo "Public key copied to clipboard."
+if [ "$XDG_SESSION_TYPE" = "tty" ]; then
+    echo ""
+    cat "$PUB_KEY"
+    echo ""
+    echo "You're on a TTY, here's the public key."
+elif [ "$XDG_SESSION_TYPE" = "wayland" ]; then
+    wl-copy < "$PUB_KEY"
+    echo "Public key copied to clipboard."
+else
+    xclip -selection c -i "$PUB_KEY"
+    echo "Public key copied to clipboard."
+fi
+
