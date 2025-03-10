@@ -9,6 +9,8 @@ alias vimconfig="vim $HOME/.vimrc"
 alias i3config="vim $HOME/.config/i3/config"
 alias polyconfig="vim $HOME/.config/polybar/"
 
+export GITHUB_USERNAME="jarulsamy"
+
 # Aliases for quick adding to clipboard.
 if [ "$XDG_SESSION_TYPE" = "wayland" ]; then
 	alias setclip="wl-copy -n"
@@ -58,21 +60,13 @@ cdl() {
 }
 
 authorize_github_keys() {
-	# Grab username from config.ini
-	source <(grep username .gitconfig | sed 's/ *= */=/g')
-
-	if [ -z ${username+x} ]; then
-		echo "Github username unset, skipping..."
-		return
-	fi
-
 	# URL to keys
-	URL="https://github.com/$username.keys"
+	URL="https://github.com/${GITHUB_USERNAME}.keys"
 	# Save keys to authorized_keys
 
 	mkdir -p ~/.ssh
 
-	curl "$URL" -o "$HOME/.ssh/authorized_keys" 2>/dev/null 1>/dev/null
+	curl --silent "$URL" -o "$HOME/.ssh/authorized_keys"
 	# Ensure permissions are correct
 	chmod 700 ~/.ssh
 	chmod 600 ~/.ssh/authorized_keys
