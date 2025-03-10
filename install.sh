@@ -74,8 +74,15 @@ install_packages() {
     INSTALLER_DEPS=(cmake curl gcc git make zsh jq)
     DEPS=(fzf ripgrep vim wget xclip xdg-utils)
 
-  # If not apt-get, yum/dnf, or pacman, not supported.
+  elif is_command emerge; then
+    echo "=============================================="
+    echo "= Ensure your use flags are set correctly!!! ="
+    echo "=============================================="
+    sleep 5
+    sudo emerge -n --ask $(< gentoo.pkglist)
+    return
   else
+    # If not apt-get, yum/dnf, pacman, or emerge, not supported.
     # it's not an OS we can support,
     printf "  %b OS distribution not supported\\n" "${CROSS}"
     # so exit the installer
