@@ -25,7 +25,7 @@
 (setq confirm-kill-emacs nil)
 
 ;; Timezone
-(setenv "TZ" "America/Denver")
+(setenv "TZ" "America/Chicago")
 
 ;; Frame/Font Sizing
 (display-set-frame-size-according-to-resolution)
@@ -33,15 +33,15 @@
 (if (display-graphic-p)
     (progn
       (when (> (display-primary-width) 3400)
-        (setq font-size 24))))
+        (setq font-size 16))))
 
 ;;; Font/Theme
 (setq doom-font (font-spec
-                 :family "Hack"
+                 :family "Cascadia Code"
                  :size font-size
                  :weight 'normal)
       doom-variable-pitch-font (font-spec
-                                :family "Hack"
+                                :family "Cascadia Code"
                                 :size font-size
                                 :weight 'normal)
       doom-theme 'doom-dark+
@@ -62,7 +62,7 @@
   ;; Set segments and fix oversized icons being cutoff on the right side.
   (doom-modeline-def-modeline 'main
     '(hud bar matches input-method buffer-info-simple remote-host buffer-position)
-    '(minor-modes persp-name lsp checker vcs time-segment battery "  "))
+    '(minor-modes persp-name lsp vcs time-segment battery "  "))
 
   ;; Misc customization
   (setq doom-modeline-hud t
@@ -77,11 +77,12 @@
         doom-modeline-workspace-name t
         doom-modeline-persp-name t
         doom-modeline-persp-icon t
-        doom-modeline-mu4e t
+        ;; doom-modeline-mu4e t
         doom-modeline-unicode-fallback nil
         doom-modeline-display-default-persp-name nil
         doom-modeline-major-mode-icon t
-        doom-modeline-major-mode-color-icon t))
+        doom-modeline-major-mode-color-icon t)
+  )
 
 ;;; Evil
 (setq evil-split-below t
@@ -223,8 +224,6 @@ _vr_ reset      ^^                       ^^                 ^^
       :map evil-normal-state-map
       "<f9>" #'hydra-org-agenda/body)
 
-(use-package! smart-compile)
-
 ;; Roam
 (setq org-directory "~/org/")
 (setq org-roam-directory "~/org/brain")
@@ -264,7 +263,7 @@ _vr_ reset      ^^                       ^^                 ^^
 ;;; Latex
 (setq +latex-viewers '(pdf-tools))
 ;; Use pdflatex for tex
-(setq smart-compile-alist (add-to-list 'smart-compile-alist '("\\.tex\\'" . "pdflatex %f")))
+;;(setq smart-compile-alist (add-to-list 'smart-compile-alist '("\\.tex\\'" . "pdflatex %f")))
 
 ;; Dired
 (after! dired
@@ -286,10 +285,13 @@ _vr_ reset      ^^                       ^^                 ^^
 (after! dap-mode
   (require 'dap-cpptools)
   (require 'dap-gdb-lldb)
+  (require 'dap-gdb-lldb)
   (require 'dap-lldb)
   (require 'dap-python)
+  (require 'dap-gdb)
+  (setq dap-auto-configure-features '(sessions locals controls tooltip))
   (setq dap-python-debugger 'debugpy)
-  (dap-ui-mode nil)
+  (dap-ui-mode t)
   ;; enables mouse hover support
   (dap-tooltip-mode 1)
   ;; use tooltips for mouse hover
@@ -297,7 +299,33 @@ _vr_ reset      ^^                       ^^                 ^^
   (tooltip-mode 1)
   ;; displays floating panel with debug buttons
   ;; requies emacs 26+
-  (dap-ui-controls-mode nil))
+  (dap-ui-controls-mode nil)
+  ;; -*- lexical-binding: t -*-
+  (define-minor-mode +dap-running-session-mode
+    "A mode for adding keybindings to running sessions"
+    nil
+    nil
+    (make-sparse-keymap)
+    (evil-normalize-keymaps) ;; if you use evil, this is necessary to update the keymaps
+    ;; The following code adds to the dap-terminated-hook
+    ;; so that this minor mode will be deactivated when the debugger finishes
+    (when +dap-running-session-mode
+      (let ((session-at-creation (dap--cur-active-session-or-die)))
+        (add-hook 'dap-terminated-hook
+                  (lambda (session)
+                    (when (eq session session-at-creation)
+                      (+dap-running-session-mode -1)))))))
+
+  ;; Activate this minor mode when dap is initialized
+  (add-hook 'dap-session-created-hook '+dap-running-session-mode)
+
+  ;; Activate this minor mode when hitting a breakpoint in another file
+  (add-hook 'dap-stopped-hook '+dap-running-session-mode)
+
+  ;; Activate this minor mode when stepping into code in another file
+  (add-hook 'dap-stack-frame-changed-hook (lambda (session)
+                                            (when (dap--session-running session)
+                                              (+dap-running-session-mode 1)))))
 
 ;; Spotify
 (use-package! spotify)
@@ -335,3 +363,21 @@ _vr_ reset      ^^                       ^^                 ^^
     :server-id 'ruff)))
 
 (setq frame-title-format "Emacs")
+
+                                        ; Format with LSP whenever possible
+
+;; Email
+;; (after! mu4e
+;;   (setq sendmail-program (executable-find "msmtp")
+;; 	send-mail-function #'smtpmail-send-it
+;; 	message-sendmail-f-is-evil t
+;; 	message-sendmail-extra-arguments '("--read-envelope-from")
+;; 	message-send-mail-function #'message-send-mail-with-sendmail))
+
+
+;; (setq +format-on-save-enabled-modes
+;;       '(not emacs-lisp-mode  ; elisp's mechanisms are good enough
+;; 	sql-mode         ; sqlformat is currently broken
+;; 	tex-mode         ; latexindent is broken
+;; 	latex-mode
+;;         rust-mode))

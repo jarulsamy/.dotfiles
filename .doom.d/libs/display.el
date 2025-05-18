@@ -20,12 +20,12 @@
         ;; and smaller 80 column windows for smaller displays
         ;; pick whatever numbers make sense for you
         (if (> (display-primary-width) 1280)
-            (add-to-list 'default-frame-alist (cons 'width 120))
+            (add-to-list 'default-frame-alist (cons 'width 80))
           (add-to-list 'default-frame-alist (cons 'width 80)))
         ;; for the height, subtract a couple hundred pixels
         ;; from the screen height (for panels, menubars and
         ;; whatnot), then divide by the height of a char to
         ;; get the height we want
         (add-to-list 'default-frame-alist
-                     (cons 'height (/ (- (x-display-pixel-height) 400)
+                     (cons 'height (/ (- (x-display-pixel-height) 1500)
                                       (frame-char-height)))))))

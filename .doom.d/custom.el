@@ -25,6 +25,8 @@
       ((agenda ""))
       ((org-agenda-tag-filter-preset
         '("-SCHEDULE"))))))
+ '(org-safe-remote-resources
+   '("\\`https://fniessen\\.github\\.io/org-html-themes/org/theme-readtheorg\\.setup\\'"))
  '(package-selected-packages
    '(flymake-ruff lsp-mode d2-mode sphinx-doc yasnippet chess lsp-haskell haskell-mode virtualenvwrapper python-black))
  '(pdf-view-midnight-colors (cons "#bbc2cf" "#282c34"))
