@@ -11,19 +11,20 @@ function M.config()
         "clangd",
         "cssls",
         "docker_compose_language_service",
-        -- "docker_language_service",
         "graphql",
         "html",
         "jinja_lsp",
         "jsonls",
         "lua_ls",
+        "markdown_oxide",
         "pylsp",
         "pyright",
         "ruff",
         "rust_analyzer",
-        -- "terraform_lsp",
         "vimls",
         "yamlls",
+        -- "docker_language_service",
+        -- "terraform_lsp",
     }
 
     require("mason").setup {
