@@ -29,7 +29,7 @@
     new = green
 
 [core]
-    editor = vim
+    editor = nvim
     mergeoptions =
 
 [pager]

@@ -50,6 +50,7 @@ linkDot .config/mimeapps.list
 linkDot .config/mpd
 linkDot .config/mypy
 linkDot .config/ncmpcpp
+linkDot .config/nvim
 linkDot .config/polybar
 linkDot .config/ranger
 linkDot .config/redshift
