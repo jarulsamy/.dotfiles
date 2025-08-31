@@ -1,7 +1,7 @@
 -- vim.opt.backspace = indent,eol,start
 vim.opt.history = 1000
 vim.opt.showcmd = true
-vim.opt.showmode = true
+vim.opt.showmode = false
 
 vim.opt.cursorline = true -- highlight the current line
 vim.opt.number = true

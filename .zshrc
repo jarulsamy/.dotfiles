@@ -81,10 +81,10 @@ export LANG=en_US.UTF-8
 setopt ignore_eof
 
 # Preferred editor for local and remote sessions
-export EDITOR="vim"
+export EDITOR="nvim"
 export VISUAL="$EDITOR"
 export SUDO_EDITOR="$EDITOR"
-export GIT_EDITOR="vim -c'startinsert|norm! ggA'"
+export GIT_EDITOR="nvim -c'startinsert|norm! ggA'"
 
 # Compilation flags
 export NUM_THREADS="$(nproc)"

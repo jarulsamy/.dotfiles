@@ -1,6 +1,7 @@
 app-dicts/aspell-en
 app-editors/emacs
 app-editors/vim
+app-editors/nvim
 app-misc/jq
 app-misc/tmux
 app-portage/genlop
