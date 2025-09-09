@@ -16,7 +16,8 @@ local function lsp_keymaps(bufnr)
     keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
     keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
     keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-    keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+    keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.hide()<CR>", opts)
+    keymap(bufnr, "n", "gL", "<cmd>lua vim.diagnostic.show()<CR>", opts)
 end
 
 M.on_attach = function(client, bufnr)
@@ -77,7 +78,7 @@ function M.config()
         "yamlls",
     }
 
-    local default_diagnostic_config = {
+    vim.diagnostic.config({
         signs = {
             active = true,
             values = {
@@ -92,23 +93,25 @@ function M.config()
         underline = true,
         severity_sort = true,
         float = {
-            focusable = true,
+            focusable = false,
             style = "minimal",
             border = "rounded",
-            source = "always",
+            source = "if_many",
             header = "",
             prefix = "",
         },
-    }
+    })
+    vim.o.winborder = 'rounded'
+    -- Auto-open diagnostic float on CursorHold
+    vim.api.nvim_create_autocmd("CursorHold", {
+        callback = function()
+            vim.diagnostic.open_float(nil, {
+                focus = false,    -- don't steal focus
+                scope = "cursor", -- only show diagnostics under the cursor
+            })
+        end,
+    })
 
-    vim.diagnostic.config(default_diagnostic_config)
-
-    for _, sign in ipairs(vim.tbl_get(vim.diagnostic.config(), "signs", "values") or {}) do
-        vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = sign.name })
-    end
-
-    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded" })
-    vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded" })
     require("lspconfig.ui.windows").default_options.border = "rounded"
 
     for _, server in pairs(servers) do
