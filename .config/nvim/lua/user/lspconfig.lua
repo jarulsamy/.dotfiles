@@ -34,27 +34,28 @@ function M.common_capabilities()
     return capabilities
 end
 
-M.toggle_inlay_hints = function()
-    local bufnr = vim.api.nvim_get_current_buf()
-    vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled { bufnr }, { bufnr })
-end
-
 function M.config()
+    vim.keymap.set('n', "gk", function()
+            local new_config = not vim.diagnostic.config().virtual_lines
+            vim.diagnostic.config({ virtual_lines = new_config })
+        end,
+        { desc = "Toggle diagnostic virtual_lines" })
+
+
     local wk = require "which-key"
     wk.add {
-        { "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>",                      desc = "Code Action" },
+        { "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<cr>",   desc = "Code Action" },
         {
             "<leader>lf",
             "<cmd>lua vim.lsp.buf.format({async = true, filter = function(client) return client.name ~= 'typescript-tools' end})<cr>",
             desc = "Format",
         },
-        { "<leader>lh", "<cmd>lua require('user.lspconfig').toggle_inlay_hints()<cr>", desc = "Hints" },
-        { "<leader>li", "<cmd>LspInfo<cr>",                                            desc = "Info" },
-        { "<leader>lj", "<cmd>lua vim.diagnostic.goto_next()<cr>",                     desc = "Next Diagnostic" },
-        { "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev()<cr>",                     desc = "Prev Diagnostic" },
-        { "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<cr>",                         desc = "CodeLens Action" },
-        { "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<cr>",                    desc = "Quickfix" },
-        { "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>",                           desc = "Rename" },
+        { "<leader>li", "<cmd>LspInfo<cr>",                         desc = "Info" },
+        { "<leader>lj", "<cmd>lua vim.diagnostic.goto_next()<cr>",  desc = "Next Diagnostic" },
+        { "<leader>lk", "<cmd>lua vim.diagnostic.goto_prev()<cr>",  desc = "Prev Diagnostic" },
+        { "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<cr>",      desc = "CodeLens Action" },
+        { "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<cr>", desc = "Quickfix" },
+        { "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>",        desc = "Rename" },
     }
 
     wk.add {
@@ -62,9 +63,7 @@ function M.config()
         { "<leader>laa", "<cmd>lua vim.lsp.buf.code_action()<cr>", desc = "Code Action", mode = "v" },
     }
 
-    local lspconfig = require "lspconfig"
     local icons = require "user.icons"
-
     local servers = {
         "lua_ls",
         "cssls",
@@ -129,7 +128,8 @@ function M.config()
             require("neodev").setup {}
         end
 
-        lspconfig[server].setup(opts)
+        vim.lsp.config[server] = opts
+        vim.lsp.enable(server)
     end
 end
 

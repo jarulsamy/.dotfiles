@@ -17,7 +17,7 @@ function M.config()
         "jsonls",
         "lua_ls",
         "markdown_oxide",
-        "pylsp",
+        -- "pylsp",
         "pyright",
         "ruff",
         "rust_analyzer",

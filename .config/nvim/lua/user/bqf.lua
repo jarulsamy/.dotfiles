@@ -9,10 +9,10 @@ function M.config()
         magic_window = true,
         auto_resize_height = false,
         preview = {
-            auto_preview = false,
+            auto_preview = true,
             show_title = true,
-            delay_syntax = 50,
-            wrap = false,
+            delay_syntax = 0,
+            wrap = true,
         },
         func_map = {
             tab = "t",

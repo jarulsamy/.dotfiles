@@ -12,6 +12,7 @@ function M.config()
     local wk = require "which-key"
     wk.add {
         { "<leader>bb",      "<cmd>Telescope buffers previewer=false<cr>",                       desc = "Find" },
+        { "<leader>,",       "<cmd>Telescope buffers previewer=false<cr>",                       desc = "Find" },
         { "<leader>fb",      "<cmd>Telescope git_branches<cr>",                                  desc = "Checkout branch" },
         { "<leader>fc",      "<cmd>Telescope colorscheme<cr>",                                   desc = "Colorscheme" },
         { "<leader>ff",      "<cmd>Telescope find_files<cr>",                                    desc = "Find files" },
